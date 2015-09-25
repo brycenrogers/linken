@@ -1,0 +1,77 @@
+//  ====================  Layout Main SASS  ====================
+
+//    created by:        Brycen Rogers ( brycenrogers@gmail.com )
+//    creation data:     September 16, 2015
+
+//    This file contains styles for the base HTML layout of Linken
+
+//  ===========================================================
+
+$greyLineColor: #e3e3e3;
+$lightGreyBackground: #efefef;
+$darkGreyFooterText: #aaaaaa;
+
+body {
+    font: 100% Helvetica, sans-serif;
+    background-color: $lightGreyBackground;
+    font-size: 11pt;
+    line-height: 15pt;
+}
+.linken-logo {
+    background-image: url("../images/linken-logo.png");
+    background-repeat: no-repeat;
+    width: 90px;
+    height: 98px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 24pt;
+    color: black;
+    margin: 0 auto;
+    position: relative;
+    z-index: 140;
+}
+.container-main {
+    background-color: #fff;
+}
+.container-header {
+    height: 125px;
+    background-color: #efefef;
+    margin-top: 25px;
+}
+.container-content {
+    background-color: #fff;
+    min-height: 700px;
+    border-left: 1px solid $greyLineColor;
+    border-right: 1px solid $greyLineColor;
+}
+.container-link-pane {
+    border-bottom: 1px solid $greyLineColor;
+    width: 100%;
+    float: left;
+    padding: 15px 0;
+    .link-padding {
+        padding: 10px;
+    }
+    .media-tags {
+        padding: 15px 0 0;
+    }
+}
+.container-control-pane {
+    width: 100%;
+    float: left;
+    padding: 15px 0;
+    border-bottom: 1px solid $greyLineColor;
+}
+.container-footer {
+    height: 150px;
+    background-color: $lightGreyBackground;
+    border-top: 1px solid $greyLineColor;
+    color: $darkGreyFooterText;
+    .footer {
+        font-size: 10pt;
+        padding-top: 30px;
+        text-align: center;
+    }
+    a {
+        color: #999;
+    }
+}

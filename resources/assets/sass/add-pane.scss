@@ -1,0 +1,113 @@
+//  ====================  Add Pane SASS  ====================
+
+//    created by:        Brycen Rogers ( brycenrogers@gmail.com )
+//    creation data:     September 16, 2015
+
+//    This file contains styles for the Add pane of Linken
+
+//  ===========================================================
+
+$add-container-height: 85px;
+$blue: #448dff;
+.select2-results {
+    font-size: 12pt !important;
+}
+#blue-hitbox-add-pane {
+    float: left;
+    width: 100%;
+    position: relative;
+    z-index: 120;
+    background-color: $blue;
+    border-bottom: 1px solid #405da3;
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+    textarea#add {
+        float: left;
+        width: 100%;
+        background-color: transparent;
+        border-top: 0;
+        border-left: 0;
+        border-right: 0;
+        border-bottom: 0;
+        font-size: 16pt;
+        color: white;
+        outline: none;
+        font-family: 'Montserrat', sans-serif;
+        text-shadow: 0 1px 1px #405da3;
+        resize: none;
+
+        &::-webkit-input-placeholder {
+            color: #cddcff;
+            text-shadow: 0 -1px 1px #405da3;
+        }
+        &:-moz-placeholder {
+            /* Firefox 18- */
+            color: #cddcff;
+            text-shadow: 0 -1px 1px #405da3;
+        }
+        &::-moz-placeholder {
+            /* Firefox 19+ */
+            color: #cddcff;
+            text-shadow: 0 -1px 1px #405da3;
+        }
+        &:-ms-input-placeholder {
+            color: #cddcff;
+            text-shadow: 0 -1px 1px #405da3;
+        }
+    }
+}
+div#add-pane {
+    float: left;
+    display: none;
+    position: relative;
+    z-index: 110;
+    background-color: white;
+    border-bottom: 1px solid #e3e3e3;
+    float: left;
+    height: 0;
+    padding: 15px;
+    min-height: 0;
+    text-align: right;
+    textarea, button, .select2 {
+        opacity: 0;
+        resize: none;
+        box-shadow: none;
+    }
+    textarea#add-description:focus {
+        border: 1px solid $blue !important;
+    }
+    .select2-container--focus {
+        .select2-selection {
+            border: 1px solid $blue !important;
+        }
+    }
+    .select2-selection {
+        font-size: 13pt;
+        border: 1px solid #ccc !important;
+        padding: 5px 10px;
+    }
+}
+div#info-pane {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 15px;
+    height: 60px;
+    background-color: white;
+    border-left: 1px solid #e3e3e3;
+    border-right: 1px solid #e3e3e3;
+    border-top: 1px solid #e3e3e3;
+    margin: 0 15px 0 0;
+    z-index: 120;
+}
+div#add-fader {
+    display: none;
+    position: fixed;
+    background-color: #000;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+}
