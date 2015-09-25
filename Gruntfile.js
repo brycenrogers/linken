@@ -17,13 +17,13 @@ module.exports = function(grunt) {
         },
         watch: {
             scripts: {
-                files: ['assets/dev/sass/*.scss'],
+                files: ['resources/assets/sass/*.scss'],
                 tasks: ['sass'],
                 options: {
                     spawn: false,
                     interval: 3007
-                },
-            },
+                }
+            }
         },
         sass: {
             options: {
@@ -31,7 +31,7 @@ module.exports = function(grunt) {
             },
             dist: {
                 files: {
-                    'assets/dist/css/base.css': 'assets/dev/sass/base.scss'
+                    'public/assets/css/base.css': 'resources/assets/sass/base.scss'
                 }
             }
         },

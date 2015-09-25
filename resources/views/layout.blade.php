@@ -8,9 +8,9 @@
 
     <!-- CSS -->
     <!-- build:css /assets/dist/css/linken.min.css -->
-    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/base.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/base.css') }}">
     <!-- /build -->
 </head>
 <body>
@@ -209,13 +209,13 @@
     </div>
 </div>
 
-<!-- build:js /resources/assets/js/linken.min.js -->
-<script src="{{ asset('js/libs/jquery.min.js') }}"></script>
-<script src="{{ asset('js/libs/velocity.min.js') }}"></script>
-<script src="{{ asset('js/libs/bootstrap.min.js') }}"></script>
-<script src="{{ asset('js/libs/select2.min.js') }}"></script>
-<script src="{{ asset('js/libs/autosize.min.js') }}"></script>
-<script src="{{ asset('js/add-pane.js') }}"></script>
+<!-- build:js /assets/js/linken.min.js -->
+<script src="{{ asset('assets/js/libs/jquery.min.js') }}"></script>
+<script src="{{ asset('assets/js/libs/velocity.min.js') }}"></script>
+<script src="{{ asset('assets/js/libs/bootstrap.min.js') }}"></script>
+<script src="{{ asset('assets/js/libs/select2.min.js') }}"></script>
+<script src="{{ asset('assets/js/libs/autosize.min.js') }}"></script>
+<script src="{{ asset('assets/js/add-pane.js') }}"></script>
 <!-- /build -->
 </body>
 
