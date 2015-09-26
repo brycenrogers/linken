@@ -7,9 +7,10 @@
 
 //  ===========================================================
 
-$greyLineColor: #e3e3e3;
-$lightGreyBackground: #efefef;
-$darkGreyFooterText: #aaaaaa;
+.btn-primary {
+    background-color: $blue;
+    text-shadow: 0 1px 1px #405da3;
+}
 
 body {
     font: 100% Helvetica, sans-serif;
@@ -42,6 +43,22 @@ body {
     min-height: 700px;
     border-left: 1px solid $greyLineColor;
     border-right: 1px solid $greyLineColor;
+    .external-header {
+        float: left;
+        width: 100%;
+        position: relative;
+        z-index: 120;
+        background-color: $blue;
+        border-bottom: 1px solid #405da3;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 18pt;
+        text-shadow: 0 1px 1px #405da3;
+        color: #ffffff;
+        text-align: center;
+    }
 }
 .container-link-pane {
     border-bottom: 1px solid $greyLineColor;
