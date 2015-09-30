@@ -1,4 +1,4 @@
-<div id="info-pane" data-loaded="false" data-url="">
+<div id="info-pane" data-loaded="false" data-url="" data-open="false">
     <div id="info-image-container" class=""></div>
     <div id="info-title-container"></div>
 </div>

@@ -26,6 +26,7 @@ class LinkParseController extends Controller
         $title = "";
         $imageUrl = "";
 
+        // Pull images from Facebook info first, if available
         foreach ($metaTags as $metaTagArray) {
             $key = strtolower($metaTagArray[0]);
             $value = $metaTagArray[1];
@@ -36,6 +37,7 @@ class LinkParseController extends Controller
             }
         }
 
+        // Still no image, get it from first available source
         if ($imageUrl == "") {
             $images = $parser->getImageSources();
             if ($images) {
@@ -43,6 +45,7 @@ class LinkParseController extends Controller
             }
         }
 
+        // Still no title, get it from the page
         if ($title == "") {
             $title = $parser->getTitle(true);
         }

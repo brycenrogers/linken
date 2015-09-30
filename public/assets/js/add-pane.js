@@ -59,7 +59,7 @@ $( document ).ready(function() {
             return;
         }
         $('div#add-pane').attr('data-toggle', 'open');
-        var height = 146;
+        var height = 160;
         if($('input#add-pane-height').val() != '') {
             height = $('input#add-pane-height').val();
         }
@@ -127,27 +127,18 @@ $( document ).ready(function() {
     function loadInfoPaneData()
     {
         // If data has already been loaded for this url, just open
-        var dataLoadedElement = $('div#info-pane').attr('data-loaded');
-        var dataLoaded = false;
-        if (dataLoadedElement == 'true') {
-            dataLoaded = true;
-        }
+        var sameUrl = true;
 
         var url = $('textarea#add').val();
         var loadedUrl = $('div#info-pane').attr('data-url');
-        var newUrl = false;
         if (loadedUrl != $.trim(url)) {
-            newUrl = true;
+            sameUrl = false;
         }
 
-        if(newUrl && dataLoaded === false) {
+        if(sameUrl) {
             openInfoPane();
-        }
-
-        // Load info from URL and slide info pane up
-        var image = $("#info-image-container");
-        var title = $("#info-title-container");
-        if(url != "" && image.html() == "" && title.html() == "") {
+        } else {
+            // Load info from URL and slide info pane up
             var csrf = $('input#csrf_token').val();
             $.ajax({
                 url: "/link/parse",
@@ -155,40 +146,56 @@ $( document ).ready(function() {
                 method: 'post',
                 data: { url: url, _token: csrf }
             })
-            .done(function( response ) {
-                $('div#info-pane').attr('data-loaded', 'true').attr('data-url', url);
-                openInfoPane(response.image, response.title);
-            });
+                .done(function( response ) {
+                    $('div#info-pane').attr('data-loaded', 'true').attr('data-url', url);
+                    if($('div#info-pane').attr('data-open') == 'true') {
+                        updateInfoPane(response.image, response.title);
+                    } else {
+                        openInfoPane(response.image, response.title);
+                    }
+                });
         }
+    }
+
+    function updateInfoPane(image, title)
+    {
+        $("#info-image-container").css("background-image", "url('" + image + "')").fadeIn('fast');
+        $("#info-title-container").html(title).fadeIn('fast');
     }
 
     function openInfoPane(image, title)
     {
-        $('div#info-pane').delay(10).show().velocity({
-            top: [ -60, "easeOutCubic" ]
-        }, 200, function() {
-            $('div.container-header').velocity({
-                marginTop: [ 15, "easeOutElastic"],
-                height: [ 135, "easeOutElastic"]
+        var infoPane = $('div#info-pane');
+        if (infoPane.attr('data-open') == 'false') {
+            infoPane.delay(10).show().velocity({
+                top: [ -60, "easeOutCubic" ]
             }, 200, function() {
-                if(image != null || title != null) {
-                    $("#info-image-container").css("background-image", "url('" + image + "')").fadeIn('fast');
-                    $("#info-title-container").html(title).fadeIn('fast');
-                }
+                $('div.container-header').velocity({
+                    marginTop: [ 15, "easeOutElastic"],
+                    height: [ 135, "easeOutElastic"]
+                }, 200, function() {
+                    infoPane.attr('data-open', 'true');
+                    updateInfoPane(image, title);
+                });
             });
-        });
+        }
     }
 
     function closeInfoPane()
     {
-        $('div#info-pane').velocity({
-            top: [ 0, "easeInCubic"]
-        }, 100, function() {
-            $('div.container-header').velocity({
-                marginTop: [ 25, "easeInElastic"],
-                height: [ 125, "easeInElastic"]
-            }, 200, function() {});
-        });
+        var infoPane = $('div#info-pane');
+        if (infoPane.attr('data-open') == 'true') {
+            $('div#info-pane').velocity({
+                top: [0, "easeInCubic"]
+            }, 100, function () {
+                $('div.container-header').velocity({
+                    marginTop: [25, "easeInElastic"],
+                    height: [125, "easeInElastic"]
+                }, 200, function () {
+                    infoPane.attr('data-open', 'false');
+                });
+            });
+        }
     }
 
 });
