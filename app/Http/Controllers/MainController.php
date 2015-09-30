@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
-
 class MainController extends Controller
 {
 

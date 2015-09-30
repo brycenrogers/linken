@@ -24,4 +24,6 @@ Route::get('/welcome', function () {
     return view('welcome');
 });
 
+Route::post('link/parse', 'LinkParseController@postLinkParse');
+
 Route::get('/', 'MainController@getAll');

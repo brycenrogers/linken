@@ -83,7 +83,8 @@ div#add-pane {
     .select2-selection {
         font-size: 13pt;
         border: 1px solid #ccc !important;
-        padding: 5px 10px;
+        padding: 7px 10px;
+        border-radius: 6px;
     }
 }
 div#info-pane {
@@ -99,6 +100,24 @@ div#info-pane {
     border-top: 1px solid #e3e3e3;
     margin: 0 15px 0 0;
     z-index: 120;
+    div {
+        display: none;
+    }
+    div#info-image-container {
+        float: left;
+        width: 50px;
+        height: 50px;
+        margin: 5px 10px 0 5px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+    div#info-title-container {
+        margin: 20px 0;
+        font-weight: bold;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 16pt;
+    }
 }
 div#add-fader {
     display: none;

@@ -1,0 +1,186 @@
+@import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
+.btn-primary {
+  background-color: #448dff;
+  text-shadow: 0 1px 1px #405da3; }
+
+body {
+  font: 100% Helvetica, sans-serif;
+  background-color: #efefef;
+  font-size: 11pt;
+  line-height: 15pt; }
+
+.linken-logo {
+  background-image: url("../images/linken-logo.png");
+  background-repeat: no-repeat;
+  width: 90px;
+  height: 98px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 24pt;
+  color: black;
+  margin: 0 auto;
+  position: relative;
+  z-index: 140; }
+
+.container-main {
+  background-color: #fff; }
+
+.container-header {
+  height: 125px;
+  background-color: #efefef;
+  margin-top: 25px; }
+
+.container-content {
+  background-color: #fff;
+  min-height: 700px;
+  border-left: 1px solid #e3e3e3;
+  border-right: 1px solid #e3e3e3; }
+  .container-content .external-header {
+    float: left;
+    width: 100%;
+    position: relative;
+    z-index: 120;
+    background-color: #448dff;
+    border-bottom: 1px solid #405da3;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18pt;
+    text-shadow: 0 1px 1px #405da3;
+    color: #ffffff;
+    text-align: center; }
+
+.container-link-pane {
+  border-bottom: 1px solid #e3e3e3;
+  width: 100%;
+  float: left;
+  padding: 15px 0; }
+  .container-link-pane .link-padding {
+    padding: 10px; }
+  .container-link-pane .media-tags {
+    padding: 15px 0 0; }
+
+.container-control-pane {
+  width: 100%;
+  float: left;
+  padding: 15px 0;
+  border-bottom: 1px solid #e3e3e3; }
+
+.container-footer {
+  height: 150px;
+  background-color: #efefef;
+  border-top: 1px solid #e3e3e3;
+  color: #aaaaaa; }
+  .container-footer .footer {
+    font-size: 10pt;
+    padding-top: 30px;
+    text-align: center; }
+  .container-footer a {
+    color: #999; }
+
+.select2-results {
+  font-size: 12pt !important; }
+
+#blue-hitbox-add-pane {
+  float: left;
+  width: 100%;
+  position: relative;
+  z-index: 120;
+  background-color: #448dff;
+  border-bottom: 1px solid #405da3;
+  padding-top: 20px;
+  padding-bottom: 20px; }
+  #blue-hitbox-add-pane textarea#add {
+    float: left;
+    width: 100%;
+    background-color: transparent;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 0;
+    font-size: 16pt;
+    color: white;
+    outline: none;
+    font-family: 'Montserrat', sans-serif;
+    text-shadow: 0 1px 1px #405da3;
+    resize: none; }
+    #blue-hitbox-add-pane textarea#add::-webkit-input-placeholder {
+      color: #cddcff;
+      text-shadow: 0 -1px 1px #405da3; }
+    #blue-hitbox-add-pane textarea#add:-moz-placeholder {
+      /* Firefox 18- */
+      color: #cddcff;
+      text-shadow: 0 -1px 1px #405da3; }
+    #blue-hitbox-add-pane textarea#add::-moz-placeholder {
+      /* Firefox 19+ */
+      color: #cddcff;
+      text-shadow: 0 -1px 1px #405da3; }
+    #blue-hitbox-add-pane textarea#add:-ms-input-placeholder {
+      color: #cddcff;
+      text-shadow: 0 -1px 1px #405da3; }
+
+div#add-pane {
+  float: left;
+  display: none;
+  position: relative;
+  z-index: 110;
+  background-color: white;
+  border-bottom: 1px solid #e3e3e3;
+  float: left;
+  height: 0;
+  padding: 15px;
+  min-height: 0;
+  text-align: right; }
+  div#add-pane textarea, div#add-pane button, div#add-pane .select2 {
+    opacity: 0;
+    resize: none;
+    box-shadow: none; }
+  div#add-pane textarea#add-description:focus {
+    border: 1px solid #448dff !important; }
+  div#add-pane .select2-container--focus .select2-selection {
+    border: 1px solid #448dff !important; }
+  div#add-pane .select2-selection {
+    font-size: 13pt;
+    border: 1px solid #ccc !important;
+    padding: 7px 10px;
+    border-radius: 6px; }
+
+div#info-pane {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 15px;
+  height: 60px;
+  background-color: white;
+  border-left: 1px solid #e3e3e3;
+  border-right: 1px solid #e3e3e3;
+  border-top: 1px solid #e3e3e3;
+  margin: 0 15px 0 0;
+  z-index: 120; }
+  div#info-pane div {
+    display: none; }
+  div#info-pane div#info-image-container {
+    float: left;
+    width: 50px;
+    height: 50px;
+    margin: 5px 10px 0 5px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center; }
+  div#info-pane div#info-title-container {
+    margin: 20px 0;
+    font-weight: bold;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16pt; }
+
+div#add-fader {
+  display: none;
+  position: fixed;
+  background-color: #000;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100; }
+
+/*# sourceMappingURL=base.css.map */
