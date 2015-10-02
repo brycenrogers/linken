@@ -338,10 +338,10 @@ class WebsiteParser
             $this->content = curl_exec($ch);
 
             if ($this->content === FALSE) {
-                throw new Exception();
+                throw new \Exception();
             }
 
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->message = 'Unable to grab site contents';
         }
 

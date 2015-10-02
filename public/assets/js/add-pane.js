@@ -18,13 +18,11 @@ $( document ).ready(function() {
     $('textarea#add').focus(function() {
         $(this).attr('placeholder', '');
         openAddPane();
+        triggerInfoPane();
     });
     $('textarea#add').change(function() {
-        if($.trim($(this).val()) == "") {
-            closeInfoPane();
-        } else {
-            loadInfoPaneData();
-        }
+        // Load the info pane if necessary
+        triggerInfoPane();
     });
     $('select#add-tags').select2({
         tags: true,
@@ -43,7 +41,22 @@ $( document ).ready(function() {
     $('select#add-tags').on("change", function (e) {
         adjustPaneHeight();
     });
-
+    function triggerInfoPane()
+    {
+        var entry = $.trim($('textarea#add').val());
+        var foundUrls = entry.match(/(([a-z]{3,6}:\/\/)|(^|\s))([a-zA-Z0-9\-]+\.)+[a-z]{2,13}[\.\?\=\&\%\/\w\-]*\b([^@]|$)/mg);
+        var isUrl = false;
+        var infoPaneOpen = $('div#info-pane').attr('data-open');
+        if(foundUrls && foundUrls.length > 0) {
+            isUrl = true;
+        }
+        // If they clear the add field, or if its no longer a URL, close the info pane
+        if((entry == "" || isUrl === false) && infoPaneOpen == 'true') {
+            closeInfoPane();
+        } else if (isUrl) {
+            loadInfoPaneData(foundUrls[0]);
+        }
+    }
     function adjustPaneHeight()
     {
         var containerHeightPx = $('div#add-pane-container').css('height');
@@ -66,8 +79,6 @@ $( document ).ready(function() {
         $('div#add-fader').show().velocity({
             opacity: 0.25
         }, 200, function() {
-            var addPaneOffset = $('div#add-pane').offset();
-            var inputAddOffset = $('input#add').offset();
             $('div#add-pane').show().velocity({
                 minHeight: [ height, "easeOutCubic" ]
             }, 200, function() {
@@ -124,14 +135,14 @@ $( document ).ready(function() {
         });
     }
 
-    function loadInfoPaneData()
+    function loadInfoPaneData(url)
     {
+        url = $.trim(url);
         // If data has already been loaded for this url, just open
         var sameUrl = true;
 
-        var url = $('textarea#add').val();
         var loadedUrl = $('div#info-pane').attr('data-url');
-        if (loadedUrl != $.trim(url)) {
+        if (loadedUrl != url) {
             sameUrl = false;
         }
 
@@ -175,7 +186,9 @@ $( document ).ready(function() {
                     height: [ 135, "easeOutElastic"]
                 }, 200, function() {
                     infoPane.attr('data-open', 'true');
-                    updateInfoPane(image, title);
+                    if (image != null || title != null) {
+                        updateInfoPane(image, title);
+                    }
                 });
             });
         }

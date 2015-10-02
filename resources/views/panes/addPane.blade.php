@@ -22,6 +22,9 @@
                 Add
             </button>
         </div>
+        <div class="col-md-12">
+            <div class="foot"></div>
+        </div>
     </div>
 </div>
 <input id="csrf_token" type="hidden" value="{!! csrf_token() !!}" />

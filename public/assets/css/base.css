@@ -144,6 +144,9 @@ div#add-pane {
     border: 1px solid #ccc !important;
     padding: 7px 10px;
     border-radius: 6px; }
+  div#add-pane .foot {
+    height: 14px;
+    width: 100%; }
 
 div#info-pane {
   display: none;
