@@ -9,6 +9,9 @@
 
 $( document ).ready(function() {
 
+    var addButtonSpinner;
+    var infoPaneSpinner;
+
     autosize($('textarea#add'));
     autosize($('textarea#add-description'));
 
@@ -35,9 +38,12 @@ $( document ).ready(function() {
     $('button#add-button').click(function() {
         var button = $(this);
         button.prop("disabled", true);
+        button.html('&nbsp;');
+
+        // Show the spinner
+        addButtonSpinner = addSpinnerToElement(button.get(0));
 
         var csrf = $('input#csrf_token').val();
-
         var value = $('textarea#add').val();
         var description = $('textarea#add-description').val();
         var type = "Link";
@@ -49,9 +55,11 @@ $( document ).ready(function() {
             data: { value: value, description: description, type: type, _token: csrf }
         })
             .done(function( response ) {
-                console.log(response);
-                button.prop("disabled", false);
                 closeAddPane();
+                addButtonSpinner.stop();
+                addButtonSpinner = null;
+                button.html('Add');
+                button.prop("disabled", false);
             });
     });
     $('textarea#add-description').on('autosize:resized', function() {
@@ -68,7 +76,20 @@ $( document ).ready(function() {
         var infoPaneOpen = $('div#info-pane').attr('data-open');
         if(foundUrls && foundUrls.length > 0) {
             isUrl = true;
+            var url = $.trim(foundUrls[0]);
+
+            // If data has already been loaded for this url, just open
+            var sameUrl = true;
+            var loadedUrl = $('div#info-pane').attr('data-url');
+            if (loadedUrl != url) {
+                sameUrl = false;
+            }
+            if(sameUrl) {
+                openInfoPane();
+                return;
+            }
         }
+
         // If they clear the add field, or if its no longer a URL, close the info pane
         if((entry == "" || isUrl === false) && infoPaneOpen == 'true') {
             closeInfoPane();
@@ -110,9 +131,7 @@ $( document ).ready(function() {
                         $('div#add-pane button').velocity({
                             opacity: 1
                         }, 200, function() {
-                            if($.trim($('textarea#add').val()) != "") {
-                                loadInfoPaneData();
-                            }
+
                         });
                     });
                 });
@@ -156,39 +175,29 @@ $( document ).ready(function() {
 
     function loadInfoPaneData(url)
     {
-        url = $.trim(url);
-        // If data has already been loaded for this url, just open
-        var sameUrl = true;
+        // Open the info pane if its not already open
+        openInfoPane();
 
-        var loadedUrl = $('div#info-pane').attr('data-url');
-        if (loadedUrl != url) {
-            sameUrl = false;
-        }
+        // Show the spinner
+        infoPaneSpinner = addSpinnerToElement($('div#info-pane').get(0), '30px', '#448dff');
 
-        if(sameUrl) {
-            openInfoPane();
-        } else {
-            // Load info from URL and slide info pane up
-            var csrf = $('input#csrf_token').val();
-            $.ajax({
-                url: "/link/parse",
-                cache: false,
-                method: 'post',
-                data: { url: url, _token: csrf }
-            })
-                .done(function( response ) {
-                    $('div#info-pane').attr('data-loaded', 'true').attr('data-url', url);
-                    if($('div#info-pane').attr('data-open') == 'true') {
-                        updateInfoPane(response.image, response.title);
-                    } else {
-                        openInfoPane(response.image, response.title);
-                    }
-                });
-        }
+        // Load info from URL and slide info pane up
+        var csrf = $('input#csrf_token').val();
+        $.ajax({
+            url: "/link/parse",
+            cache: false,
+            method: 'post',
+            data: { url: url, _token: csrf }
+        })
+            .done(function( response ) {
+                $('div#info-pane').attr('data-url', url);
+                updateInfoPane(response.image, response.title);
+            });
     }
 
     function updateInfoPane(image, title)
     {
+        infoPaneSpinner.stop();
         $("#info-image-container").css("background-image", "url('" + image + "')").fadeIn('fast');
         $("#info-title-container").html(title).fadeIn('fast');
     }
@@ -228,6 +237,44 @@ $( document ).ready(function() {
                 });
             });
         }
+    }
+
+    function addSpinnerToElement(element, left, color)
+    {
+        var opts = {
+            lines: 13 // The number of lines to draw
+            , length: 5 // The length of each line
+            , width: 3 // The line thickness
+            , radius: 8 // The radius of the inner circle
+            , scale: 1 // Scales overall size of the spinner
+            , corners: 1 // Corner roundness (0..1)
+            , color: '#fff' // #rgb or #rrggbb or array of colors
+            , opacity: 0.25 // Opacity of the lines
+            , rotate: 0 // The rotation offset
+            , direction: 1 // 1: clockwise, -1: counterclockwise
+            , speed: 1 // Rounds per second
+            , trail: 60 // Afterglow percentage
+            , fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
+            , zIndex: 2e9 // The z-index (defaults to 2000000000)
+            , className: 'spinner' // The CSS class to assign to the spinner
+            , top: '50%' // Top position relative to parent
+            , left: '50%' // Left position relative to parent
+            , shadow: false // Whether to render a shadow
+            , hwaccel: true // Whether to use hardware acceleration
+            , position: 'absolute' // Element positioning
+        };
+
+        if (color) {
+            opts.color = color;
+        }
+
+        if (left) {
+            opts.left = left;
+        }
+
+        var spinner = new Spinner(opts).spin(element);
+
+        return spinner;
     }
 
 });

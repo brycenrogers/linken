@@ -63,6 +63,7 @@
 <script src="{{ asset('assets/js/libs/bootstrap.min.js') }}"></script>
 <script src="{{ asset('assets/js/libs/select2.min.js') }}"></script>
 <script src="{{ asset('assets/js/libs/autosize.min.js') }}"></script>
+<script src="{{ asset('assets/js/libs/spin.min.js') }}"></script>
 <script src="{{ asset('assets/js/add-pane.js') }}"></script>
 <!-- /build -->
 </body>

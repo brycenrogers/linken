@@ -161,7 +161,8 @@ div#info-pane {
   border-top: 1px solid #e3e3e3;
   margin: 0 15px 0 0;
   z-index: 120; }
-  div#info-pane div {
+  div#info-pane div#info-image-container,
+  div#info-pane div#info-title-container {
     display: none; }
   div#info-pane div#info-image-container {
     float: left;

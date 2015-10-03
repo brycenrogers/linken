@@ -104,7 +104,9 @@ div#info-pane {
     border-top: 1px solid #e3e3e3;
     margin: 0 15px 0 0;
     z-index: 120;
-    div {
+
+    div#info-image-container,
+    div#info-title-container {
         display: none;
     }
     div#info-image-container {
