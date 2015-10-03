@@ -17,7 +17,6 @@ class CreateTagsItemLinksNotesTables extends Migration
             $table->text('value');
             $table->text('description')->nullable();
             $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users');
             $table->integer('itemable_id')->unsigned()->nullable();
             $table->string('itemable_type')->nullable();
             $table->timestamps();
@@ -26,11 +25,15 @@ class CreateTagsItemLinksNotesTables extends Migration
         Schema::create('tags', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->integer('item_id')->unsigned();
-            $table->foreign('item_id')->references('id')->on('items');
-            $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->integer('item_id')->unsigned()->nullable();
+            $table->integer('user_id')->unsigned()->nullable();
             $table->timestamps();
+        });
+
+        Schema::create('item_tag', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('item_id')->unsigned()->nullable();
+            $table->integer('tag_id')->unsigned()->nullable();
         });
 
         Schema::create('links', function (Blueprint $table) {
@@ -56,6 +59,7 @@ class CreateTagsItemLinksNotesTables extends Migration
     {
         Schema::drop('notes');
         Schema::drop('links');
+        Schema::drop('item_tag');
         Schema::drop('tags');
         Schema::drop('items');
     }

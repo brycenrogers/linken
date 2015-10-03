@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Item;
 use App\Link;
 use App\Note;
+use App\Tag;
 use Auth;
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -31,18 +32,21 @@ class ItemController extends Controller
     public function store(Request $request)
     {
         $user = Auth::user();
-        $cacheKey = 'getAll' . $user->id;
+
         $type = $request->input('type');
+        $value = $request->input('value');
+        $tags = $request->input('tags');
+        $tags = explode("|", $tags);
 
         $item = new Item();
-        $item->value = $request->input('value');
+        $item->value = $value;
         $item->description = $request->input('description');
         $item->user()->associate($user);
         $item->save();
 
         if ($type == 'Link') {
             $link = new Link();
-            $link->url = $request->input('value');
+            $link->url = $value;
             $link->photo = $request->input('photo');
             $link->save();
             $link->items()->save($item);
@@ -52,6 +56,22 @@ class ItemController extends Controller
             $note->items()->save($item);
         }
 
+        // Save tags
+        foreach ($tags as $tag) {
+            if ($tag == "") {
+                continue;
+            }
+            $newTag = new Tag();
+            $newTag = $newTag->firstOrNew(['name' => $tag, 'user_id' => $user->id]);
+            if ( ! $newTag->id ) {
+                $newTag->user()->associate($user);
+                $newTag->save();
+            }
+            $item->tags()->attach($newTag->id);
+        }
+
+        // Forget the 'all' cache so it can be regenerated
+        $cacheKey = 'getAll' . $user->id;
         Cache::forget($cacheKey);
 
         return \Response::json('Success');

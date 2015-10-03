@@ -19,6 +19,7 @@ class MainController extends Controller
         $user = Auth::user();
         $cacheKey = 'getAll' . $user->id;
 
+        // Get the list from the cache, or regenerate it
         if (Cache::has($cacheKey)) {
             $items = Cache::get($cacheKey);
         } else {

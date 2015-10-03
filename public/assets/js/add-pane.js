@@ -37,22 +37,30 @@ $( document ).ready(function() {
     });
     $('button#add-button').click(function() {
         var button = $(this);
-        button.prop("disabled", true);
+        //button.prop("disabled", true);
         button.html('&nbsp;');
 
         // Show the spinner
         addButtonSpinner = addSpinnerToElement(button.get(0));
 
+        // Gather form data
         var csrf = $('input#csrf_token').val();
         var value = $('textarea#add').val();
         var description = $('textarea#add-description').val();
-        var type = "Link";
+        var type = "Note";
+        if ($('div#info-pane').attr('data-url') != "") {
+            type = "Link";
+        }
+        var tags = "";
+        $("select#add-tags option:selected").each(function() {
+            tags += $( this ).text() + "|";
+        });
 
         $.ajax({
             url: "/item/store",
             cache: false,
             method: 'post',
-            data: { value: value, description: description, type: type, _token: csrf }
+            data: { value: value, description: description, type: type, tags: tags, _token: csrf }
         })
             .done(function( response ) {
                 closeAddPane();
