@@ -33,7 +33,26 @@ $( document ).ready(function() {
         closeAddPane();
     });
     $('button#add-button').click(function() {
-        closeAddPane();
+        var button = $(this);
+        button.prop("disabled", true);
+
+        var csrf = $('input#csrf_token').val();
+
+        var value = $('textarea#add').val();
+        var description = $('textarea#add-description').val();
+        var type = "Link";
+
+        $.ajax({
+            url: "/item/store",
+            cache: false,
+            method: 'post',
+            data: { value: value, description: description, type: type, _token: csrf }
+        })
+            .done(function( response ) {
+                console.log(response);
+                button.prop("disabled", false);
+                closeAddPane();
+            });
     });
     $('textarea#add-description').on('autosize:resized', function() {
         adjustPaneHeight();

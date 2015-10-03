@@ -11,28 +11,31 @@
 @endsection
 
 @section('pageContent')
-<div class="container-link-pane container">
-    <div class="col-md-12">
-        <div class="media link-padding">
-            <div class="media-left">
-                <a href="#">
-                    <img class="media-object" src="" alt="">
-                </a>
-            </div>
-            <div class="media-body">
-                <h4 class="media-heading">Middle aligned media</h4>
-                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo.
-                Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla.
-                Donec lacinia congue felis in faucibus. Donec sed odio dui. Nullam quis risus eget urna mollis ornare vel eu leo.
-                Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-                <div class="media-url">
-                    google.com/test/stuff
-                </div>
-                <div class="media-tags">
-                    programming, apple, stuff
+    @foreach ($items as $item)
+        <div class="container-link-pane container">
+            <div class="col-md-12">
+                <div class="media link-padding">
+                    <div class="media-left">
+                        <a href="#">
+                            <img class="media-object" src="" alt="">
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading">{{ $item->value }}</h4>
+                        {{ $item->description }}
+                        @if (get_class($item->itemable) == "App\Link")
+                            <div class="media-url">
+                                {{ $item->itemable->url }}
+                            </div>
+                        @endif
+                        <div class="media-tags">
+                            @foreach ($item->tags as $tag)
+                                {{ $tag->name }}
+                            @endforeach
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
+    @endforeach
 @endsection
