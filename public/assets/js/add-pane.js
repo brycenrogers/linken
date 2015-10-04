@@ -32,12 +32,13 @@ $( document ).ready(function() {
         tokenSeparators: [','],
         placeholder: "Tags"
     });
+    $('input.select2-search__field').prop('tabindex', "3");
     $('div#add-fader').click(function() {
         closeAddPane();
     });
     $('button#add-button').click(function() {
         var button = $(this);
-        //button.prop("disabled", true);
+        button.prop("disabled", true);
         button.html('&nbsp;');
 
         // Show the spinner
@@ -48,8 +49,11 @@ $( document ).ready(function() {
         var value = $('textarea#add').val();
         var description = $('textarea#add-description').val();
         var type = "Note";
+        var url = null;
         if ($('div#info-pane').attr('data-url') != "") {
             type = "Link";
+            value = $('input#info-title').val();
+            url = $('div#info-pane').attr('data-url');
         }
         var tags = "";
         $("select#add-tags option:selected").each(function() {
@@ -60,7 +64,7 @@ $( document ).ready(function() {
             url: "/item/store",
             cache: false,
             method: 'post',
-            data: { value: value, description: description, type: type, tags: tags, _token: csrf }
+            data: { value: value, description: description, url: url, type: type, tags: tags, _token: csrf }
         })
             .done(function( response ) {
                 closeAddPane();
@@ -75,6 +79,29 @@ $( document ).ready(function() {
     });
     $('select#add-tags').on("change", function (e) {
         adjustPaneHeight();
+    });
+    $("#info-image-container").click(function () {
+        var container = $(this);
+        var url = $('textarea#add').val();
+        var csrf = $('input#csrf_token').val();
+
+        var originalUrl = $(this).css("background-image");
+        $(this).css("background-image", "url('')");
+        infoPaneSpinner = addSpinnerToElement($('div#info-pane').get(0), '30px', '#448dff');
+
+        $.ajax({
+            url: "/link/parse?image=true&image_number=0",
+            cache: false,
+            method: 'get'
+        })
+            .done(function( response ) {
+                if (response.image == '') {
+                    infoPaneSpinner.stop();
+                    container.css("background-image", originalUrl);
+                } else {
+                    updateInfoPane(response.image);
+                }
+            });
     });
     function triggerInfoPane()
     {
@@ -206,8 +233,13 @@ $( document ).ready(function() {
     function updateInfoPane(image, title)
     {
         infoPaneSpinner.stop();
-        $("#info-image-container").css("background-image", "url('" + image + "')").fadeIn('fast');
-        $("#info-title-container").html(title).fadeIn('fast');
+        if (image) {
+            $("#info-image-container").css("background-image", "url('" + image + "')").fadeIn('fast');
+        }
+        if (title) {
+            var decoded = $('#info-title-decode').html($.trim(title)).text();
+            $("#info-title").val(decoded).fadeIn('fast');
+        }
     }
 
     function openInfoPane(image, title)

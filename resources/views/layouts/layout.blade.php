@@ -65,6 +65,7 @@
 <script src="{{ asset('assets/js/libs/autosize.min.js') }}"></script>
 <script src="{{ asset('assets/js/libs/spin.min.js') }}"></script>
 <script src="{{ asset('assets/js/add-pane.js') }}"></script>
+<script src="{{ asset('assets/js/control-pane.js') }}"></script>
 <!-- /build -->
 </body>
 

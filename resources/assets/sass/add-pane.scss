@@ -106,7 +106,7 @@ div#info-pane {
     z-index: 120;
 
     div#info-image-container,
-    div#info-title-container {
+    input#info-title {
         display: none;
     }
     div#info-image-container {
@@ -119,10 +119,19 @@ div#info-pane {
         background-position: center;
     }
     div#info-title-container {
-        margin: 20px 0;
+        margin: 16px 0;
         font-weight: bold;
         font-family: 'Montserrat', sans-serif;
         font-size: 16pt;
+        input#info-title {
+            width: 100%;
+            background-color: transparent;
+            outline: none;
+            border: 0;
+            -o-text-overflow: ellipsis;
+            -ms-text-overflow: ellipsis;
+            text-overflow: ellipsis;
+        }
     }
 }
 div#add-fader {

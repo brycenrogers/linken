@@ -46,7 +46,7 @@ class ItemController extends Controller
 
         if ($type == 'Link') {
             $link = new Link();
-            $link->url = $value;
+            $link->url = $request->input('url');
             $link->photo = $request->input('photo');
             $link->save();
             $link->items()->save($item);
@@ -70,9 +70,12 @@ class ItemController extends Controller
             $item->tags()->attach($newTag->id);
         }
 
-        // Forget the 'all' cache so it can be regenerated
+        // Forget the 'all' and 'tags' caches so they can be regenerated
         $cacheKey = 'getAll' . $user->id;
-        Cache::forget($cacheKey);
+        Cache::store('memcached')->forget($cacheKey);
+
+        $cacheKey = 'tags' . $user->id;
+        Cache::store('memcached')->forget($cacheKey);
 
         return \Response::json('Success');
     }

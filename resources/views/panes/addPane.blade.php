@@ -1,6 +1,9 @@
 <div id="info-pane" data-loaded="false" data-url="" data-open="false">
-    <div id="info-image-container" class=""></div>
-    <div id="info-title-container"></div>
+    <div id="info-image-container" class="col-md-1"></div>
+    <div id="info-title-container" class="col-md-11">
+        <input id="info-title" type="text" value="">
+        <textarea id="info-title-decode" style="display: none;"></textarea>
+    </div>
 </div>
 <div id="blue-hitbox-add-pane">
     <div class="container-input-add col-md-12">
@@ -15,7 +18,11 @@
             <br>
         </div>
         <div class="col-md-10">
-            <select multiple tabindex="3" class="form-control input-lg select2" id="add-tags" style="width: 100%; padding: 10px;" aria-hidden="true"></select>
+            <select multiple class="form-control input-lg select2" id="add-tags" style="width: 100%; padding: 10px;" aria-hidden="true">
+                @foreach ($tags as $tag)
+                    <option name="{{ $tag->name }}">{{ $tag->name }}</option>
+                @endforeach
+            </select>
         </div>
         <div class="col-md-2">
             <button tabindex="4" class="btn btn-success btn-lg btn-block" id="add-button">

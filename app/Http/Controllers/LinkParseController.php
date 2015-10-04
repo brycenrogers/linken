@@ -26,6 +26,20 @@ class LinkParseController extends Controller
         $title = "";
         $imageUrl = "";
 
+        if ($request->input('image')) {
+
+            // Only image was requested
+            $num = intval($request->input('image_number'));
+            $images = $parser->getImageSources();
+            if ($images && array_key_exists($num, $images)) {
+                $imageUrl = $images[$num];
+            }
+
+            return response()->json(['image' => $imageUrl]);
+        }
+
+        $imageCount = 0;
+
         // Pull images from Facebook info first, if available
         foreach ($metaTags as $metaTagArray) {
             $key = strtolower($metaTagArray[0]);
@@ -34,6 +48,7 @@ class LinkParseController extends Controller
                 $title = $value;
             } elseif ($key == 'og:image') {
                 $imageUrl = $value;
+                $imageCount++;
             }
         }
 
@@ -42,6 +57,7 @@ class LinkParseController extends Controller
             $images = $parser->getImageSources();
             if ($images) {
                 $imageUrl = $images[0];
+                $imageCount = $imageCount + count($images);
             }
         }
 
@@ -50,6 +66,6 @@ class LinkParseController extends Controller
             $title = $parser->getTitle(true);
         }
 
-        return response()->json(['title' => $title, 'image' => $imageUrl]);
+        return response()->json(['title' => $title, 'image' => $imageUrl, 'image_count' => $imageCount]);
     }
 }

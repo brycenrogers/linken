@@ -1,10 +1,12 @@
 <div class="container-control-pane">
-    <div class="container-tags-pane col-md-7">
-        <div class="btn-group" role="group" aria-label="..." style="width: 100%">
-            <button type="button" class="btn btn-default active">All</button>
-            <button type="button" class="btn btn-default">Programming</button>
-            <button type="button" class="btn btn-default">Funny</button>
-            <button type="button" class="btn btn-default">...</button>
+    <div class="col-md-7">
+        <div class="form-inline">
+            <select multiple class="form-control select2" id="search-tags" style="width: 70%; padding: 10px;" aria-hidden="true">
+                @foreach ($tags as $tag)
+                    <option name="{{ $tag->name }}">{{ $tag->name }}</option>
+                @endforeach
+            </select>
+            <button class="btn btn-default">Search</button>
         </div>
     </div>
     <div class="container-account-pane col-md-5">

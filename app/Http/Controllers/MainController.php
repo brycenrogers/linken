@@ -20,16 +20,13 @@ class MainController extends Controller
         $cacheKey = 'getAll' . $user->id;
 
         // Get the list from the cache, or regenerate it
-        if (Cache::has($cacheKey)) {
-            $items = Cache::get($cacheKey);
+        if (Cache::store('memcached')->has($cacheKey)) {
+            $items = Cache::store('memcached')->get($cacheKey);
         } else {
             // Get all items for user
-            $items = Item::with(['user' => function ($query) {
-                $query->where('id', '=', Auth::user()->id);
-            }, 'tags'])->orderBy('created_at', 'desc')->get();
-
+            $items = Item::where('user_id', '=', $user->id)->orderBy('created_at', 'desc')->take(30)->get();
             // Save in cache
-            Cache::put($cacheKey, $items, 5);
+            Cache::store('memcached')->put($cacheKey, $items, 2880);
         }
 
         return view('all', ['items' => $items]);

@@ -14,7 +14,7 @@ class ComposerServiceProvider extends ServiceProvider
     public function boot()
     {
         view()->composer(
-            'panes.controlPane', 'App\Http\ViewComposers\ControlPaneComposer'
+            ['panes.controlPane', 'panes.addPane'], 'App\Http\ViewComposers\LinkenViewComposer'
         );
     }
 
