@@ -33,9 +33,13 @@ class LinkParseController extends Controller
             $images = $parser->getImageSources();
             if ($images && array_key_exists($num, $images)) {
                 $imageUrl = $images[$num];
+                $num++;
+            } else if ($images) {
+                $imageUrl = $images[0];
+                $num = 0;
             }
 
-            return response()->json(['image' => $imageUrl]);
+            return response()->json(['image' => $imageUrl, 'image_number' => $num]);
         }
 
         $imageCount = 0;
