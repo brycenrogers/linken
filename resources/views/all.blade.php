@@ -16,9 +16,11 @@
             <div class="col-md-12">
                 <div class="media link-padding">
                     <div class="media-left">
-                        <a href="#">
-                            <img class="media-object" src="" alt="">
-                        </a>
+                        @if (get_class($item->itemable) == "App\Link")
+                            <a href="#">
+                                <img class="media-object" src="{{ $item->itemable->photo }}" alt="">
+                            </a>
+                        @endif
                     </div>
                     <div class="media-body">
                         <h4 class="media-heading">{{ $item->value }}</h4>

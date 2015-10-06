@@ -46,8 +46,9 @@ class ItemController extends Controller
 
         if ($type == 'Link') {
             $link = new Link();
-            $link->url = $request->input('url');
-            $link->photo = $request->input('photo');
+            $link->url = urldecode($request->input('url'));
+            $link->photo = urldecode($request->input('photo_url'));
+            $link->title = $request->input('title');
             $link->save();
             $link->items()->save($item);
         } else {

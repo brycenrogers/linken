@@ -50,11 +50,17 @@ $( document ).ready(function() {
         var description = $('textarea#add-description').val();
         var type = "Note";
         var url = null;
+        var photo_url = null;
+        var title = null;
+
         if ($('div#info-pane').attr('data-url') != "") {
             type = "Link";
             value = $('input#info-title').val();
             url = $('div#info-pane').attr('data-url');
+            photo_url = $('#info-image-container').attr('data-image-url');
+            title = $('input#info-title').val();
         }
+
         var tags = "";
         $("select#add-tags option:selected").each(function() {
             tags += $( this ).text() + "|";
@@ -64,7 +70,16 @@ $( document ).ready(function() {
             url: "/item/store",
             cache: false,
             method: 'post',
-            data: { value: value, description: description, url: url, type: type, tags: tags, _token: csrf }
+            data: {
+                title: title,
+                value: value,
+                description: description,
+                url: encodeURIComponent(url),
+                photo_url: encodeURIComponent(photo_url),
+                type: type,
+                tags: tags,
+                _token: csrf
+            }
         })
             .done(function( response ) {
                 closeAddPane();
@@ -162,7 +177,7 @@ $( document ).ready(function() {
         }
         $('div#add-fader').show().velocity({
             opacity: 0.25
-        }, 200, function() {
+        }, 300, function() {
             $('div#add-pane').show().velocity({
                 minHeight: [ height, "easeOutCubic" ]
             }, 200, function() {
@@ -244,7 +259,9 @@ $( document ).ready(function() {
     {
         infoPaneSpinner.stop();
         if (image) {
-            $("#info-image-container").css("background-image", "url('" + image + "')").fadeIn('fast');
+            var imageContainer = $("#info-image-container");
+            imageContainer.css("background-image", "url('" + image + "')").fadeIn('fast');
+            imageContainer.attr('data-image-url', image);
         }
         if (title) {
             var decoded = $('#info-title-decode').html($.trim(title)).text();
