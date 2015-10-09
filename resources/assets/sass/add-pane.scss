@@ -31,7 +31,7 @@
         font-size: 16pt;
         color: white;
         outline: none;
-        font-family: 'Montserrat', sans-serif;
+        font-family: $fontFace;
         text-shadow: 0 1px 1px #405da3;
         resize: none;
 
@@ -121,7 +121,7 @@ div#info-pane {
     div#info-title-container {
         margin: 16px 0;
         font-weight: bold;
-        font-family: 'Montserrat', sans-serif;
+        font-family: $fontFace;
         font-size: 16pt;
         input#info-title {
             width: 100%;

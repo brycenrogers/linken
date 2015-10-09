@@ -1,6 +1,6 @@
 @extends('layouts.layout')
 
-@section('title', ' - All')
+@section('title', $title)
 
 @section('addPane')
     @include('panes.addPane')
@@ -12,27 +12,41 @@
 
 @section('pageContent')
     @foreach ($items as $item)
-        <div class="container-link-pane container">
+        <div class="container-item-pane container">
             <div class="col-md-12">
                 <div class="media link-padding">
-                    <div class="media-left">
-                        @if (get_class($item->itemable) == "App\Link")
-                            <a href="#">
-                                <img class="media-object" src="{{ $item->itemable->photo }}" alt="">
+                    @if (get_class($item->itemable) == "App\Link" && $item->itemable->photo)
+                        <div class="media-left">
+                            <a href="{{ $item->itemable->url }}">
+                                <div class="media-link-image" style="background-image: url('{{ $item->itemable->photo }}')"></div>
                             </a>
-                        @endif
-                    </div>
+                        </div>
+                    @endif
                     <div class="media-body">
-                        <h4 class="media-heading">{{ $item->value }}</h4>
-                        {{ $item->description }}
                         @if (get_class($item->itemable) == "App\Link")
+                            <h4 class="media-heading">
+                                <a href="{{ $item->itemable->url }}">
+                                    {{ $item->value }}
+                                </a>
+                            </h4>
                             <div class="media-url">
-                                {{ $item->itemable->url }}
+                                <a href="{{ $item->itemable->url }}">{{ $item->itemable->url }}</a>
+                            </div>
+                        @else
+                            <h4 class="media-heading">
+                                {{ $item->value }}
+                            </h4>
+                        @endif
+                        @if ($item->description)
+                            <div class="media-description">
+                                {{ $item->description }}
                             </div>
                         @endif
                         <div class="media-tags">
                             @foreach ($item->tags as $tag)
-                                {{ $tag->name }}
+                                <a href="/tags?q={{ $tag->name }}" class="tag-link">
+                                    <span class="label label-tag">{{ $tag->name }}</span>
+                                </a>
                             @endforeach
                         </div>
                     </div>

@@ -1,0 +1,45 @@
+//  ====================  Item Pane SASS  ====================
+
+//    created by:        Brycen Rogers ( brycenrogers@gmail.com )
+//    creation data:     October 8, 2015
+
+//    This file contains styles for the item pane HTML layout of Linken
+
+//  ===========================================================
+
+.container-item-pane {
+    div.media-link-image {
+        width: 100px;
+        height: 100px;
+        margin: 5px 10px 0 5px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+    div.link-padding {
+        padding: 10px;
+    }
+    div.media-description {
+        padding-top: 15px;
+    }
+    div.media-tags {
+        padding: 15px 0 0;
+        min-height: 40px;
+    }
+    h4.media-heading {
+        font-family: $fontFace;
+        font-size: 24px;
+    }
+    div.media-url {
+        font-size: 9pt;
+        font-style: italic;
+        a {
+            color: #aaa;
+        }
+    }
+    div.media-body {
+        padding-left: 20px;
+        font-size: 11pt;
+        color: $fontColorGrey;
+    }
+}

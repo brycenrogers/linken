@@ -29,6 +29,8 @@ class MainController extends Controller
             Cache::store('memcached')->put($cacheKey, $items, 2880);
         }
 
-        return view('all', ['items' => $items]);
+        $title = "All";
+
+        return view('all', ['items' => $items, 'title' => $title]);
     }
 }

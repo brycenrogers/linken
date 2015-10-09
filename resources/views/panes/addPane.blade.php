@@ -10,7 +10,7 @@
         <textarea id="add" tabindex="1" class="" placeholder="Add URL or Note" rows="1"></textarea>
     </div>
 </div>
-<div id="add-pane" class="container-link-pane" data-toggle="closed">
+<div id="add-pane" class="container-item-pane" data-toggle="closed">
     <div id="add-pane-container" class="row">
         <div class="col-md-12">
             <input type="hidden" id="add-pane-height" value="" />

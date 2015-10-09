@@ -60,17 +60,11 @@ body {
         text-align: center;
     }
 }
-.container-link-pane {
+.container-item-pane {
     border-bottom: 1px solid $greyLineColor;
     width: 100%;
     float: left;
     padding: 15px 0;
-    .link-padding {
-        padding: 10px;
-    }
-    .media-tags {
-        padding: 15px 0 0;
-    }
 }
 .container-control-pane {
     width: 100%;
@@ -91,4 +85,19 @@ body {
     a {
         color: #999;
     }
+}
+
+/**
+
+Common Classes
+
+**/
+a.tag-link {
+    text-decoration: none;
+}
+.label-tag {
+    background-color: #bbb;
+}
+.label-tag:hover {
+    background-color: #777;
 }

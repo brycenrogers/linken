@@ -29,13 +29,28 @@ class LinkParseController extends Controller
         if ($request->input('image')) {
 
             // Only image was requested
+            $imageSources = [];
+
+            foreach ($metaTags as $metaTagArray) {
+                $key = strtolower($metaTagArray[0]);
+                $value = $metaTagArray[1];
+                if ($key == 'og:image') {
+                    $imageSources[] = $value;
+                }
+            }
+
             $num = intval($request->input('image_number'));
             $images = $parser->getImageSources();
-            if ($images && array_key_exists($num, $images)) {
-                $imageUrl = $images[$num];
+
+            foreach ($images as $imageSource) {
+                $imageSources[] = $imageSource;
+            }
+
+            if ($imageSources && array_key_exists($num, $imageSources)) {
+                $imageUrl = $imageSources[$num];
                 $num++;
             } else if ($images) {
-                $imageUrl = $images[0];
+                $imageUrl = $imageSources[0];
                 $num = 0;
             }
 
