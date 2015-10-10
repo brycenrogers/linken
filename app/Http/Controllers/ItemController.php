@@ -93,13 +93,7 @@ class ItemController extends Controller
         $tags = explode(",", $tags);
 
         $items = Item::whereHas('tags', function ($query) use ($tags) {
-            foreach ($tags as $tag) {
-                if ($tags[0] == $tag) {
-                    $query->where('name', '=', $tag);
-                } else {
-                    $query->orWhere('name', '=', $tag);
-                }
-            }
+            $query->whereIn('name', $tags);
         })->orderBy('created_at', 'desc')->get();
 
         $title = "Tags";

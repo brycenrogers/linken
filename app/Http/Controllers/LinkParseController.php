@@ -71,25 +71,30 @@ class LinkParseController extends Controller
                 if ($imageSources && array_key_exists($num, $imageSources)) {
                     $imageUrl = $imageSources[$num];
                 } else {
-                    // Requested image was not found, reset to original image
-                    $imageUrl = $imageSources[0];
-                    $num = 0;
+                    if (count($imageSources) === 0) {
+                        $imageUrl = "";
+                    } else {
+                        // Requested image was not found, reset to original image
+                        $imageUrl = $imageSources[0];
+                        $num = 0;
+                    }
                 }
             }
         }
 
         // Check to make sure the image url has the base url in it, otherwise its a relative url. If thats the case
         // update the imageUrl to include the base url.
-
-        $protocolsFound = [];
-        preg_match('/(http:\/\/|https:\/\/)/i', $imageUrl, $protocolsFound);
-        if (count($protocolsFound) === 0) {
-            if (substr($imageUrl, 0, 2) == '//') {
-                $imageUrl = 'http:' . $imageUrl;
-            } else if (substr($imageUrl, 0, 1) == '/') {
-                $imageUrl = $parser->base_url . substr($imageUrl, 1);
-            } else {
-                $imageUrl = $parser->base_url . $imageUrl;
+        if ($imageUrl != "") {
+            $protocolsFound = [];
+            preg_match('/(http:\/\/|https:\/\/)/i', $imageUrl, $protocolsFound);
+            if (count($protocolsFound) === 0) {
+                if (substr($imageUrl, 0, 2) == '//') {
+                    $imageUrl = 'http:' . $imageUrl;
+                } else if (substr($imageUrl, 0, 1) == '/') {
+                    $imageUrl = $parser->base_url . substr($imageUrl, 1);
+                } else {
+                    $imageUrl = $parser->base_url . $imageUrl;
+                }
             }
         }
 
