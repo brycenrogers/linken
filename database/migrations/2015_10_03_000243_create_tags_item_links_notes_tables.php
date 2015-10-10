@@ -25,7 +25,6 @@ class CreateTagsItemLinksNotesTables extends Migration
         Schema::create('tags', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->integer('item_id')->unsigned()->nullable();
             $table->integer('user_id')->unsigned()->nullable();
             $table->timestamps();
         });

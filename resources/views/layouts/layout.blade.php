@@ -23,7 +23,7 @@
             <div class="container-main">
                 <div class="container-header">
                     <!-- Header -->
-                    <div class="linken-logo"></div>
+                    <a href="/"><div class="linken-logo"></div></a>
                 </div>
                 <div class="container-content">
                     <!-- Content -->
@@ -66,6 +66,7 @@
 <script src="{{ asset('assets/js/libs/spin.min.js') }}"></script>
 <script src="{{ asset('assets/js/add-pane.js') }}"></script>
 <script src="{{ asset('assets/js/control-pane.js') }}"></script>
+<script src="{{ asset('assets/js/item-pane.js') }}"></script>
 <!-- /build -->
 </body>
 

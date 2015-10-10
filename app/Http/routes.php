@@ -27,5 +27,6 @@ Route::get('/welcome', function () {
 Route::post('link/parse', 'LinkParseController@postLinkParse');
 Route::post('item/store', 'ItemController@store');
 Route::get('tags/search', 'TagController@search');
+Route::get('tags', 'ItemController@findItemsForTags');
 
 Route::get('/', 'MainController@getAll');

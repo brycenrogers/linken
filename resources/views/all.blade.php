@@ -42,12 +42,28 @@
                                 {{ $item->description }}
                             </div>
                         @endif
-                        <div class="media-tags">
-                            @foreach ($item->tags as $tag)
-                                <a href="/tags?q={{ $tag->name }}" class="tag-link">
-                                    <span class="label label-tag">{{ $tag->name }}</span>
+                        <div class="media-footer">
+                            <div class="media-tags">
+                                @foreach ($item->tags as $tag)
+                                    <a href="/tags?q={{ $tag->name }}" class="tag-link">
+                                        <span class="label label-tag">{{ $tag->name }}</span>
+                                    </a>
+                                @endforeach
+                            </div>
+                            <div class="media-options">
+                                <a href="#itemSettingsModal"
+                                   class="settings-link"
+                                   title="Settings"
+                                   data-toggle="modal"
+                                   data-type="{{ (get_class($item->itemable) == "App\Link") ? "Link" : "Note" }}"
+                                   data-value="{{ $item->value }}"
+                                   data-description="{{ $item->description }}">
+                                    <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
                                 </a>
-                            @endforeach
+                                <a href="#itemShareModal" class="share-link" title="Share" data-toggle="modal">
+                                    <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -55,3 +71,49 @@
         </div>
     @endforeach
 @endsection
+
+<!-- Item Settings Modal -->
+<div class="modal fade" id="itemSettingsModal" tabindex="-1" role="dialog" aria-labelledby="itemSettingsModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form class="form"></form>
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="itemSettingsModalLabel"></h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="settingsValue">Title</label>
+                    <textarea name="value" id="settingsValue" class="form-control input-lg" rows="4"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="settingsValue">Description</label>
+                    <textarea name="description" id="settingsDescription" class="form-control input-lg" rows="6"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Item Share Modal -->
+<div class="modal fade" id="itemShareModal" tabindex="-1" role="dialog" aria-labelledby="itemShareModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="itemShareModalLabel">Share</h4>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success">Send</button>
+            </div>
+        </div>
+    </div>
+</div>

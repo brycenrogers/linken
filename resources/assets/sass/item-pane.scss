@@ -22,17 +22,50 @@
     div.media-description {
         padding-top: 15px;
     }
-    div.media-tags {
-        padding: 15px 0 0;
-        min-height: 40px;
+    div.media-footer {
+        padding-top: 15px;
+        div.media-tags {
+            min-height: 22px;
+            float: left;
+            a.tag-link {
+                text-decoration: none;
+                float: left;
+                margin-right: 5px;
+                margin-top: 5px;
+            }
+            .label-tag {
+                background-color: #bbb;
+            }
+            .label-tag:hover {
+                background-color: #777;
+            }
+        }
+        div.media-options {
+            float: left;
+            padding-left: 5px;
+            a {
+                margin: 3px 10px 0 3px;
+                float: left;
+                color: #bbb;
+                :hover {
+                    color: #777;
+                }
+            }
+        }
     }
     h4.media-heading {
         font-family: $fontFace;
         font-size: 24px;
+        color: #BE5C00;
+        margin-bottom: 0;
+        a {
+            text-decoration: none;
+        }
     }
     div.media-url {
         font-size: 9pt;
         font-style: italic;
+        padding-top: 5px;
         a {
             color: #aaa;
         }

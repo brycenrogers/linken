@@ -74,20 +74,6 @@ body {
   .container-footer a {
     color: #999; }
 
-/**
-
-Common Classes
-
-**/
-a.tag-link {
-  text-decoration: none; }
-
-.label-tag {
-  background-color: #bbb; }
-
-.label-tag:hover {
-  background-color: #777; }
-
 .select2-results {
   font-size: 12pt !important; }
 
@@ -186,7 +172,8 @@ div#info-pane {
     margin: 16px 0;
     font-weight: bold;
     font-family: "Montserrat", sans-serif;
-    font-size: 16pt; }
+    font-size: 16pt;
+    padding-left: 0; }
     div#info-pane div#info-title-container input#info-title {
       width: 100%;
       background-color: transparent;
@@ -219,17 +206,42 @@ div#add-fader {
 .container-item-pane div.media-description {
   padding-top: 15px; }
 
-.container-item-pane div.media-tags {
-  padding: 15px 0 0;
-  min-height: 40px; }
+.container-item-pane div.media-footer {
+  padding-top: 15px; }
+  .container-item-pane div.media-footer div.media-tags {
+    min-height: 22px;
+    float: left; }
+    .container-item-pane div.media-footer div.media-tags a.tag-link {
+      text-decoration: none;
+      float: left;
+      margin-right: 5px;
+      margin-top: 5px; }
+    .container-item-pane div.media-footer div.media-tags .label-tag {
+      background-color: #bbb; }
+    .container-item-pane div.media-footer div.media-tags .label-tag:hover {
+      background-color: #777; }
+  .container-item-pane div.media-footer div.media-options {
+    float: left;
+    padding-left: 5px; }
+    .container-item-pane div.media-footer div.media-options a {
+      margin: 3px 10px 0 3px;
+      float: left;
+      color: #bbb; }
+      .container-item-pane div.media-footer div.media-options a :hover {
+        color: #777; }
 
 .container-item-pane h4.media-heading {
   font-family: "Montserrat", sans-serif;
-  font-size: 24px; }
+  font-size: 24px;
+  color: #BE5C00;
+  margin-bottom: 0; }
+  .container-item-pane h4.media-heading a {
+    text-decoration: none; }
 
 .container-item-pane div.media-url {
   font-size: 9pt;
-  font-style: italic; }
+  font-style: italic;
+  padding-top: 5px; }
   .container-item-pane div.media-url a {
     color: #aaa; }
 

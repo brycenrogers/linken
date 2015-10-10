@@ -82,6 +82,31 @@ class ItemController extends Controller
     }
 
     /**
+     * Find items that relate to the tags passed in
+     *
+     * @param Request $request
+     * @return \Illuminate\View\View
+     */
+    public function findItemsForTags(Request $request)
+    {
+        $tags = $request->input('q');
+        $tags = explode(",", $tags);
+
+        $items = Item::whereHas('tags', function ($query) use ($tags) {
+            foreach ($tags as $tag) {
+                if ($tags[0] == $tag) {
+                    $query->where('name', '=', $tag);
+                } else {
+                    $query->orWhere('name', '=', $tag);
+                }
+            }
+        })->orderBy('created_at', 'desc')->get();
+
+        $title = "Tags";
+        return view('all', ['items' => $items, 'title' => $title]);
+    }
+
+    /**
      * Display the specified resource.
      *
      * @param  int  $id
