@@ -6,6 +6,7 @@ use Auth;
 use Cache;
 use App\Tag;
 use Illuminate\Contracts\View\View;
+use Route;
 
 class LinkenViewComposer
 {
@@ -47,6 +48,8 @@ class LinkenViewComposer
             Cache::put($cacheKey, $tags, 5);
         }
 
-        $view->with('user', $this->user)->with('tags', $tags);
+        $request = Route::getCurrentRequest();
+
+        $view->with('user', $this->user)->with('tags', $tags)->with('requestPath', $request->path());
     }
 }

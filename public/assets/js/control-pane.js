@@ -13,4 +13,31 @@ $( document ).ready(function() {
         placeholder: "Tags"
     });
 
+    $('#image-cropper').cropit({
+        width: 150,
+        height: 150
+    });
+
+    $('.select-image-btn').click(function() {
+        $('.cropit-image-input').click();
+    });
+
+    $('.cropit-image-preview').click(function() {
+        if ($(this).data('clicked') == false) {
+            $('.cropit-image-input').click();
+            $(this).data('clicked', true);
+            $(this).css('cursor', 'move');
+        }
+    });
+
+    $('#updatePhotoSubmit').click(function() {
+        var dataURI = $('#image-cropper').cropit('export', {
+            type: 'image/png',
+            quality: .9,
+            originalSize: false
+        });
+        $('#photoDataURI').val(dataURI);
+        $('#uploadPhotoForm').submit();
+    });
+
 });

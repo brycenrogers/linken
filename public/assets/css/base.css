@@ -192,6 +192,54 @@ div#add-fader {
   height: 100%;
   z-index: 100; }
 
+.user-photo {
+  width: 45px;
+  height: 45px;
+  margin: -5px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 50%;
+  border: 0;
+  outline: none; }
+
+.menu-username {
+  font-weight: bold;
+  padding: 0 15px; }
+
+.cropit-image-preview {
+  background-color: #f8f8f8;
+  background-size: cover;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  width: 250px;
+  height: 250px;
+  cursor: pointer;
+  margin: 0 auto; }
+
+.cropit-image-background {
+  opacity: .2;
+  cursor: auto; }
+
+.image-size-label {
+  margin-top: 10px; }
+
+.cropit-image-zoom-input {
+  margin: 0 auto;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  height: 5px;
+  background: #eee;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  outline: none;
+  width: 130px !important;
+  position: relative; }
+
+input.cropit-image-input {
+  visibility: hidden; }
+
 .container-item-pane div.media-link-image {
   width: 100px;
   height: 100px;
@@ -226,7 +274,8 @@ div#add-fader {
     .container-item-pane div.media-footer div.media-options a {
       margin: 3px 10px 0 3px;
       float: left;
-      color: #bbb; }
+      color: #bbb;
+      outline: none; }
       .container-item-pane div.media-footer div.media-options a :hover {
         color: #777; }
 

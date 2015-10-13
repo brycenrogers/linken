@@ -64,6 +64,7 @@
 <script src="{{ asset('assets/js/libs/select2.min.js') }}"></script>
 <script src="{{ asset('assets/js/libs/autosize.min.js') }}"></script>
 <script src="{{ asset('assets/js/libs/spin.min.js') }}"></script>
+<script src="{{ asset('assets/js/libs/jquery.cropit.js') }}"></script>
 <script src="{{ asset('assets/js/add-pane.js') }}"></script>
 <script src="{{ asset('assets/js/control-pane.js') }}"></script>
 <script src="{{ asset('assets/js/item-pane.js') }}"></script>
