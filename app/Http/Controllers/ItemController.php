@@ -10,6 +10,7 @@ use Auth;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Cache;
+use SearchIndex;
 
 class ItemController extends Controller
 {
@@ -75,8 +76,19 @@ class ItemController extends Controller
         $cacheKey = 'getAll' . $user->id;
         Cache::store('memcached')->forget($cacheKey);
 
-        $cacheKey = 'tags' . $user->id;
-        Cache::store('memcached')->forget($cacheKey);
+        // Prep data for elasticsearch
+        $additionalData = ['user_id' => $user->id, 'tags' => trim(implode(' ', $tags))];
+
+        if (isset($link)) {
+            $additionalData['title'] = $link->title;
+            $additionalData['url'] = $link->url;
+        }
+
+        if (isset($link)) {
+            SearchIndex::upsertToIndex($link);
+        } elseif (isset($note)) {
+            SearchIndex::upsertToIndex($note);
+        }
 
         return \Response::json('Success');
     }

@@ -20,4 +20,19 @@ class Item extends Model
     {
         return $this->belongsToMany('App\Tag');
     }
+
+    /**
+     * Returns a string containing all tags for the Item, separated by $delimiter
+     * @param string $delimiter
+     * @return string
+     */
+    public function tagsAsString($delimiter = ' ')
+    {
+        $tags = $this->tags()->get()->toArray();
+        $tagNames = [];
+        foreach ($tags as $tag) {
+            $tagNames[] = $tag['name'];
+        }
+        return trim(implode($delimiter, $tagNames), $delimiter);
+    }
 }

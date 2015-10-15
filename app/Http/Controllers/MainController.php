@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Item;
 use Auth;
 use Cache;
+use Illuminate\Http\Request;
 
 class MainController extends Controller
 {
@@ -14,19 +15,25 @@ class MainController extends Controller
         $this->middleware('auth');
     }
 
-    public function getAll()
+    public function getAll(Request $request)
     {
         $user = Auth::user();
-        $cacheKey = 'getAll' . $user->id;
 
-        // Get the list from the cache, or regenerate it
-        if (Cache::store('memcached')->has($cacheKey)) {
-            $items = Cache::store('memcached')->get($cacheKey);
+        // If the 'page' variable is not set (home page) or it is set to 1, load from Memcache if available
+        if ((!$request->has('page') || ($request->has('page') && $request->input('page') == 1))) {
+            $cacheKey = 'getAll' . $user->id;
+            // Get the list from the cache, or regenerate it
+            if (Cache::store('memcached')->has($cacheKey)) {
+                $items = Cache::store('memcached')->get($cacheKey);
+            } else {
+                // Get all items for user
+                $items = Item::where('user_id', '=', $user->id)->orderBy('created_at', 'desc')->simplePaginate(20);
+                // Save in cache
+                Cache::store('memcached')->put($cacheKey, $items, 2880);
+            }
         } else {
-            // Get all items for user
-            $items = Item::where('user_id', '=', $user->id)->orderBy('created_at', 'desc')->take(30)->get();
-            // Save in cache
-            Cache::store('memcached')->put($cacheKey, $items, 2880);
+            // Page other than front page was requested, pull from db
+            $items = Item::where('user_id', '=', $user->id)->orderBy('created_at', 'desc')->simplePaginate(20);
         }
 
         $title = "All";
