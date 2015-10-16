@@ -23,12 +23,10 @@ body {
     background-repeat: no-repeat;
     width: 90px;
     height: 98px;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 24pt;
-    color: black;
     margin: 0 auto;
     position: relative;
     z-index: 140;
+    display: block;
 }
 .container-main {
     background-color: #fff;
@@ -60,18 +58,6 @@ body {
         text-align: center;
     }
 }
-.container-item-pane {
-    border-bottom: 1px solid $greyLineColor;
-    width: 100%;
-    float: left;
-    padding: 15px 0;
-}
-.container-control-pane {
-    width: 100%;
-    float: left;
-    padding: 15px 0;
-    border-bottom: 1px solid $greyLineColor;
-}
 .container-footer {
     height: 150px;
     background-color: $lightGreyBackground;
@@ -81,6 +67,7 @@ body {
         font-size: 10pt;
         padding-top: 30px;
         text-align: center;
+        width: 100%;
     }
     a {
         color: #999;

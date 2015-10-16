@@ -24,6 +24,43 @@ class TagController extends Controller
         return \Response::json($tags);
     }
 
+    public function getTagsPane()
+    {
+        $user = Auth::user();
+        $cacheKey = 'getTagsPane' . $user->id;
+        // Get the list from the cache, or regenerate it
+        if (Cache::store('memcached')->has($cacheKey)) {
+            $display = Cache::store('memcached')->get($cacheKey);
+        } else {
+            $tags = Tag::where('user_id', '=', Auth::user()->id)->orderBy('name', 'asc')->get();
+            $tagsDisplayArray = [];
+            foreach ($tags as $tag) {
+
+                // Get first letter of tag and add to the array if it doesn't exist
+                $letter = strtoupper(substr($tag->name, 0, 1));
+                if(!array_key_exists($letter, $tagsDisplayArray)) {
+                    $tagsDisplayArray[$letter] = [];
+                }
+
+                // Add tag to array for letter
+                $tagsDisplayArray[$letter][] = $tag->name;
+            }
+            // Build display
+            $display = "<ul>";
+            foreach ($tagsDisplayArray as $letter => $tagNameArray) {
+                $display .= "<div class='letter-headersssss'>$letter</div>";
+                $display .= "<li class='divider' role='separator'></li>";
+                foreach ($tagNameArray as $tag) {
+                    $display .= "<li><div class='tag'>$tag</div></li>";
+                }
+            }
+            $display .= "</ul>";
+            // Save in cache
+            Cache::store('memcached')->put($cacheKey, $display, 2880);
+        }
+        return \Response::view('panes.tagsPane', ['display' => $display]);
+    }
+
     /**
      * Display a listing of the resource.
      *

@@ -28,11 +28,20 @@ class Item extends Model
      */
     public function tagsAsString($delimiter = ' ')
     {
+        return trim(implode($delimiter, $this->tagsAsArray()), $delimiter);
+    }
+
+    /**
+     * Returns an array containing all tag names for Item
+     * @return array
+     */
+    public function tagsAsArray()
+    {
         $tags = $this->tags()->get()->toArray();
         $tagNames = [];
         foreach ($tags as $tag) {
             $tagNames[] = $tag['name'];
         }
-        return trim(implode($delimiter, $tagNames), $delimiter);
+        return $tagNames;
     }
 }

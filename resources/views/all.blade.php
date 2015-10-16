@@ -71,7 +71,9 @@
         </div>
     @endforeach
     @if (!is_array($items))
-        {!! $items->render() !!}
+        <div id="pager-container">
+            {!! $items->render() !!}
+        </div>
     @endif
 @endsection
 

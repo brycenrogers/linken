@@ -29,6 +29,7 @@ Route::post('link/parse', 'LinkParseController@postLinkParse');
 Route::post('item/store', 'ItemController@store');
 Route::get('search/reindex', 'SearchController@reindex');
 Route::get('search', 'SearchController@search');
+Route::get('tags/pane', 'TagController@getTagsPane');
 Route::get('tags/search', 'TagController@search');
 Route::get('tags', 'ItemController@findItemsForTags');
 

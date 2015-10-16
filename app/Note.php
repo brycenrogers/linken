@@ -24,9 +24,10 @@ class Note extends Model implements Searchable
         $tags = $item->tagsAsString();
         $searchableProperties = [
             'user_id' => $item->user()->getResults()->first()->id,
-            'title' => $item->value,
-            'description' => $this->description,
-            'tags' => $tags
+            'value' => $item->value,
+            'description' => $item->description,
+            'tags' => $tags,
+            'created_at' => $this->created_at->getTimestamp()
         ];
 
         return $searchableProperties;

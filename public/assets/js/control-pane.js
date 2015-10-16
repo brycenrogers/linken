@@ -40,4 +40,16 @@ $( document ).ready(function() {
         $('#uploadPhotoForm').submit();
     });
 
+    $('#tags-dropdown').click(function() {
+        if ($(this).attr('aria-expanded') == "false") {
+            $.ajax({
+                url: "/tags/pane",
+                cache: false,
+                method: 'get'
+            })
+                .done(function( response ) {
+                    $('#tags-dropdown-pane').html(response);
+                });
+        }
+    });
 });

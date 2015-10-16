@@ -18,27 +18,37 @@ class SearchController extends Controller
         // If the 'page' variable is not set (home page) or it is set to 1, load from Memcache if available
         if ($request->has('q')) {
 
+            $query = $request->input('q');
             $hits = SearchIndex::getResults($this->fuzzyQuery($request->input('q'), $user->id));
 
             $items = [];
             foreach($hits['hits']['hits'] as $hit) {
                 $itemArray = $hit['_source'];
+                $item = new \App\Item();
+                $item->id = intval($hit['_id']);
                 if (array_key_exists('url', $itemArray)) {
-                    $item = new \App\Link();
-                    $item->url = $itemArray['url'];
-                    //$item->photo = $hit['photo'];
-                    $item->photo = "";
+                    $item->itemable = new \App\Link();
+                    $item->itemable->url = $itemArray['url'];
+                    $item->itemable->photo = $itemArray['photo'];
                 } else {
-                    $item = new \App\Note();
+                    $item->itemable = new \App\Note();
                 }
-                $item->value = $itemArray['title'];
+                $item->value = $itemArray['value'];
                 $item->description = $itemArray['description'];
-                $item->tags = $itemArray['tags'];
+                $tagsArray = json_decode($itemArray['tags'], true);
+                $tagsObjArray = [];
+                foreach ($tagsArray as $tag) {
+                    $tagObj = new \App\Tag();
+                    $tagObj->name = $tag;
+                    $tagsObjArray[] = $tagObj;
+                }
+                $item->tags = $tagsObjArray;
                 $items[] = $item;
             }
 
             $title = "Search";
-            return view('all', ['items' => $items, 'title' => $title]);
+
+            return view('all', ['items' => $items, 'title' => $title, 'q' => $query]);
         } else {
             // Page other than front page was requested, pull from db
             return Response::redirectTo('/');
@@ -71,7 +81,7 @@ class SearchController extends Controller
         // Clear the search index
         try {
             SearchIndex::clearIndex();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             error_log($e->getMessage());
         }
 

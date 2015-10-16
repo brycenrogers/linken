@@ -23,7 +23,7 @@
             <div class="container-main">
                 <div class="container-header">
                     <!-- Header -->
-                    <a href="/"><div class="linken-logo"></div></a>
+                    <a href="/" class="linken-logo"></a>
                 </div>
                 <div class="container-content">
                     <!-- Content -->
@@ -42,14 +42,8 @@
                 </div>
                 <div class="container-footer">
                     <!-- Footer -->
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-6 col-md-offset-3">
-                                <div class="footer">
-                                    &copy; Linken 2015
-                                </div>
-                            </div>
-                        </div>
+                    <div class="footer">
+                        &copy; Linken 2015
                     </div>
                 </div>
             </div>

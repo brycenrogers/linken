@@ -1,0 +1,4 @@
+{!! $display !!}
+<br>
+<br>
+<br>

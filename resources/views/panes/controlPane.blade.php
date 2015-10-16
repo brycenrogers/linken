@@ -8,10 +8,21 @@
             {{ Session::get('error') }}
         </div>
     @endif
-    <div class="col-md-7">
+    <div class="col-md-1">
+        <!-- Single button -->
+        <div class="btn-group">
+            <button id="tags-dropdown" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Tags&nbsp;&nbsp;&nbsp;<span class="caret"></span>
+            </button>
+            <div class="dropdown-menu">
+                <div id="tags-dropdown-pane"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
         <form action="/search" method="get" class="form-inline pull-left" style="margin-bottom: 0;">
             <div class="form-group">
-                <input type="input" class="form-control" id="searchField" placeholder="Search" name="q">
+                <input type="input" class="form-control" id="searchField" placeholder="Search" name="q" value="{{ (isset($q)) ? $q : null }}">
                 <button type="submit" class="btn btn-default">Search</button>
             </div>
         </form>
@@ -47,50 +58,48 @@
             </ul>
         </div>
     </div>
-</div>
+    <!-- User Settings Modal -->
+    <div class="modal fade" id="userSettingsModal" tabindex="-1" role="dialog" aria-labelledby="userSettingsModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="userSettingsModalLabel">User Settings</h4>
+                </div>
+                <div class="modal-body">
 
-<!-- User Settings Modal -->
-<div class="modal fade" id="userSettingsModal" tabindex="-1" role="dialog" aria-labelledby="userSettingsModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="userSettingsModalLabel">User Settings</h4>
-            </div>
-            <div class="modal-body">
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- Change Password Modal -->
-<div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="changePasswordModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="changePasswordModalLabel">Change Password</h4>
-            </div>
-            <div class="modal-body">
+    <!-- Change Password Modal -->
+    <div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="changePasswordModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="changePasswordModalLabel">Change Password</h4>
+                </div>
+                <div class="modal-body">
 
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- Update Photo Modal -->
-<div class="modal fade" id="updatePhotoModal" tabindex="-1" role="dialog" aria-labelledby="updatePhotoModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
+    <!-- Update Photo Modal -->
+    <div class="modal fade" id="updatePhotoModal" tabindex="-1" role="dialog" aria-labelledby="updatePhotoModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="updatePhotoModalLabel">Update Photo</h4>
@@ -116,6 +125,7 @@
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary" id="updatePhotoSubmit">Save changes</button>
                 </div>
+            </div>
         </div>
     </div>
 </div>
