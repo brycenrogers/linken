@@ -11,6 +11,11 @@ use App\Item;
 class SearchController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function search(Request $request)
     {
         $user = Auth::user();
@@ -36,13 +41,16 @@ class SearchController extends Controller
                 $item->value = $itemArray['value'];
                 $item->description = $itemArray['description'];
                 $tagsArray = json_decode($itemArray['tags'], true);
-                $tagsObjArray = [];
-                foreach ($tagsArray as $tag) {
-                    $tagObj = new \App\Tag();
-                    $tagObj->name = $tag;
-                    $tagsObjArray[] = $tagObj;
+                $item->tags = [];
+                if ($tagsArray) {
+                    $tagsObjArray = [];
+                    foreach ($tagsArray as $tag) {
+                        $tagObj = new \App\Tag();
+                        $tagObj->name = $tag;
+                        $tagsObjArray[] = $tagObj;
+                    }
+                    $item->tags = $tagsObjArray;
                 }
-                $item->tags = $tagsObjArray;
                 $items[] = $item;
             }
 

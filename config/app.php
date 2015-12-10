@@ -145,6 +145,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\ComposerServiceProvider::class,
+        App\Providers\ImageServiceProvider::class,
         Spatie\SearchIndex\SearchIndexServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class
 

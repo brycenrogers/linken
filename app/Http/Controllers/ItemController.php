@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Interfaces\ImageHandlerInterface;
 use App\Item;
 use App\Link;
 use App\Note;
@@ -10,6 +11,7 @@ use Auth;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Cache;
+use Illuminate\Http\Response;
 use SearchIndex;
 
 class ItemController extends Controller
@@ -30,7 +32,7 @@ class ItemController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, ImageHandlerInterface $imageHandler)
     {
         $user = Auth::user();
 
@@ -48,7 +50,10 @@ class ItemController extends Controller
         if ($type == 'Link') {
             $link = new Link();
             $link->url = urldecode($request->input('url'));
-            $link->photo = urldecode($request->input('photo_url'));
+            $photoUrl = urldecode($request->input('photo_url'));
+            if ($photoUrl) {
+                $link->photo = $imageHandler->generateThumbnail($photoUrl);
+            }
             $link->title = $request->input('title');
             $link->save();
             $link->items()->save($item);
@@ -93,6 +98,8 @@ class ItemController extends Controller
         return \Response::json('Success');
     }
 
+
+
     /**
      * Find items that relate to the tags passed in
      *
@@ -101,15 +108,16 @@ class ItemController extends Controller
      */
     public function findItemsForTags(Request $request)
     {
-        $tags = $request->input('q');
-        $tags = explode(",", $tags);
+        $q = $request->input('q');
+        $tags = explode(",", $q);
 
         $items = Item::whereHas('tags', function ($query) use ($tags) {
             $query->whereIn('name', $tags);
-        })->orderBy('created_at', 'desc')->get();
+        })->orderBy('created_at', 'desc')->simplePaginate();
 
         $title = "Tags";
-        return view('all', ['items' => $items, 'title' => $title]);
+        $subControl = "<a href='/' class='btn btn-default'><span class='glyphicon glyphicon-menu-left'></span>&nbsp;Back</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tag: " . $q;
+        return view('all', ['items' => $items, 'title' => $title, 'subControl' => $subControl]);
     }
 
     /**
@@ -154,6 +162,23 @@ class ItemController extends Controller
      */
     public function destroy($id)
     {
-        //
+        /* @var $item \App\Item */
+        $item = Item::find($id);
+
+        // Make sure they own it
+        $user = $item->user;
+        $currentUser = Auth::user();
+        if ($user != $currentUser) {
+            return \Response::redirectTo('/');
+        }
+
+        // Delete
+        $item->delete();
+
+        // Delete from cache too
+        $cacheKey = 'getAll' . $user->id;
+        Cache::store('memcached')->forget($cacheKey);
+
+        return \Response::redirectTo('/');
     }
 }

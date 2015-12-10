@@ -27,6 +27,7 @@ Route::get('/welcome', function () {
 Route::post('photo/upload', 'PhotoController@postUpload');
 Route::post('link/parse', 'LinkParseController@postLinkParse');
 Route::post('item/store', 'ItemController@store');
+Route::get('item/destroy/{id}', 'ItemController@destroy');
 Route::get('search/reindex', 'SearchController@reindex');
 Route::get('search', 'SearchController@search');
 Route::get('tags/pane', 'TagController@getTagsPane');

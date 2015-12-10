@@ -61,6 +61,9 @@ body {
   .container-footer a {
     color: #999; }
 
+.row.no-margin {
+  margin: 0; }
+
 .select2-results {
   font-size: 12pt !important; }
 
@@ -203,8 +206,7 @@ div#add-fader {
       .container-item-pane div.media-footer div.media-tags a.tag-link {
         text-decoration: none;
         float: left;
-        margin-right: 5px;
-        margin-top: 5px; }
+        margin-right: 5px; }
       .container-item-pane div.media-footer div.media-tags .label-tag {
         background-color: #bbb; }
       .container-item-pane div.media-footer div.media-tags .label-tag:hover {
@@ -298,5 +300,10 @@ div.letter-header {
   font-weight: bold;
   font-size: 15pt;
   border-bottom: 1px solid #ccc; }
+
+div#subcontrol-pane {
+  padding: 15px;
+  border-top: 1px solid #e3e3e3;
+  margin: 8px 0 -15px; }
 
 /*# sourceMappingURL=base.css.map */

@@ -18,7 +18,7 @@
                     @if (get_class($item->itemable) == "App\Link" && $item->itemable->photo)
                         <div class="media-left">
                             <a href="{{ $item->itemable->url }}">
-                                <div class="media-link-image" style="background-image: url('{{ $item->itemable->photo }}')"></div>
+                                <div class="media-link-image" style="background-image: url('{{ asset('assets/images/thumbs/' . $item->itemable->photo) }}')"></div>
                             </a>
                         </div>
                     @endif
@@ -55,6 +55,7 @@
                                    class="settings-link"
                                    title="Settings"
                                    data-toggle="modal"
+                                   data-itemid="{{ $item->id }}"
                                    data-type="{{ (get_class($item->itemable) == "App\Link") ? "Link" : "Note" }}"
                                    data-value="{{ $item->value }}"
                                    data-description="{{ $item->description }}">
@@ -75,49 +76,49 @@
             {!! $items->render() !!}
         </div>
     @endif
+            <!-- Item Settings Modal -->
+        <div class="modal fade" id="itemSettingsModal" tabindex="-1" role="dialog" aria-labelledby="itemSettingsModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="itemSettingsModalLabel"></h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="settingsValue">Title</label>
+                            <textarea name="value" id="settingsValue" class="form-control input-lg" rows="4"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="settingsValue">Description</label>
+                            <textarea name="description" id="settingsDescription" class="form-control input-lg" rows="6"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="" id="destroyItem" class="btn btn-danger">Delete</a>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Item Share Modal -->
+        <div class="modal fade" id="itemShareModal" tabindex="-1" role="dialog" aria-labelledby="itemShareModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="itemShareModalLabel">Share</h4>
+                    </div>
+                    <div class="modal-body">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-success">Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 @endsection
-
-<!-- Item Settings Modal -->
-<div class="modal fade" id="itemSettingsModal" tabindex="-1" role="dialog" aria-labelledby="itemSettingsModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="itemSettingsModalLabel"></h4>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label for="settingsValue">Title</label>
-                    <textarea name="value" id="settingsValue" class="form-control input-lg" rows="4"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="settingsValue">Description</label>
-                    <textarea name="description" id="settingsDescription" class="form-control input-lg" rows="6"></textarea>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Item Share Modal -->
-<div class="modal fade" id="itemShareModal" tabindex="-1" role="dialog" aria-labelledby="itemShareModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="itemShareModalLabel">Share</h4>
-            </div>
-            <div class="modal-body">
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success">Send</button>
-            </div>
-        </div>
-    </div>
-</div>

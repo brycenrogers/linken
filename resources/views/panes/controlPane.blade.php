@@ -8,56 +8,66 @@
             {{ Session::get('error') }}
         </div>
     @endif
-    <div class="col-md-1">
-        <!-- Single button -->
-        <div class="btn-group">
-            <button id="tags-dropdown" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Tags&nbsp;&nbsp;&nbsp;<span class="caret"></span>
-            </button>
-            <div class="dropdown-menu">
-                <div id="tags-dropdown-pane"></div>
+
+    <div class="row no-margin">
+        <div class="col-md-1">
+            <!-- Single button -->
+            <div class="btn-group">
+                <button id="tags-dropdown" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Tags&nbsp;&nbsp;&nbsp;<span class="caret"></span>
+                </button>
+                <div class="dropdown-menu">
+                    <div id="tags-dropdown-pane"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <form action="/search" method="get" class="form-inline pull-left" style="margin-bottom: 0;">
+                <div class="form-group">
+                    <input type="input" class="form-control" id="searchField" placeholder="Search" name="q" value="{{ (isset($q)) ? $q : null }}">
+                    <button type="submit" class="btn btn-default">Search</button>
+                </div>
+            </form>
+        </div>
+        <div class="container-account-pane col-md-5">
+            <div class="dropdown pull-right">
+                <button type="button" title="Logged in as {{ $user->name }}" class="user-photo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-image: url({{ file_exists('uploads/' . $user->id . '.png') ? 'uploads/' . $user->id . '.png?' . time() : '/assets/images/default-user.png' }});">
+                </button>
+                <ul class="dropdown-menu">
+                    <li>
+                        <span class="menu-username">{{ $user->name }}</span>
+                    </li>
+                    <li class="divider" role="separator"></li>
+                    <li>
+                        <a href="#userSettingsModal" data-toggle="modal" aria-hidden="true">
+                            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Settings
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#changePasswordModal" data-toggle="modal" aria-hidden="true">
+                            <span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Change Password
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#updatePhotoModal" data-toggle="modal" aria-hidden="true">
+                            <span class="glyphicon glyphicon-camera" aria-hidden="true"></span> Update Photo
+                        </a>
+                    </li>
+                    <li role="separator" class="divider"></li>
+                    <li>
+                        <a href="/auth/logout">Logout</a>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
-    <div class="col-md-6">
-        <form action="/search" method="get" class="form-inline pull-left" style="margin-bottom: 0;">
-            <div class="form-group">
-                <input type="input" class="form-control" id="searchField" placeholder="Search" name="q" value="{{ (isset($q)) ? $q : null }}">
-                <button type="submit" class="btn btn-default">Search</button>
+    @if (isset($subControl))
+        <div class="row no-margin">
+            <div class="col-md-12" id="subcontrol-pane">
+                {!! $subControl !!}
             </div>
-        </form>
-    </div>
-    <div class="container-account-pane col-md-5">
-        <div class="dropdown pull-right">
-            <button type="button" title="Logged in as {{ $user->name }}" class="user-photo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-image: url({{ file_exists('uploads/' . $user->id . '.png') ? 'uploads/' . $user->id . '.png?' . time() : '/assets/images/default-user.png' }});">
-            </button>
-            <ul class="dropdown-menu">
-                <li>
-                    <span class="menu-username">{{ $user->name }}</span>
-                </li>
-                <li class="divider" role="separator"></li>
-                <li>
-                    <a href="#userSettingsModal" data-toggle="modal" aria-hidden="true">
-                        <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Settings
-                    </a>
-                </li>
-                <li>
-                    <a href="#changePasswordModal" data-toggle="modal" aria-hidden="true">
-                        <span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Change Password
-                    </a>
-                </li>
-                <li>
-                    <a href="#updatePhotoModal" data-toggle="modal" aria-hidden="true">
-                        <span class="glyphicon glyphicon-camera" aria-hidden="true"></span> Update Photo
-                    </a>
-                </li>
-                <li role="separator" class="divider"></li>
-                <li>
-                    <a href="/auth/logout">Logout</a>
-                </li>
-            </ul>
         </div>
-    </div>
+    @endif
     <!-- User Settings Modal -->
     <div class="modal fade" id="userSettingsModal" tabindex="-1" role="dialog" aria-labelledby="userSettingsModalLabel">
         <div class="modal-dialog" role="document">

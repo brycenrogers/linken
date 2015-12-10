@@ -5,14 +5,17 @@ $( document ).ready(function() {
         var type = button.data('type'); // Extract info from data-* attributes
         var value = button.data('value');
         var description = button.data('description');
+        var itemId = button.data('itemid');
 
         var settingsValueTextarea = $('#settingsValue');
         var settingsDescriptionTextarea = $('#settingsDescription');
+        var destroyItem = $('#destroyItem');
 
         var modal = $(this);
         modal.find('.modal-title').text(type + ' Settings');
         settingsValueTextarea.val(value);
         settingsDescriptionTextarea.val(description);
+        destroyItem.attr('href', '/item/destroy/' + itemId);
 
         autosize(settingsValueTextarea);
         autosize(settingsDescriptionTextarea);
