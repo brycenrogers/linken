@@ -17,30 +17,23 @@ use SearchIndex;
 class ItemController extends Controller
 {
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request $request
+     * @param ImageHandlerInterface $imageHandler
+     * @return Response
      */
     public function store(Request $request, ImageHandlerInterface $imageHandler)
     {
         $user = Auth::user();
 
+        // Gather post data
         $type = $request->input('type');
         $value = $request->input('value');
         $tags = $request->input('tags');
         $tags = explode("|", $tags);
 
+        // Build new Item for User
         $item = new Item();
         $item->value = $value;
         $item->description = $request->input('description');
@@ -52,7 +45,13 @@ class ItemController extends Controller
             $link->url = urldecode($request->input('url'));
             $photoUrl = urldecode($request->input('photo_url'));
             if ($photoUrl) {
-                $link->photo = $imageHandler->generateThumbnail($photoUrl);
+                // Try to generate a thumbnail for the desired photo
+                try {
+                    $link->photo = $imageHandler->generateThumbnail($photoUrl);
+                }
+                catch (\Exception $e) {
+                    error_log($e);
+                }
             }
             $link->title = $request->input('title');
             $link->save();
@@ -81,21 +80,14 @@ class ItemController extends Controller
         $cacheKey = 'getAll' . $user->id;
         Cache::store('memcached')->forget($cacheKey);
 
-        // Prep data for elasticsearch
-        $additionalData = ['user_id' => $user->id, 'tags' => trim(implode(' ', $tags))];
-
-        if (isset($link)) {
-            $additionalData['title'] = $link->title;
-            $additionalData['url'] = $link->url;
-        }
-
         if (isset($link)) {
             SearchIndex::upsertToIndex($link);
         } elseif (isset($note)) {
             SearchIndex::upsertToIndex($note);
         }
 
-        return \Response::json('Success');
+        //return \Response::json('Success');
+        return view('item', ['item' => $item]);
     }
 
 
@@ -127,17 +119,6 @@ class ItemController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
     {
         //
     }

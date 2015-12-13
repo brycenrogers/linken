@@ -13,10 +13,14 @@
     padding: 15px 0;
     border-bottom: 1px solid $greyLineColor;
 
+    .container-account-pane {
+        height: 34px;
+    }
+
     .user-photo {
         width: 45px;
         height: 45px;
-        margin: -5px;
+        margin: -6px;
         background-size: contain;
         background-repeat: no-repeat;
         background-position: center;

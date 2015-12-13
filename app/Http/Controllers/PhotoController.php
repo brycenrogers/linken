@@ -23,6 +23,8 @@ class PhotoController extends Controller
         $croppedPhotoData = $request->input('photoDataURI');
         $data = file_get_contents($croppedPhotoData);
 
+        // @todo Add validation to prevent any kind of injection
+
         if ($data) {
             $destinationPath = public_path() .'/uploads/' . $user->id . ".png";
             if(file_put_contents($destinationPath, $data)) {

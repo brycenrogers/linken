@@ -248,10 +248,12 @@ div#pager-container {
   float: left;
   padding: 15px 0;
   border-bottom: 1px solid #e3e3e3; }
+  .container-control-pane .container-account-pane {
+    height: 34px; }
   .container-control-pane .user-photo {
     width: 45px;
     height: 45px;
-    margin: -5px;
+    margin: -6px;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;

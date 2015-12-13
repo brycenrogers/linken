@@ -29,6 +29,7 @@ class ImageHandler implements ImageHandlerInterface {
         // Resize and Save
         $image->resize($thumbBox)->save(public_path('assets/images/thumbs/' . $filename));
 
+        // Return the filename for reference purposes
         return $filename;
     }
 

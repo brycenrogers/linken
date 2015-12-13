@@ -8,13 +8,12 @@
             {{ Session::get('error') }}
         </div>
     @endif
-
     <div class="row no-margin">
         <div class="col-md-1">
             <!-- Single button -->
             <div class="btn-group">
                 <button id="tags-dropdown" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Tags&nbsp;&nbsp;&nbsp;<span class="caret"></span>
+                    <span class="glyphicon glyphicon-tags" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;<span class="caret"></span>
                 </button>
                 <div class="dropdown-menu">
                     <div id="tags-dropdown-pane"></div>
@@ -25,7 +24,7 @@
             <form action="/search" method="get" class="form-inline pull-left" style="margin-bottom: 0;">
                 <div class="form-group">
                     <input type="input" class="form-control" id="searchField" placeholder="Search" name="q" value="{{ (isset($q)) ? $q : null }}">
-                    <button type="submit" class="btn btn-default">Search</button>
+                    <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
                 </div>
             </form>
         </div>

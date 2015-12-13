@@ -81,8 +81,8 @@ $( document ).ready(function() {
                 _token: csrf
             }
         })
-            .done(function( response ) {
-                closeAddPane();
+            .done(function(response) {
+                closeAddPane(response);
                 addButtonSpinner.stop();
                 addButtonSpinner = null;
                 button.html('Add');
@@ -198,7 +198,7 @@ $( document ).ready(function() {
         });
     }
 
-    function closeAddPane()
+    function closeAddPane(newItemData)
     {
         if ($('div#add-pane').attr('data-toggle') == 'closed') {
             return;
@@ -227,9 +227,18 @@ $( document ).ready(function() {
                     if (addVal == '') {
                         $('textarea#add').val('').attr('placeholder', 'Add URL or Note');
                     }
+                    if (newItemData) {
+                        showNewItem(newItemData);
+                    }
                 });
             });
         });
+    }
+
+    function showNewItem(newItemHtml)
+    {
+        $("#item-list-container").prepend(newItemHtml).slideDown();
+        $('textarea#add').val('').attr('placeholder', 'Add URL or Note');
     }
 
     function loadInfoPaneData(url)
