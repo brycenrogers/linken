@@ -2,10 +2,15 @@
 
 namespace App\Repositories;
 
-use App\Interfaces\CacheHandlerInterface;
-use App\Models\Item;
+use App\Interfaces\ItemRepositoryInterface,
+    App\Models\Item,
+    App\Models\User;
 
-class ItemRepository extends BaseRepository {
+/**
+ * Class ItemRepository
+ * @package App\Repositories
+ */
+class ItemRepository extends BaseRepository implements ItemRepositoryInterface {
 
     /**
      * The Item instance
@@ -14,98 +19,51 @@ class ItemRepository extends BaseRepository {
      */
     protected $item;
 
-    protected $cacheHandler;
+    /**
+     * Current User instance
+     *
+     * @var \App\Models\User
+     */
+    protected $user;
 
     /**
      * Create a new ItemRepository instance.
      *
-     * @param  \App\Models\Item $item
+     * @param Item $item
+     * @param User $user
      */
-    public function __construct(Item $item, CacheHandlerInterface $cacheHandler)
+    public function __construct(Item $item, User $user)
     {
         $this->model = $item;
-        $this->cacheHandler = $cacheHandler;
-    }
-
-    /**
-     * Save or update an Item
-     *
-     * @param $item \App\Models\Item
-     * @param $inputs
-     * @param $userId int
-     * @return mixed
-     */
-    private function saveItem($item, $inputs, $userId)
-    {
-        $item->value = $inputs['value'];
-        $item->content = $inputs['description'];
-        if ($userId) {
-            $item->user_id = $userId;
-        }
-        $item->save();
-
-        return $item;
+        $this->user = $user;
     }
 
     /**
      * Create an Item and it's derived class
      *
      * @param $inputs
-     * @param $userId
+     * @return Item
      */
-    public function store($inputs, $userId)
+    public function store($inputs)
     {
-        $item = $this->saveItem(new $this->model, $inputs, $userId);
+        $item = new Item();
+        $item->value = $inputs['value'];
+        $item->description = $inputs['description'];
+        $item->user_id = $this->user->id;
+        $item->save();
 
-        // Save derived type
-        switch($inputs['type']) {
-            case 'Link':
-                $link = new \App\Models\Link();
-                $link->url = urldecode($inputs['url']);
-                $link->photo_url = urldecode($inputs['photo_url']);
-                $link->title = $inputs['title'];
-                $link->save();
-                $link->items()->save($item);
-                \SearchIndex::upsertToIndex($link);
-                break;
-            case 'Note':
-                $note = new \App\Models\Note();
-                $note->save();
-                $note->items()->save($item);
-                \SearchIndex::upsertToIndex($note);
-                break;
-        }
-
-        // Save tags
-        $tags = $inputs['tags'];
-        $tags = explode("|", $tags);
-        foreach ($tags as $tag) {
-            if ($tag == "") {
-                continue;
-            }
-            $newTag = new \App\Models\Tag();
-            $newTag = $newTag->firstOrNew(['name' => $tag, 'user_id' => $userId]);
-            if ( ! $newTag->id ) {
-                $newTag->user_id = $userId;
-                $newTag->save();
-            }
-            $item->tags()->attach($newTag->id);
-        }
-
-        // Reset cache
-        $this->cacheHandler->del(CacheHandlerInterface::MAINPAGE, $userId);
+        return $item;
     }
 
     /**
      * Get a paginated result set of Items for a specific User
      *
      * @param $amount int
-     * @param $userId int
      * @return mixed
      */
-    public function getItemsPaginated($amount, $userId)
+    public function getItemsPaginated($amount)
     {
-        return Item::where('user_id', '=', $userId)
+        return Item::where('user_id', '=', $this->user->id)
             ->orderBy('created_at', 'desc')
             ->simplePaginate($amount);
     }

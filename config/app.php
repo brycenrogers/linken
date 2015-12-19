@@ -146,6 +146,9 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\ComposerServiceProvider::class,
         App\Providers\ImageServiceProvider::class,
+        App\Providers\ItemHandlerServiceProvider::class,
+        App\Providers\CacheManagerServiceProvider::class,
+        App\Providers\ItemRepositoryServiceProvider::class,
         Spatie\SearchIndex\SearchIndexServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class
 

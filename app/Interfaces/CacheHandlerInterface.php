@@ -4,10 +4,11 @@ namespace App\Interfaces;
 
 interface CacheHandlerInterface
 {
-    const MAINPAGE  = 'main.page.';
-    const TAGS      = 'tags.';
-    public function set($type, $value, $userId);
-    public function get($type, $userId);
-    public function del($type, $userId);
-    public function has($type, $userId);
+    const MAINPAGE      = 'main.page.';
+    const TAGS          = 'tags.';
+    const EXPIRATION    = 1440;
+    public function set($type, $value);
+    public function get($type);
+    public function del($type);
+    public function has($type);
 }

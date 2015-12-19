@@ -2,10 +2,16 @@
 
 namespace App\Providers;
 
-use App\Libraries\ImageHandler,
-    Illuminate\Support\ServiceProvider;
+use App\Models\Item,
+    Illuminate\Support\ServiceProvider,
+    Auth,
+    App\Repositories\ItemRepository;
 
-class ImageServiceProvider extends ServiceProvider
+/**
+ * Class ItemRepositoryServiceProvider
+ * @package App\Providers
+ */
+class ItemRepositoryServiceProvider extends ServiceProvider
 {
     protected $defer = true;
 
@@ -26,8 +32,8 @@ class ImageServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('App\Interfaces\ImageHandlerInterface', function(){
-            return new ImageHandler();
+        $this->app->bind('App\Interfaces\ItemRepositoryInterface', function() {
+            return new ItemRepository(new Item(), Auth::user());
         });
     }
 
@@ -38,6 +44,6 @@ class ImageServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return ['App\Interfaces\ImageHandlerInterface'];
+        return ['App\Interfaces\ItemRepositoryInterface'];
     }
 }

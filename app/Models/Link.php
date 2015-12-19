@@ -67,6 +67,6 @@ class Link extends Model implements Searchable
      */
     public function getSearchableId()
     {
-        return $this->items()->getResults()->first()->id;
+        return $this->id;
     }
 }

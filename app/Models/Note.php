@@ -19,7 +19,7 @@ class Note extends Model implements Searchable
      */
     public function getSearchableBody()
     {
-        /* @var $item \App\Item */
+        /* @var $item \App\Models\Item */
         $item = $this->items()->getResults()->first();
         $tags = $item->tagsAsString();
         $searchableProperties = [

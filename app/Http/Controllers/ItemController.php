@@ -2,89 +2,31 @@
 
 namespace App\Http\Controllers;
 
-use App\Interfaces\ImageHandlerInterface;
+use App\Interfaces\ItemHandlerInterface;
 use App\Models\Item;
-use App\Models\Link;
-use App\Models\Note;
-use App\Models\Tag;
 use Auth;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Cache;
 use Illuminate\Http\Response;
-use SearchIndex;
 
+/**
+ * Class ItemController
+ * @package App\Http\Controllers
+ */
 class ItemController extends Controller
 {
+
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param ImageHandlerInterface $imageHandler
      * @return Response
      */
-    public function store(Request $request, ImageHandlerInterface $imageHandler)
+    public function store(Request $request, ItemHandlerInterface $itemHandler)
     {
-        $user = Auth::user();
-
-        // Gather post data
-        $type = $request->input('type');
-        $value = $request->input('value');
-        $tags = $request->input('tags');
-        $tags = explode("|", $tags);
-
-        // Build new Item for User
-        $item = new Item();
-        $item->value = $value;
-        $item->description = $request->input('description');
-        $item->user()->associate($user);
-        $item->save();
-
-        if ($type == 'Link') {
-            $link = new Link();
-            $link->url = urldecode($request->input('url'));
-            $photoUrl = urldecode($request->input('photo_url'));
-            if ($photoUrl) {
-                // Try to generate a thumbnail for the desired photo
-                try {
-                    $link->photo = $imageHandler->generateThumbnail($photoUrl);
-                }
-                catch (\Exception $e) {
-                    error_log($e);
-                }
-            }
-            $link->title = $request->input('title');
-            $link->save();
-            $link->items()->save($item);
-        } else {
-            $note = new Note();
-            $note->save();
-            $note->items()->save($item);
-        }
-
-        // Save tags
-        foreach ($tags as $tag) {
-            if ($tag == "") {
-                continue;
-            }
-            $newTag = new Tag();
-            $newTag = $newTag->firstOrNew(['name' => $tag, 'user_id' => $user->id]);
-            if ( ! $newTag->id ) {
-                $newTag->user()->associate($user);
-                $newTag->save();
-            }
-            $item->tags()->attach($newTag->id);
-        }
-
-        // Forget the 'all' and 'tags' caches so they can be regenerated
-        $cacheKey = 'getAll' . $user->id;
-        Cache::store('memcached')->forget($cacheKey);
-
-        if (isset($link)) {
-            SearchIndex::upsertToIndex($link);
-        } elseif (isset($note)) {
-            SearchIndex::upsertToIndex($note);
-        }
+        // Create the new item
+        $item = $itemHandler->create($request->input());
 
         return view('item', ['item' => $item]);
     }
