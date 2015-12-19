@@ -1,15 +1,15 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Spatie\SearchIndex\Searchable;
+use Illuminate\Database\Eloquent\Model,
+    Spatie\SearchIndex\Searchable;
 
 class Note extends Model implements Searchable
 {
     public function items()
     {
-        return $this->morphMany('App\Item', 'itemable');
+        return $this->morphMany('App\Models\Item', 'itemable');
     }
 
     /**

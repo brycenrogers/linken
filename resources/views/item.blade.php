@@ -1,7 +1,7 @@
 <div class="container-item-pane container">
     <div class="col-md-12">
         <div class="media link-padding">
-            @if (get_class($item->itemable) == "App\Link" && $item->itemable->photo)
+            @if (get_class($item->itemable) == "App\Models\Link" && $item->itemable->photo)
                 <div class="media-left">
                     <a href="{{ $item->itemable->url }}">
                         <div class="media-link-image" style="background-image: url('{{ asset('assets/images/thumbs/' . $item->itemable->photo) }}')"></div>
@@ -9,7 +9,7 @@
                 </div>
             @endif
             <div class="media-body">
-                @if (get_class($item->itemable) == "App\Link")
+                @if (get_class($item->itemable) == "App\Models\Link")
                     <h4 class="media-heading">
                         <a href="{{ $item->itemable->url }}">
                             {{ $item->value }}
@@ -42,7 +42,7 @@
                            title="Settings"
                            data-toggle="modal"
                            data-itemid="{{ $item->id }}"
-                           data-type="{{ (get_class($item->itemable) == "App\Link") ? "Link" : "Note" }}"
+                           data-type="{{ (get_class($item->itemable) == "App\Models\Link") ? "Link" : "Note" }}"
                            data-value="{{ $item->value }}"
                            data-description="{{ $item->description }}">
                             <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>

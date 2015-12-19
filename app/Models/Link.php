@@ -1,15 +1,15 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Spatie\SearchIndex\Searchable;
+use Illuminate\Database\Eloquent\Model,
+    Spatie\SearchIndex\Searchable;
 
 class Link extends Model implements Searchable
 {
     public function items()
     {
-        return $this->morphMany('App\Item', 'itemable');
+        return $this->morphMany('App\Models\Item', 'itemable');
     }
 
     /**
@@ -35,7 +35,7 @@ class Link extends Model implements Searchable
      */
     public function getSearchableBody()
     {
-        /* @var $item \App\Item */
+        /* @var $item \App\Models\Item */
         $item = $this->items()->getResults()->first();
         $tags = $item->tagsAsArray();
         $searchableProperties = [

@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
 use Cache;
 use Auth;
-use App\Tag;
+use App\Models\Tag;
+use App\Models\Item;
 
 class TagController extends Controller
 {
@@ -66,79 +66,24 @@ class TagController extends Controller
         return \Response::view('panes.tagsPane', ['display' => $display]);
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function discover()
     {
-        //
-    }
+        // Get top 10 recent tags
+        $tags = Tag::where('user_id', Auth::user()->id)
+            ->orderBy('created_at', 'desc')
+            ->take(10)
+            ->lists('name');
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+        // Find top 2 links for each tag, regardless of user
+        $items = Item::whereHas('tags', function ($query) use ($tags) {
+                $query->whereIn('name', $tags);
+            })
+            ->where('itemable_type', 'App\Models\Link')
+            ->where('user_id', '<>', Auth::user()->id)
+            ->orderBy('created_at', 'desc')
+            ->simplePaginate();
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $title = "Discover";
+        return view('all', ['items' => $items, 'title' => $title]);
     }
 }

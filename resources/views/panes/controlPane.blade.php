@@ -30,7 +30,7 @@
         </div>
         <div class="container-account-pane col-md-5">
             <div class="dropdown pull-right">
-                <button type="button" title="Logged in as {{ $user->name }}" class="user-photo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-image: url({{ file_exists('uploads/' . $user->id . '.png') ? 'uploads/' . $user->id . '.png?' . time() : '/assets/images/default-user.png' }});">
+                <button type="button" title="Logged in as {{ $user->name }}" class="user-photo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-image: url('{!! file_exists(asset('/assets/uploads/' . $user->id . '.png')) ? asset('/assets/uploads/' . $user->id . '.png?' . time()) : asset('/assets/images/default-user.png') !!}');">
                 </button>
                 <ul class="dropdown-menu">
                     <li>

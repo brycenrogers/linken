@@ -3,10 +3,7 @@
 namespace App\Http\Controllers;
 
 use Auth;
-use Input;
-use Validator;
 use Response;
-use File;
 use Illuminate\Http\Request;
 
 class PhotoController extends Controller
@@ -26,7 +23,7 @@ class PhotoController extends Controller
         // @todo Add validation to prevent any kind of injection
 
         if ($data) {
-            $destinationPath = public_path() .'/uploads/' . $user->id . ".png";
+            $destinationPath = public_path() .'/assets/uploads/' . $user->id . ".png";
             if(file_put_contents($destinationPath, $data)) {
                 $request->session()->flash('success', 'Photo updated!');
             } else {

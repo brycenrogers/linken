@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
-use Response;
-use Illuminate\Http\Request;
-use SearchIndex;
-use App\Item;
+use Auth,
+    Response,
+    Illuminate\Http\Request,
+    SearchIndex,
+    App\Models\Item;
 
 class SearchController extends Controller
 {
@@ -29,14 +29,14 @@ class SearchController extends Controller
             $items = [];
             foreach($hits['hits']['hits'] as $hit) {
                 $itemArray = $hit['_source'];
-                $item = new \App\Item();
+                $item = new \App\Models\Item();
                 $item->id = intval($hit['_id']);
                 if (array_key_exists('url', $itemArray)) {
-                    $item->itemable = new \App\Link();
+                    $item->itemable = new \App\Models\Link();
                     $item->itemable->url = $itemArray['url'];
                     $item->itemable->photo = $itemArray['photo'];
                 } else {
-                    $item->itemable = new \App\Note();
+                    $item->itemable = new \App\Models\Note();
                 }
                 $item->value = $itemArray['value'];
                 $item->description = $itemArray['description'];
@@ -45,7 +45,7 @@ class SearchController extends Controller
                 if ($tagsArray) {
                     $tagsObjArray = [];
                     foreach ($tagsArray as $tag) {
-                        $tagObj = new \App\Tag();
+                        $tagObj = new \App\Models\Tag();
                         $tagObj->name = $tag;
                         $tagsObjArray[] = $tagObj;
                     }

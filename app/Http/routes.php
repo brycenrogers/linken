@@ -30,6 +30,7 @@ Route::post('item/store', 'ItemController@store');
 Route::get('item/destroy/{id}', 'ItemController@destroy');
 Route::get('search/reindex', 'SearchController@reindex');
 Route::get('search', 'SearchController@search');
+Route::get('tags/discover', 'TagController@discover');
 Route::get('tags/pane', 'TagController@getTagsPane');
 Route::get('tags/search', 'TagController@search');
 Route::get('tags', 'ItemController@findItemsForTags');

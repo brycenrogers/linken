@@ -40,6 +40,7 @@ class CreateTagsItemLinksNotesTables extends Migration
             $table->text('url');
             $table->text('title')->nullable();
             $table->text('photo')->nullable();
+            $table->text('photo_url')->nullable();
             $table->timestamps();
         });
 

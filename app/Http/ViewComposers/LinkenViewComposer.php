@@ -4,7 +4,7 @@ namespace App\Http\ViewComposers;
 
 use Auth;
 use Cache;
-use App\Tag;
+use App\Models\Tag;
 use Illuminate\Contracts\View\View;
 use Route;
 
@@ -13,16 +13,16 @@ class LinkenViewComposer
     /**
      * The user object
      *
-     * @var \App\User
+     * @var \App\Models\User
      */
     protected $user;
 
     /**
      * Create a new control panel composer.
      *
-     * @param  \App\User $user
+     * @param  \App\Models\User $user
      */
-    public function __construct(\App\User $user)
+    public function __construct(\App\Models\User $user)
     {
         $this->user = Auth::user();
     }

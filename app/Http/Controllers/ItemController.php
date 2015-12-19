@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Interfaces\ImageHandlerInterface;
-use App\Item;
-use App\Link;
-use App\Note;
-use App\Tag;
+use App\Models\Item;
+use App\Models\Link;
+use App\Models\Note;
+use App\Models\Tag;
 use Auth;
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -86,7 +86,6 @@ class ItemController extends Controller
             SearchIndex::upsertToIndex($note);
         }
 
-        //return \Response::json('Success');
         return view('item', ['item' => $item]);
     }
 
@@ -104,8 +103,12 @@ class ItemController extends Controller
         $tags = explode(",", $q);
 
         $items = Item::whereHas('tags', function ($query) use ($tags) {
-            $query->whereIn('name', $tags);
-        })->orderBy('created_at', 'desc')->simplePaginate();
+                $query->whereIn('name', $tags);
+            })
+            ->where('user_id', Auth::user()->id)
+            ->where('itemable_type', 'App\Models\Link')
+            ->orderBy('created_at', 'desc')
+            ->simplePaginate();
 
         $title = "Tags";
         $subControl = "<a href='/' class='btn btn-default'><span class='glyphicon glyphicon-menu-left'></span>&nbsp;Back</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tag: " . $q;

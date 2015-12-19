@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.1.26 (LTS) on 2015-12-09.
+ * Generated for Laravel 5.1.27 (LTS) on 2015-12-19.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -1271,7 +1271,7 @@ namespace {
         /**
          * Get the currently authenticated user.
          *
-         * @return \App\User|null 
+         * @return \App\Models\User|null 
          * @static 
          */
         public static function user(){
@@ -1373,7 +1373,7 @@ namespace {
          *
          * @param mixed $id
          * @param bool $remember
-         * @return \App\User 
+         * @return \App\Models\User 
          * @static 
          */
         public static function loginUsingId($id, $remember = false){
@@ -1478,7 +1478,7 @@ namespace {
         /**
          * Return the currently cached user.
          *
-         * @return \App\User|null 
+         * @return \App\Models\User|null 
          * @static 
          */
         public static function getUser(){
@@ -1520,7 +1520,7 @@ namespace {
         /**
          * Get the last user we attempted to authenticate.
          *
-         * @return \App\User 
+         * @return \App\Models\User 
          * @static 
          */
         public static function getLastAttempted(){
@@ -2505,11 +2505,12 @@ namespace {
          *
          * @param string $path
          * @param string $domain
+         * @param bool $secure
          * @return $this 
          * @static 
          */
-        public static function setDefaultPathAndDomain($path, $domain){
-            return \Illuminate\Cookie\CookieJar::setDefaultPathAndDomain($path, $domain);
+        public static function setDefaultPathAndDomain($path, $domain, $secure = false){
+            return \Illuminate\Cookie\CookieJar::setDefaultPathAndDomain($path, $domain, $secure);
         }
         
         /**
@@ -4449,7 +4450,7 @@ namespace {
         /**
          * Determine if any rows exist for the current query.
          *
-         * @return bool|null 
+         * @return bool 
          * @static 
          */
         public static function exists(){
@@ -8120,6 +8121,61 @@ namespace {
     }
 
 
+    class Redis extends \Illuminate\Support\Facades\Redis{
+        
+        /**
+         * Get a specific Redis connection instance.
+         *
+         * @param string $name
+         * @return \Predis\ClientInterface|null 
+         * @static 
+         */
+        public static function connection($name = 'default'){
+            return \Illuminate\Redis\Database::connection($name);
+        }
+        
+        /**
+         * Run a command against the Redis database.
+         *
+         * @param string $method
+         * @param array $parameters
+         * @return mixed 
+         * @static 
+         */
+        public static function command($method, $parameters = array()){
+            return \Illuminate\Redis\Database::command($method, $parameters);
+        }
+        
+        /**
+         * Subscribe to a set of given channels for messages.
+         *
+         * @param array|string $channels
+         * @param \Closure $callback
+         * @param string $connection
+         * @param string $method
+         * @return void 
+         * @static 
+         */
+        public static function subscribe($channels, $callback, $connection = null, $method = 'subscribe'){
+            \Illuminate\Redis\Database::subscribe($channels, $callback, $connection, $method);
+        }
+        
+        /**
+         * Subscribe to a set of given channels with wildcards.
+         *
+         * @param array|string $channels
+         * @param \Closure $callback
+         * @param string $connection
+         * @return void 
+         * @static 
+         */
+        public static function psubscribe($channels, $callback, $connection = null){
+            \Illuminate\Redis\Database::psubscribe($channels, $callback, $connection);
+        }
+        
+    }
+
+
     class Request extends \Illuminate\Support\Facades\Request{
         
         /**
@@ -10824,16 +10880,6 @@ namespace {
         }
         
         /**
-         * Remove data that was flashed for only the current request.
-         *
-         * @return void 
-         * @static 
-         */
-        public static function removeFlashNowData(){
-            \Illuminate\Session\Store::removeFlashNowData();
-        }
-        
-        /**
          * Checks if an attribute is defined.
          *
          * @param string $name The attribute name
@@ -11015,14 +11061,14 @@ namespace {
         }
         
         /**
-         * Remove an item from the session.
+         * Remove one or many items from the session.
          *
-         * @param string $key
+         * @param string|array $keys
          * @return void 
          * @static 
          */
-        public static function forget($key){
-            \Illuminate\Session\Store::forget($key);
+        public static function forget($keys){
+            \Illuminate\Session\Store::forget($keys);
         }
         
         /**
