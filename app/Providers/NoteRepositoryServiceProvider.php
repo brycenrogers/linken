@@ -2,16 +2,16 @@
 
 namespace App\Providers;
 
-use App\Models\Item;
+use App\Models\Note;
 use Illuminate\Support\ServiceProvider;
 use Auth;
-use App\Repositories\ItemRepository;
+use App\Repositories\NoteRepository;
 
 /**
- * Class ItemRepositoryServiceProvider
+ * Class NoteRepositoryServiceProvider
  * @package App\Providers
  */
-class ItemRepositoryServiceProvider extends ServiceProvider
+class NoteRepositoryServiceProvider extends ServiceProvider
 {
     protected $defer = true;
 
@@ -32,11 +32,11 @@ class ItemRepositoryServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('App\Interfaces\UserItemRepositoryInterface', function() {
-            return new ItemRepository(new Item(), Auth::user());
+        $this->app->bind('App\Interfaces\UserNoteRepositoryInterface', function() {
+            return new NoteRepository(new Note(), Auth::user());
         });
-        $this->app->bind('App\Interfaces\ItemRepositoryInterface', function() {
-            return new ItemRepository(new Item());
+        $this->app->bind('App\Interfaces\NoteRepositoryInterface', function() {
+            return new NoteRepository(new Note());
         });
     }
 
@@ -48,8 +48,8 @@ class ItemRepositoryServiceProvider extends ServiceProvider
     public function provides()
     {
         return [
-            'App\Interfaces\ItemRepositoryInterface',
-            'App\Interfaces\UserItemRepositoryInterface'
+            'App\Interfaces\NoteRepositoryInterface',
+            'App\Interfaces\UserNoteRepositoryInterface'
         ];
     }
 }

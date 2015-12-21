@@ -11,21 +11,36 @@ abstract class BaseRepository {
 	 */
 	protected $model;
 
-    /**
+	/**
+     * Current User instance
+     *
+     * @var \App\Models\User
+     */
+    protected $user;
+
+	/**
 	 * Destroy a model.
 	 *
 	 * @param  int $id
-	 * @return void
+	 * @throws \Exception
 	 */
 	public function destroy($id)
 	{
-		$this->getById($id)->delete();
+        // Make sure they own it
+		$obj = $this->getById($id);
+        if ($obj->user != $this->user) {
+            throw new \Exception('ACL error while deleting');
+        }
+
+        // Delete
+        $obj->delete();
 	}
+
 	/**
 	 * Get Model by id.
 	 *
 	 * @param  int  $id
-	 * @return App\Models\Model
+	 * @return \Illuminate\Database\Eloquent\Model
 	 */
 	public function getById($id)
 	{

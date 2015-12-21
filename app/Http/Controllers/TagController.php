@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Interfaces\UserTagRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Cache;
@@ -16,10 +17,11 @@ class TagController extends Controller
         $this->middleware('auth');
     }
 
-    public function search(Request $request)
+    public function search(Request $request, UserTagRepositoryInterface $tagRepo)
     {
-        $q = $request->input('q');
-        $tagObjs = Tag::where('name', 'like', $q . "%")->where('user_id', '=', Auth::user()->id)->get();
+        $query = $request->input('q');
+
+        $tagObjs = $tagRepo->search($query);
 
         $tags = [];
         foreach($tagObjs as $tag) {
@@ -53,7 +55,7 @@ class TagController extends Controller
             // Build display
             $display = "<ul>";
             foreach ($tagsDisplayArray as $letter => $tagNameArray) {
-                $display .= "<div class='letter-headersssss'>$letter</div>";
+                $display .= "<div class='letter-headers'>$letter</div>";
                 $display .= "<li class='divider' role='separator'></li>";
                 foreach ($tagNameArray as $tag) {
                     $display .= "<li><div class='tag'>$tag</div></li>";

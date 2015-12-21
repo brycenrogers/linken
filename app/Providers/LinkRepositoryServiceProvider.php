@@ -2,16 +2,16 @@
 
 namespace App\Providers;
 
-use App\Models\Item;
+use App\Models\Link;
 use Illuminate\Support\ServiceProvider;
 use Auth;
-use App\Repositories\ItemRepository;
+use App\Repositories\LinkRepository;
 
 /**
- * Class ItemRepositoryServiceProvider
+ * Class LinkRepositoryServiceProvider
  * @package App\Providers
  */
-class ItemRepositoryServiceProvider extends ServiceProvider
+class LinkRepositoryServiceProvider extends ServiceProvider
 {
     protected $defer = true;
 
@@ -32,11 +32,11 @@ class ItemRepositoryServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('App\Interfaces\UserItemRepositoryInterface', function() {
-            return new ItemRepository(new Item(), Auth::user());
+        $this->app->bind('App\Interfaces\UserLinkRepositoryInterface', function() {
+            return new LinkRepository(new Link(), Auth::user());
         });
-        $this->app->bind('App\Interfaces\ItemRepositoryInterface', function() {
-            return new ItemRepository(new Item());
+        $this->app->bind('App\Interfaces\LinkRepositoryInterface', function() {
+            return new LinkRepository(new Link());
         });
     }
 
@@ -48,8 +48,8 @@ class ItemRepositoryServiceProvider extends ServiceProvider
     public function provides()
     {
         return [
-            'App\Interfaces\ItemRepositoryInterface',
-            'App\Interfaces\UserItemRepositoryInterface'
+            'App\Interfaces\LinkRepositoryInterface',
+            'App\Interfaces\UserLinkRepositoryInterface'
         ];
     }
 }

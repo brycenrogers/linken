@@ -2,16 +2,16 @@
 
 namespace App\Providers;
 
-use App\Models\Item;
+use App\Models\Tag;
 use Illuminate\Support\ServiceProvider;
 use Auth;
-use App\Repositories\ItemRepository;
+use App\Repositories\TagRepository;
 
 /**
- * Class ItemRepositoryServiceProvider
+ * Class TagRepositoryServiceProvider
  * @package App\Providers
  */
-class ItemRepositoryServiceProvider extends ServiceProvider
+class TagRepositoryServiceProvider extends ServiceProvider
 {
     protected $defer = true;
 
@@ -32,11 +32,11 @@ class ItemRepositoryServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('App\Interfaces\UserItemRepositoryInterface', function() {
-            return new ItemRepository(new Item(), Auth::user());
+        $this->app->bind('App\Interfaces\UserTagRepositoryInterface', function() {
+            return new TagRepository(new Tag(), Auth::user());
         });
-        $this->app->bind('App\Interfaces\ItemRepositoryInterface', function() {
-            return new ItemRepository(new Item());
+        $this->app->bind('App\Interfaces\TagRepositoryInterface', function() {
+            return new TagRepository(new Tag());
         });
     }
 
@@ -48,8 +48,8 @@ class ItemRepositoryServiceProvider extends ServiceProvider
     public function provides()
     {
         return [
-            'App\Interfaces\ItemRepositoryInterface',
-            'App\Interfaces\UserItemRepositoryInterface'
+            'App\Interfaces\TagRepositoryInterface',
+            'App\Interfaces\UserTagRepositoryInterface'
         ];
     }
 }

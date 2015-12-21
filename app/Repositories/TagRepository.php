@@ -2,17 +2,16 @@
 
 namespace App\Repositories;
 
+use App\Interfaces\TagRepositoryInterface;
+use App\Interfaces\UserTagRepositoryInterface;
 use App\Models\Tag;
 use App\Models\User;
 
-class TagRepository extends BaseRepository {
-
-    /**
-     * Current User instance
-     *
-     * @var \App\Models\User
-     */
-    protected $user;
+/**
+ * Class TagRepository
+ * @package App\Repositories
+ */
+class TagRepository extends BaseRepository implements TagRepositoryInterface, UserTagRepositoryInterface {
 
     /**
      * Create a new ItemRepository instance.
@@ -20,13 +19,15 @@ class TagRepository extends BaseRepository {
      * @param Tag $tag
      * @param User $user
      */
-    public function __construct(Tag $tag, User $user)
+    public function __construct(Tag $tag, User $user = null)
     {
         $this->model = $tag;
-        $this->user = $user;
+        if ($user) {
+            $this->user = $user;
+        }
     }
 
-    public function store($inputs, $userId)
+    public function store($inputs)
     {
         $tags = $inputs['tags'];
         $tags = explode("|", $tags);
@@ -36,15 +37,24 @@ class TagRepository extends BaseRepository {
                 continue;
             }
             $newTag = new Tag();
-            $newTag = $newTag->firstOrNew(['name' => $tag, 'user_id' => $userId]);
+            $newTag = $newTag->firstOrNew(['name' => $tag, 'user_id' => $this->user->id]);
             if ( ! $newTag->id ) {
-                $newTag->user_id = $userId;
+                $newTag->user_id = $this->user->id;
                 $newTag->save();
             }
             $tagIds[] = $newTag->id;
         }
 
         return $tagIds;
+    }
+
+    public function search($query)
+    {
+        $query = Tag::where('name', 'like', $query . "%");
+        if ($this->user) {
+            $query->where('user_id', '=', $this->user->id);
+        }
+        return $query->get();
     }
 
 }

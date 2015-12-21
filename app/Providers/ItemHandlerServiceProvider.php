@@ -2,18 +2,18 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider,
-    Auth,
-    App\Libraries\CacheHandler,
-    App\Models\Item,
-    App\Repositories\ItemRepository,
-    App\Models\Note,
-    App\Repositories\NoteRepository,
-    App\Models\Link,
-    App\Repositories\LinkRepository,
-    App\Models\Tag,
-    App\Repositories\TagRepository,
-    App\Libraries\ItemHandler;
+use Illuminate\Support\ServiceProvider;
+use Auth;
+use App\Libraries\CacheHandler;
+use App\Models\Item;
+use App\Repositories\ItemRepository;
+use App\Models\Note;
+use App\Repositories\NoteRepository;
+use App\Models\Link;
+use App\Repositories\LinkRepository;
+use App\Models\Tag;
+use App\Repositories\TagRepository;
+use App\Libraries\ItemHandler;
 
 /**
  * Class ItemHandlerServiceProvider

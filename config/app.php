@@ -148,10 +148,12 @@ return [
         App\Providers\ImageServiceProvider::class,
         App\Providers\ItemHandlerServiceProvider::class,
         App\Providers\CacheManagerServiceProvider::class,
-        App\Providers\ItemRepositoryServiceProvider::class,
         Spatie\SearchIndex\SearchIndexServiceProvider::class,
-        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class
-
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+        App\Providers\LinkRepositoryServiceProvider::class,
+        App\Providers\NoteRepositoryServiceProvider::class,
+        App\Providers\TagRepositoryServiceProvider::class,
+        App\Providers\ItemRepositoryServiceProvider::class,
     ],
 
     /*

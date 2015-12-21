@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Interfaces\CacheHandlerInterface;
-use App\Interfaces\ItemRepositoryInterface;
+use App\Interfaces\UserItemRepositoryInterface;
 use Illuminate\Http\Request;
 
 /**
@@ -22,10 +22,10 @@ class MainController extends Controller
      *
      * @param Request $request
      * @param CacheHandlerInterface $cacheHandler
-     * @param ItemRepositoryInterface $itemRepo
+     * @param UserItemRepositoryInterface $itemRepo
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getAll(Request $request, CacheHandlerInterface $cacheHandler, ItemRepositoryInterface $itemRepo)
+    public function getAll(Request $request, CacheHandlerInterface $cacheHandler, UserItemRepositoryInterface $itemRepo)
     {
         if ((!$request->has('page') || ($request->has('page') && $request->input('page') == 1))) {
             // Requesting the main page, load from cache if available

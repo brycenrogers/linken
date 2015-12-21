@@ -2,29 +2,16 @@
 
 namespace App\Repositories;
 
-use App\Interfaces\ItemRepositoryInterface,
-    App\Models\Item,
-    App\Models\User;
+use App\Interfaces\ItemRepositoryInterface;
+use App\Models\Item;
+use App\Models\User;
+use App\Interfaces\UserItemRepositoryInterface;
 
 /**
  * Class ItemRepository
  * @package App\Repositories
  */
-class ItemRepository extends BaseRepository implements ItemRepositoryInterface {
-
-    /**
-     * The Item instance
-     *
-     * @var \App\Models\Item
-     */
-    protected $item;
-
-    /**
-     * Current User instance
-     *
-     * @var \App\Models\User
-     */
-    protected $user;
+class ItemRepository extends BaseRepository implements ItemRepositoryInterface, UserItemRepositoryInterface {
 
     /**
      * Create a new ItemRepository instance.
@@ -32,10 +19,12 @@ class ItemRepository extends BaseRepository implements ItemRepositoryInterface {
      * @param Item $item
      * @param User $user
      */
-    public function __construct(Item $item, User $user)
+    public function __construct(Item $item, User $user = null)
     {
         $this->model = $item;
-        $this->user = $user;
+        if ($user) {
+            $this->user = $user;
+        }
     }
 
     /**
@@ -66,5 +55,29 @@ class ItemRepository extends BaseRepository implements ItemRepositoryInterface {
         return Item::where('user_id', '=', $this->user->id)
             ->orderBy('created_at', 'desc')
             ->simplePaginate($amount);
+    }
+
+    /**
+     * Get all Items that are associated to the specified Tags
+     *
+     * @param $tags array
+     * @return mixed
+     */
+    public function itemsForTags($tags)
+    {
+        $query = Item::whereHas('tags', function ($query) use ($tags) {
+                $query->whereIn('name', $tags);
+            });
+
+        // Include user constraint if a user is set
+        if ($this->user) {
+            $query->where('user_id', Auth::user()->id);
+        }
+
+        $query->where('itemable_type', 'App\Models\Link')
+            ->orderBy('created_at', 'desc')
+            ->simplePaginate();
+
+        return $query;
     }
 }

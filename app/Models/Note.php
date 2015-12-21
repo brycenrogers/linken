@@ -50,6 +50,6 @@ class Note extends Model implements Searchable
      */
     public function getSearchableId()
     {
-        return $this->id;
+        return $this->items()->getResults()->first()->id;
     }
 }

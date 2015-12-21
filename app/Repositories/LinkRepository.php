@@ -2,6 +2,8 @@
 
 namespace App\Repositories;
 
+use App\Interfaces\LinkRepositoryInterface;
+use App\Interfaces\UserLinkRepositoryInterface;
 use App\Models\Link;
 use App\Models\User;
 
@@ -9,14 +11,7 @@ use App\Models\User;
  * Class LinkRepository
  * @package App\Repositories
  */
-class LinkRepository extends BaseRepository {
-
-    /**
-     * Current User instance
-     *
-     * @var \App\Models\User
-     */
-    protected $user;
+class LinkRepository extends BaseRepository implements LinkRepositoryInterface, UserLinkRepositoryInterface {
 
     /**
      * Create a new ItemRepository instance.
@@ -24,10 +19,12 @@ class LinkRepository extends BaseRepository {
      * @param Link $link
      * @param User $user
      */
-    public function __construct(Link $link, User $user)
+    public function __construct(Link $link, User $user = null)
     {
         $this->model = $link;
-        $this->user = $user;
+        if ($user) {
+            $this->user = $user;
+        }
     }
 
     public function store($inputs)

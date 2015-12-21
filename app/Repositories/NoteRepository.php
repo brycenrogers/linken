@@ -2,17 +2,12 @@
 
 namespace App\Repositories;
 
+use App\Interfaces\NoteRepositoryInterface;
+use App\Interfaces\UserNoteRepositoryInterface;
 use App\Models\Note;
 use App\Models\User;
 
-class NoteRepository extends BaseRepository {
-
-    /**
-     * Current User instance
-     *
-     * @var \App\Models\User
-     */
-    protected $user;
+class NoteRepository extends BaseRepository implements NoteRepositoryInterface, UserNoteRepositoryInterface {
 
     /**
      * Create a new ItemRepository instance.
@@ -20,10 +15,12 @@ class NoteRepository extends BaseRepository {
      * @param Note $note
      * @param User $user
      */
-    public function __construct(Note $note, User $user)
+    public function __construct(Note $note, User $user = null)
     {
         $this->model = $note;
-        $this->user = $user;
+        if ($user) {
+            $this->user = $user;
+        }
     }
 
     public function store()

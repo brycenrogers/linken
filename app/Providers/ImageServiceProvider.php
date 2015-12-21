@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Libraries\ImageHandler,
-    Illuminate\Support\ServiceProvider;
+use App\Libraries\ImageHandler;
+use Illuminate\Support\ServiceProvider;
 
 class ImageServiceProvider extends ServiceProvider
 {
