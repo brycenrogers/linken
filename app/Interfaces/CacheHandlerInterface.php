@@ -2,6 +2,11 @@
 
 namespace App\Interfaces;
 
+/**
+ * Interface CacheHandlerInterface
+ * @package  App\Interfaces
+ * @provider App\Providers\CacheHandlerServiceProvider
+ */
 interface CacheHandlerInterface
 {
     const MAINPAGE      = 'main.page.';

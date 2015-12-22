@@ -154,6 +154,7 @@ return [
         App\Providers\NoteRepositoryServiceProvider::class,
         App\Providers\TagRepositoryServiceProvider::class,
         App\Providers\ItemRepositoryServiceProvider::class,
+        App\Providers\SearchHandlerServiceProvider::class
     ],
 
     /*

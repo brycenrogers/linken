@@ -2,6 +2,8 @@
 
 namespace App\Libraries;
 
+use App\Interfaces\SearchHandlerInterface;
+use App\Interfaces\UserSearchHandlerInterface;
 use App\Models\Item;
 use App\Models\Link;
 use App\Models\Note;
@@ -9,7 +11,15 @@ use App\Models\Tag;
 use App\Models\User;
 use SearchIndex;
 
-class SearchHandler {
+/**
+ * Class SearchHandler
+ *
+ * Responsible for performing search requests on ElasticSearch
+ *
+ * @package App\Libraries
+ * @provider App\Providers\SearchHandlerServiceProvider
+ */
+class SearchHandler implements SearchHandlerInterface, UserSearchHandlerInterface {
 
     /**
      * Current User
@@ -35,6 +45,7 @@ class SearchHandler {
     {
         $hits = SearchIndex::getResults($this->basicQuery($term, $this->user->id));
 
+        // Loop through the search hits and return Eloquent models for them
         $items = [];
         foreach($hits['hits']['hits'] as $hit) {
             $itemArray = $hit['_source'];
@@ -66,6 +77,13 @@ class SearchHandler {
         return $items;
     }
 
+    /**
+     * Perform a basic search on the index
+     *
+     * @param $term
+     * @param $userId
+     * @return array
+     */
     public function basicQuery($term, $userId)
     {
         $query = [
@@ -75,9 +93,14 @@ class SearchHandler {
                 'query' => [
                     'bool' => [
                         'must' => [
-                            ['match' => [
-                                '_all' => $term
-                            ]]
+                            [
+                                'fuzzy_like_this' => [
+                                    '_all' => [
+                                        'like_text' => $term,
+                                        'fuzziness' => 0.5
+                                    ]
+                                ]
+                            ]
                         ]
                     ]
                 ]
@@ -92,12 +115,19 @@ class SearchHandler {
         return $query;
     }
 
-    public function reindex() {
+    /**
+     * Rebuild the search index
+     * @return bool
+     * @throws \Exception
+     */
+    public function reindex()
+    {
         // Clear the search index
         try {
             SearchIndex::clearIndex();
         } catch (\Exception $e) {
             error_log($e->getMessage());
+            throw $e;
         }
 
         // Get all items and reindex them
@@ -106,7 +136,7 @@ class SearchHandler {
             SearchIndex::upsertToIndex($item->itemable);
         }
 
-        return \Response::json('Reindex Successful');
+        return true;
     }
 
 }
