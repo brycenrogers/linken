@@ -2,9 +2,9 @@
 
 namespace App\Libraries;
 
-use App\Interfaces\CacheHandlerInterface,
-    Cache,
-    App\Models\User;
+use App\Interfaces\CacheHandlerInterface;
+use Cache;
+use App\Models\User;
 
 class CacheHandler implements CacheHandlerInterface {
 

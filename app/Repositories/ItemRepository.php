@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Interfaces\ItemRepositoryInterface;
+use App\Interfaces\UserTagRepositoryInterface;
 use App\Models\Item;
 use App\Models\User;
 use App\Interfaces\UserItemRepositoryInterface;
@@ -71,13 +72,32 @@ class ItemRepository extends BaseRepository implements ItemRepositoryInterface, 
 
         // Include user constraint if a user is set
         if ($this->user) {
-            $query->where('user_id', Auth::user()->id);
+            $query->where('user_id', $this->user->id);
         }
 
         $query->where('itemable_type', 'App\Models\Link')
-            ->orderBy('created_at', 'desc')
-            ->simplePaginate();
+            ->orderBy('created_at', 'desc');
 
-        return $query;
+        return $query->simplePaginate(20);
+    }
+
+    public function discovered(UserTagRepositoryInterface $tagRepo)
+    {
+        // Get recent tags
+        $tags = $tagRepo->recent(10)->lists('name');
+
+        // Get items for recent tags
+        $query = Item::whereHas('tags', function ($query) use ($tags) {
+                $query->whereIn('name', $tags);
+            })
+            ->where('itemable_type', 'App\Models\Link')
+            ->orderBy('created_at', 'desc');
+
+        // If we have a user, exclude their tags
+        if ($this->user) {
+            $query->where('user_id', '<>', $this->user->id);
+        }
+
+        return $query->simplePaginate();
     }
 }

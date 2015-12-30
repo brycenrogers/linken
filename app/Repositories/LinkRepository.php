@@ -31,11 +31,27 @@ class LinkRepository extends BaseRepository implements LinkRepositoryInterface, 
     {
         $link = new Link();
         $link->url = urldecode($inputs['url']);
-        $link->photo_url = urldecode($inputs['photo_url']);
+        $link->photo_url = $this->cleanPhotoUrl($inputs['photo_url']);
         $link->title = $inputs['title'];
         $link->save();
 
         return $link;
+    }
+
+    public function cleanPhotoUrl($url)
+    {
+        $url = urldecode($url);
+
+        // Trim any unwanted characters first
+        $url = trim($url, '//');
+        $url = trim($url, '/');
+
+        // Check to see if 'http' exists at beginning of string
+        $html = substr($url, 0, 4);
+        if ($html == 'http') {
+            return $url;
+        }
+        return 'http://' . $url;
     }
 
 }

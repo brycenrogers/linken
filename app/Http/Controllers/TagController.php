@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Interfaces\UserItemRepositoryInterface;
 use App\Interfaces\UserTagRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -19,10 +20,13 @@ class TagController extends Controller
 
     public function search(Request $request, UserTagRepositoryInterface $tagRepo)
     {
+        // Get the query term
         $query = $request->input('q');
 
+        // Find any tags that match the query term
         $tagObjs = $tagRepo->search($query);
 
+        // Format the results for the UI
         $tags = [];
         foreach($tagObjs as $tag) {
             $tags[] = ['tag_id' => $tag->id, 'tag_value' => $tag->name];
@@ -68,22 +72,17 @@ class TagController extends Controller
         return \Response::view('panes.tagsPane', ['display' => $display]);
     }
 
-    public function discover()
+    /**
+     * Find links for the current user based on their recent tags, excluding any they added themselves
+     *
+     * @param UserItemRepositoryInterface $itemRepo
+     * @param UserTagRepositoryInterface $tagRepo
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function discover(UserItemRepositoryInterface $itemRepo, UserTagRepositoryInterface $tagRepo)
     {
-        // Get top 10 recent tags
-        $tags = Tag::where('user_id', Auth::user()->id)
-            ->orderBy('created_at', 'desc')
-            ->take(10)
-            ->lists('name');
-
-        // Find top 2 links for each tag, regardless of user
-        $items = Item::whereHas('tags', function ($query) use ($tags) {
-                $query->whereIn('name', $tags);
-            })
-            ->where('itemable_type', 'App\Models\Link')
-            ->where('user_id', '<>', Auth::user()->id)
-            ->orderBy('created_at', 'desc')
-            ->simplePaginate();
+        // Get discovered items
+        $items = $itemRepo->discovered($tagRepo);
 
         $title = "Discover";
         return view('all', ['items' => $items, 'title' => $title]);

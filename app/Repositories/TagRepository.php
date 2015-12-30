@@ -57,4 +57,21 @@ class TagRepository extends BaseRepository implements TagRepositoryInterface, Us
         return $query->get();
     }
 
+    /**
+     * @param $count
+     * @return mixed
+     */
+    public function recent($count)
+    {
+        $query = Tag::query()
+            ->orderBy('created_at', 'desc')
+            ->take($count);
+
+        if ($this->user) {
+            $query->where('user_id', $this->user->id);
+        }
+
+        return $query;
+    }
+
 }

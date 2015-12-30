@@ -9,16 +9,6 @@ body {
   font-size: 11pt;
   line-height: 15pt; }
 
-.linken-logo {
-  background-image: url("../images/linken-logo.png");
-  background-repeat: no-repeat;
-  width: 90px;
-  height: 98px;
-  margin: 0 auto;
-  position: relative;
-  z-index: 140;
-  display: block; }
-
 .container-main {
   background-color: #fff; }
 
@@ -63,6 +53,23 @@ body {
 
 .row.no-margin {
   margin: 0; }
+
+.container-header .linken-logo {
+  background-image: url("../images/linken-logo.png");
+  background-repeat: no-repeat;
+  width: 90px;
+  height: 98px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 140;
+  display: block; }
+
+.container-header .container-header-pane {
+  font-family: "Montserrat", sans-serif;
+  font-size: 16pt;
+  position: absolute;
+  top: 65px;
+  width: 100%; }
 
 .select2-results {
   font-size: 12pt !important; }

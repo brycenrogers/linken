@@ -2,6 +2,8 @@
 
 namespace App\Interfaces;
 
+use App\Models\User;
+
 /**
  * Interface ImageHandlerInterface
  * @package App\Interfaces
@@ -10,4 +12,5 @@ namespace App\Interfaces;
 interface ImageHandlerInterface
 {
     public function generateThumbnail($url);
+    public function uploadUserPhoto(User $user, $croppedPhotoData);
 }

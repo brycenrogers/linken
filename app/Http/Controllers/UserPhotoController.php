@@ -2,34 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\Interfaces\ImageHandlerInterface;
 use Auth;
 use Response;
 use Illuminate\Http\Request;
 
-class PhotoController extends Controller
+class UserPhotoController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
     }
 
-    public function postUpload(Request $request)
+    public function upload(Request $request, ImageHandlerInterface $imageHandler)
     {
         $user = Auth::user();
-
         $croppedPhotoData = $request->input('photoDataURI');
-        $data = file_get_contents($croppedPhotoData);
+        $upload = $imageHandler->uploadUserPhoto($user, $croppedPhotoData);
 
         // @todo Add validation to prevent any kind of injection
 
-        if ($data) {
-            $destinationPath = public_path() .'/assets/uploads/' . $user->id . ".png";
-            if(file_put_contents($destinationPath, $data)) {
-                $request->session()->flash('success', 'Photo updated!');
-            } else {
-                $request->session()->flash('error', 'Photo could not be updated :(');
-            }
-        }
+        $request->session()->flash($upload['flash'], $upload['message']);
 
         if ($request->has('redirectTo')) {
             return Response::redirectTo($request->input('redirectTo'));

@@ -9,28 +9,32 @@
         </div>
     @endif
     <div class="row no-margin">
-        <div class="col-md-1">
-            <!-- Single button -->
-            <div class="btn-group">
-                <button id="tags-dropdown" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="glyphicon glyphicon-tags" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;<span class="caret"></span>
-                </button>
-                <div class="dropdown-menu">
-                    <div id="tags-dropdown-pane"></div>
+        <div class="col-md-5">
+            <div class="btn-group" role="group" aria-label="...">
+                <a href="/tags/discover" type="button" class="btn btn-default<?php if($title == 'Discover') { echo " active"; } ?>" title="Discover"><span class="glyphicon glyphicon-road" aria-hidden="true"></span></a>
+                <a href="/" type="button" class="btn btn-default<?php if($title == 'All') { echo " active"; } ?>" title="List"><span class="glyphicon glyphicon-list" aria-hidden="true"></span></a>
+                <a href="/help" type="button" class="btn btn-default<?php if($title == 'Help') { echo " active"; } ?>" title="Help"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
+                <div class="btn-group">
+                    <button title="Tags" id="tags-dropdown" type="button" class="btn btn-default dropdown-toggle<?php if($title == 'Tags') { echo " active"; } ?>" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="glyphicon glyphicon-tags" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;<span class="caret"></span>
+                    </button>
+                    <div class="dropdown-menu">
+                        <div id="tags-dropdown-pane"></div>
+                    </div>
                 </div>
             </div>
+            <div class="pull-right">
+                <form action="/search" method="get" class="form-inline" style="margin-bottom: 0;">
+                    <div class="form-group">
+                        <input type="input" class="form-control" id="searchField" placeholder="Search" name="q" value="{{ (isset($q)) ? $q : null }}">
+                        <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                    </div>
+                </form>
+            </div>
         </div>
-        <div class="col-md-6">
-            <form action="/search" method="get" class="form-inline pull-left" style="margin-bottom: 0;">
-                <div class="form-group">
-                    <input type="input" class="form-control" id="searchField" placeholder="Search" name="q" value="{{ (isset($q)) ? $q : null }}">
-                    <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-                </div>
-            </form>
-        </div>
-        <div class="container-account-pane col-md-5">
+        <div class="container-account-pane col-md-7">
             <div class="dropdown pull-right">
-                <button type="button" title="Logged in as {{ $user->name }}" class="user-photo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-image: url('{!! file_exists(asset('/assets/uploads/' . $user->id . '.png')) ? asset('/assets/uploads/' . $user->id . '.png?' . time()) : asset('/assets/images/default-user.png') !!}');">
+                <button type="button" title="Logged in as {{ $user->name }}" class="user-photo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-image: url('{!! asset('/assets/images/uploads/' . Auth::user()->user_photo) !!}');">
                 </button>
                 <ul class="dropdown-menu">
                     <li>
@@ -60,13 +64,6 @@
             </div>
         </div>
     </div>
-    @if (isset($subControl))
-        <div class="row no-margin">
-            <div class="col-md-12" id="subcontrol-pane">
-                {!! $subControl !!}
-            </div>
-        </div>
-    @endif
     <!-- User Settings Modal -->
     <div class="modal fade" id="userSettingsModal" tabindex="-1" role="dialog" aria-labelledby="userSettingsModalLabel">
         <div class="modal-dialog" role="document">
@@ -114,7 +111,7 @@
                     <h4 class="modal-title" id="updatePhotoModalLabel">Update Photo</h4>
                 </div>
                 <div class="modal-body" style="position: relative;">
-                    <form action="/photo/upload" method="post" id="uploadPhotoForm">
+                    <form action="/user/photo/upload" method="post" id="uploadPhotoForm">
                         <div id="image-cropper">
                             <div class="cropit-image-preview" data-clicked="false"></div>
                             <br>

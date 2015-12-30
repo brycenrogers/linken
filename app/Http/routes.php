@@ -15,6 +15,7 @@
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
 Route::get('auth/logout', 'Auth\AuthController@getLogout');
+Route::get('auth/success', 'Auth\AuthController@success');
 
 // Registration routes...
 Route::get('auth/register', 'Auth\AuthController@getRegister');
@@ -24,7 +25,7 @@ Route::get('/welcome', function () {
     return view('welcome');
 });
 
-Route::post('photo/upload', 'PhotoController@postUpload');
+Route::post('user/photo/upload', 'UserPhotoController@upload');
 Route::post('link/parse', 'LinkParseController@postLinkParse');
 Route::post('item/store', 'ItemController@store');
 Route::get('item/destroy/{id}', 'ItemController@destroy');
@@ -34,5 +35,5 @@ Route::get('tags/discover', 'TagController@discover');
 Route::get('tags/pane', 'TagController@getTagsPane');
 Route::get('tags/search', 'TagController@search');
 Route::get('tags', 'ItemController@findItemsForTags');
-
+Route::get('home', 'MainController@getAll');
 Route::get('/', 'MainController@getAll');

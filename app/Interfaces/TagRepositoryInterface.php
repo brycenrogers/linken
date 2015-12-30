@@ -11,4 +11,5 @@ interface TagRepositoryInterface
 {
     public function search($query);
     public function store($inputs);
+    public function recent($count);
 }

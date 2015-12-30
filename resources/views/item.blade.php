@@ -1,13 +1,20 @@
 <div class="container-item-pane container">
     <div class="col-md-12">
         <div class="media link-padding">
-            @if (get_class($item->itemable) == "App\Models\Link" && $item->itemable->photo)
-                <div class="media-left">
+            <div class="media-left">
+                @if (get_class($item->itemable) == "App\Models\Link")
+                    <?php $photo_url = asset('/assets/images/new-link.png') ?>
+                    @if ($item->itemable->photo)
+                        <?php $photo_url = asset('assets/images/thumbs/' . $item->itemable->photo) ?>
+                    @endif
                     <a href="{{ $item->itemable->url }}">
-                        <div class="media-link-image" style="background-image: url('{{ asset('assets/images/thumbs/' . $item->itemable->photo) }}')"></div>
+                        <div class="media-link-image" style="background-image: url('{{ $photo_url }}')"></div>
                     </a>
-                </div>
-            @endif
+                @else
+                    <?php $photo_url = asset('/assets/images/new-note.png') ?>
+                    <div class="media-link-image" style="background-image: url('{{ $photo_url }}')"></div>
+                @endif
+            </div>
             <div class="media-body">
                 @if (get_class($item->itemable) == "App\Models\Link")
                     <h4 class="media-heading">
