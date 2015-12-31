@@ -13,6 +13,14 @@
     padding: 15px 0;
     border-bottom: 1px solid $greyLineColor;
 
+    .page-title {
+        font-family: $fontFace;
+        font-weight: 300;
+        font-size: 16pt;
+        margin: 7px 0;
+        color: #aaa;
+    }
+
     .container-account-pane {
         height: 34px;
     }

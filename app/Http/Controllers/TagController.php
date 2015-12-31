@@ -85,6 +85,22 @@ class TagController extends Controller
         $items = $itemRepo->discovered($tagRepo);
 
         $title = "Discover";
+        return view('discover', ['items' => $items, 'title' => $title]);
+    }
+
+    /**
+     * Find items that relate to the tags passed in
+     *
+     * @param Request $request
+     * @param UserItemRepositoryInterface $itemRepo
+     * @return \Illuminate\View\View
+     */
+    public function findItemsForTags(Request $request, UserItemRepositoryInterface $itemRepo)
+    {
+        $q = $request->input('q');
+        $tags = explode(",", $q);
+        $items = $itemRepo->itemsForTags($tags);
+        $title = "Tag : " . $q;
         return view('all', ['items' => $items, 'title' => $title]);
     }
 }

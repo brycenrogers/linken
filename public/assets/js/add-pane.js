@@ -12,9 +12,17 @@ $( document ).ready(function() {
     var addButtonSpinner;
     var infoPaneSpinner;
 
-    autosize($('textarea#add'));
-    autosize($('textarea#add-description'));
+    if ($('div#blue-hitbox-add-pane.flash').length) {
 
+        // Show the message
+        $('textarea#add').hide();
+        $('#flash').show();
+
+        // Transition the background color back to normal
+        setTimeout(function() {
+            revertHitboxStyle();
+        }, 2000);
+    }
     $('div#blue-hitbox-add-pane').click(function() {
         $('textarea#add').focus();
     });
@@ -127,6 +135,46 @@ $( document ).ready(function() {
                 }
             });
     });
+    function showHitboxAlert(type, message) {
+
+        var successBackgroundColor = "#dff0d8";
+        var successTextColor = "#3c763d";
+        var errorBackgroundColor = "#f2dede";
+        var errorTextColor = "#a94442";
+
+        var backgroundColor;
+        var textColor;
+
+        if (type == 'success') {
+            backgroundColor = successBackgroundColor;
+            textColor = successTextColor;
+        } else if (type == 'error') {
+            backgroundColor = errorBackgroundColor;
+            textColor = errorTextColor;
+        }
+
+        $('textarea#add').fadeOut('fast');
+
+        $('div#blue-hitbox-add-pane').velocity({
+            backgroundColor: backgroundColor
+        }, 500, function () {
+
+            $('#flash').html(message).css('color', textColor).fadeIn('fast');
+
+            // Transition the background color back to normal
+            setTimeout(function() {
+                revertHitboxStyle();
+            }, 2000);
+        });
+    }
+    function revertHitboxStyle() {
+        $('#flash').fadeOut('fast');
+        $('div#blue-hitbox-add-pane').velocity({
+            backgroundColor: "#448dff"
+        }, 500, function () {
+            $('textarea#add').fadeIn('fast');
+        });
+    }
     function triggerInfoPane()
     {
         var entry = $.trim($('textarea#add').val());
@@ -167,10 +215,15 @@ $( document ).ready(function() {
 
     function openAddPane()
     {
+        if ($('div#blue-hitbox-add-pane').hasClass('flash')) {
+            revertHitboxStyle();
+        }
         if ($('div#add-pane').attr('data-toggle') == 'open') {
             return;
         }
         $('div#add-pane').attr('data-toggle', 'open');
+        autosize($('textarea#add'));
+        autosize($('textarea#add-description'));
         var height = 160;
         if($('input#add-pane-height').val() != '') {
             height = $('input#add-pane-height').val();
@@ -229,6 +282,7 @@ $( document ).ready(function() {
                     }
                     if (newItemData) {
                         showNewItem(newItemData);
+                        showHitboxAlert('success', 'Saved!');
                     }
                 });
             });

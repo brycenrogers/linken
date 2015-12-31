@@ -1,0 +1,26 @@
+//  ====================  Discover SASS  ======================
+
+//    created by:        Brycen Rogers ( brycenrogers@gmail.com )
+//    creation data:     December 30, 2015
+
+//    This file contains styles for the Discover page of Linken
+
+//  ===========================================================
+
+table#discover-table {
+    td#discover-sidebar-td {
+        width: 200px;
+        background-color: #fafafa;
+        border-right: 1px solid $greyLineColor;
+
+        #discover-sidebar-container {
+
+        }
+    }
+    td#discover-list-td {
+
+        #discover-list-container {
+
+        }
+    }
+}

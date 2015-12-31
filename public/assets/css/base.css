@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
+@import url(https://fonts.googleapis.com/css?family=Oxygen:400,300,700|Montserrat);
 .btn-primary {
   background-color: #448dff;
   text-shadow: 0 1px 1px #405da3; }
@@ -65,14 +65,21 @@ body {
   display: block; }
 
 .container-header .container-header-pane {
-  font-family: "Montserrat", sans-serif;
+  font-family: "Oxygen", sans-serif;
   font-size: 16pt;
+  font-weight: 300;
   position: absolute;
   top: 65px;
   width: 100%; }
 
 .select2-results {
   font-size: 12pt !important; }
+
+#blue-hitbox-add-pane.flash.flash-success {
+  background-color: #dff0d8; }
+
+#blue-hitbox-add-pane.flash.flash-error {
+  background-color: #f2dede; }
 
 #blue-hitbox-add-pane {
   float: left;
@@ -82,7 +89,17 @@ body {
   background-color: #448dff;
   border-bottom: 1px solid #405da3;
   padding-top: 20px;
-  padding-bottom: 20px; }
+  padding-bottom: 20px;
+  min-height: 66px; }
+  #blue-hitbox-add-pane .flash-message {
+    display: none;
+    font-family: "Oxygen", sans-serif;
+    font-size: 16pt;
+    margin: 2px 0; }
+  #blue-hitbox-add-pane .flash-message.success {
+    color: #3c763d; }
+  #blue-hitbox-add-pane .flash-message.error {
+    color: #a94442; }
   #blue-hitbox-add-pane textarea#add {
     float: left;
     width: 100%;
@@ -94,9 +111,10 @@ body {
     font-size: 16pt;
     color: white;
     outline: none;
-    font-family: "Montserrat", sans-serif;
+    font-family: "Oxygen", sans-serif;
     text-shadow: 0 1px 1px #405da3;
-    resize: none; }
+    resize: none;
+    z-index: 140; }
     #blue-hitbox-add-pane textarea#add::-webkit-input-placeholder {
       color: #cddcff;
       text-shadow: 0 -1px 1px #405da3; }
@@ -168,7 +186,7 @@ div#info-pane {
   div#info-pane div#info-title-container {
     margin: 16px 0;
     font-weight: bold;
-    font-family: "Montserrat", sans-serif;
+    font-family: "Oxygen", sans-serif;
     font-size: 16pt;
     padding-left: 0; }
     div#info-pane div#info-title-container input#info-title {
@@ -229,7 +247,7 @@ div#add-fader {
         .container-item-pane div.media-footer div.media-options a :hover {
           color: #777; }
   .container-item-pane h4.media-heading {
-    font-family: "Montserrat", sans-serif;
+    font-family: "Oxygen", sans-serif;
     font-size: 24px;
     color: #BE5C00;
     margin-bottom: 0; }
@@ -255,6 +273,12 @@ div#pager-container {
   float: left;
   padding: 15px 0;
   border-bottom: 1px solid #e3e3e3; }
+  .container-control-pane .page-title {
+    font-family: "Oxygen", sans-serif;
+    font-weight: 300;
+    font-size: 16pt;
+    margin: 7px 0;
+    color: #aaa; }
   .container-control-pane .container-account-pane {
     height: 34px; }
   .container-control-pane .user-photo {
@@ -314,5 +338,10 @@ div#subcontrol-pane {
   padding: 15px;
   border-top: 1px solid #e3e3e3;
   margin: 8px 0 -15px; }
+
+table#discover-table td#discover-sidebar-td {
+  width: 200px;
+  background-color: #fafafa;
+  border-right: 1px solid #e3e3e3; }
 
 /*# sourceMappingURL=base.css.map */

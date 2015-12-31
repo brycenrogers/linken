@@ -43,7 +43,7 @@ class MainController extends Controller
             $items = $itemRepo->getItemsPaginated(20);
         }
 
-        $title = "All";
+        $title = "List";
         return view('all', ['items' => $items, 'title' => $title]);
     }
 }

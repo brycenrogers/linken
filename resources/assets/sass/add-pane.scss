@@ -10,6 +10,12 @@
 .select2-results {
     font-size: 12pt !important;
 }
+#blue-hitbox-add-pane.flash.flash-success {
+    background-color: #dff0d8;
+}
+#blue-hitbox-add-pane.flash.flash-error {
+    background-color: #f2dede;
+}
 #blue-hitbox-add-pane {
     float: left;
     width: 100%;
@@ -19,6 +25,20 @@
     border-bottom: 1px solid #405da3;
     padding-top: 20px;
     padding-bottom: 20px;
+    min-height: 66px;
+
+    .flash-message {
+        display: none;
+        font-family: $fontFace;
+        font-size: 16pt;
+        margin: 2px 0;
+    }
+    .flash-message.success {
+        color: #3c763d;
+    }
+    .flash-message.error {
+        color: #a94442;
+    }
 
     textarea#add {
         float: left;
@@ -34,6 +54,7 @@
         font-family: $fontFace;
         text-shadow: 0 1px 1px #405da3;
         resize: none;
+        z-index: 140;
 
         &::-webkit-input-placeholder {
             color: #cddcff;

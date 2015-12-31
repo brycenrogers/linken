@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Interfaces\ImageHandlerInterface;
 use App\Models\Link,
     Illuminate\Console\Command;
+use SearchIndex;
 
 class GenerateThumbnails extends Command
 {
@@ -42,6 +43,7 @@ class GenerateThumbnails extends Command
                     $link->photo = $generatedFilename;
                     $link->photo_url = null;
                     $link->save();
+                    SearchIndex::upsertToIndex($link);
                 }
             }
             catch (\Exception $e) {

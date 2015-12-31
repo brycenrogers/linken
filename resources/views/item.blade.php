@@ -44,6 +44,7 @@
                         @endforeach
                     </div>
                     <div class="media-options">
+                        @if ($item->user == Auth::user())
                         <a href="#itemSettingsModal"
                            class="settings-link"
                            title="Settings"
@@ -54,6 +55,7 @@
                            data-description="{{ $item->description }}">
                             <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
                         </a>
+                        @endif
                         <a href="#itemShareModal" class="share-link" title="Share" data-toggle="modal">
                             <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
                         </a>

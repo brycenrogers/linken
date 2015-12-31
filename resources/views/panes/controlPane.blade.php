@@ -1,27 +1,34 @@
 <div class="container-control-pane">
-    @if(Session::has('success'))
-        <div class="alert alert-success col-md-12">
-            {{ Session::get('success') }}
-        </div>
-    @elseif (Session::has('error'))
-        <div class="alert alert-danger col-md-12">
-            {{ Session::get('error') }}
-        </div>
-    @endif
     <div class="row no-margin">
-        <div class="col-md-5">
+        <div class="col-md-4">
+            <div class="page-title">
+                {{ $title }}
+            </div>
+        </div>
+        <div class="col-md-7">
             <div class="btn-group" role="group" aria-label="...">
-                <a href="/tags/discover" type="button" class="btn btn-default<?php if($title == 'Discover') { echo " active"; } ?>" title="Discover"><span class="glyphicon glyphicon-road" aria-hidden="true"></span></a>
-                <a href="/" type="button" class="btn btn-default<?php if($title == 'All') { echo " active"; } ?>" title="List"><span class="glyphicon glyphicon-list" aria-hidden="true"></span></a>
-                <a href="/help" type="button" class="btn btn-default<?php if($title == 'Help') { echo " active"; } ?>" title="Help"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a>
+                <a href="/discover" type="button" class="btn btn-default<?php if($title == 'Discover') { echo " active"; } ?>" title="Discover">
+                    <span class="glyphicon glyphicon-road" aria-hidden="true"></span>
+                    &nbsp;Discover
+                </a>
+                <a href="/" type="button" class="btn btn-default<?php if($title == 'List') { echo " active"; } ?>" title="List">
+                    <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                    &nbsp;List
+                </a>
                 <div class="btn-group">
                     <button title="Tags" id="tags-dropdown" type="button" class="btn btn-default dropdown-toggle<?php if($title == 'Tags') { echo " active"; } ?>" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="glyphicon glyphicon-tags" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;<span class="caret"></span>
+                        <span class="glyphicon glyphicon-tags" aria-hidden="true"></span>
+                        &nbsp;Tags
+                        &nbsp;&nbsp;<span class="caret"></span>
                     </button>
                     <div class="dropdown-menu">
                         <div id="tags-dropdown-pane"></div>
                     </div>
                 </div>
+                <a href="/help" type="button" class="btn btn-default<?php if($title == 'Help') { echo " active"; } ?>" title="Help">
+                    <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                    &nbsp;Help
+                </a>
             </div>
             <div class="pull-right">
                 <form action="/search" method="get" class="form-inline" style="margin-bottom: 0;">
@@ -32,7 +39,7 @@
                 </form>
             </div>
         </div>
-        <div class="container-account-pane col-md-7">
+        <div class="container-account-pane col-md-1">
             <div class="dropdown pull-right">
                 <button type="button" title="Logged in as {{ $user->name }}" class="user-photo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-image: url('{!! asset('/assets/images/uploads/' . Auth::user()->user_photo) !!}');">
                 </button>
@@ -87,17 +94,46 @@
     <div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="changePasswordModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="changePasswordModalLabel">Change Password</h4>
-                </div>
-                <div class="modal-body">
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
+                <form method="POST" action="/settings/changePassword" class="form-horizontal">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="changePasswordModalLabel">Change Password</h4>
+                    </div>
+                    <div class="modal-body">
+                        @if (count($errors) > 0)
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                            {!! csrf_field() !!}
+                            <div class="form-group">
+                                <label for="email" class="col-sm-4 control-label">Current Password</label>
+                                <div class="col-sm-8">
+                                    <input name="old" type="password" class="form-control" id="oldPassword" placeholder="Current Password" value="{{ old('old') }}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="email" class="col-sm-4 control-label">New Password</label>
+                                <div class="col-sm-8">
+                                    <input name="password" type="password" class="form-control" id="newPassword" placeholder="New Password" value="{{ old('password') }}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="email" class="col-sm-4 control-label">Confirm New Password</label>
+                                <div class="col-sm-8">
+                                    <input name="password_confirmation" type="password" class="form-control" id="newPasswordConfirmation" placeholder="Confirm New Password" value="{{ old('password_confirmation') }}">
+                                </div>
+                            </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save New Password</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

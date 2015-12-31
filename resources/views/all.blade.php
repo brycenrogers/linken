@@ -16,7 +16,7 @@
         @each('item', $items, 'item')
     </div>
 
-    @if (is_array($items))
+    @if ( ! is_array($items))
         <div id="pager-container">
             {!! $items->render() !!}
         </div>

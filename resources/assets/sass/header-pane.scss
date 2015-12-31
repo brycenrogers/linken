@@ -11,8 +11,9 @@
     }
 
     .container-header-pane {
-        font-family: "Montserrat", sans-serif;
+        font-family: $fontFace;
         font-size: 16pt;
+        font-weight: 300;
         position: absolute;
         top: 65px;
         width: 100%;

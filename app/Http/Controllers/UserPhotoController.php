@@ -14,6 +14,13 @@ class UserPhotoController extends Controller
         $this->middleware('auth');
     }
 
+    /**
+     * Handle user photo uploads
+     *
+     * @param Request $request
+     * @param ImageHandlerInterface $imageHandler
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function upload(Request $request, ImageHandlerInterface $imageHandler)
     {
         $user = Auth::user();

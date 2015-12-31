@@ -21,19 +21,29 @@ Route::get('auth/success', 'Auth\AuthController@success');
 Route::get('auth/register', 'Auth\AuthController@getRegister');
 Route::post('auth/register', 'Auth\AuthController@postRegister');
 
+// Password reset link request routes...
+Route::get('password/email', 'Auth\PasswordController@getEmail');
+Route::post('password/email', 'Auth\PasswordController@postEmail');
+
+// Password reset routes...
+Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
+Route::post('password/reset', 'Auth\PasswordController@postReset');
+
+// Homepage
 Route::get('/welcome', function () {
     return view('welcome');
 });
 
+Route::post('settings/changePassword', 'UserSettingsController@changePassword');
 Route::post('user/photo/upload', 'UserPhotoController@upload');
 Route::post('link/parse', 'LinkParseController@postLinkParse');
 Route::post('item/store', 'ItemController@store');
 Route::get('item/destroy/{id}', 'ItemController@destroy');
 Route::get('search/reindex', 'SearchController@reindex');
 Route::get('search', 'SearchController@search');
-Route::get('tags/discover', 'TagController@discover');
+Route::get('discover', 'TagController@discover');
 Route::get('tags/pane', 'TagController@getTagsPane');
 Route::get('tags/search', 'TagController@search');
-Route::get('tags', 'ItemController@findItemsForTags');
+Route::get('tags', 'TagController@findItemsForTags');
 Route::get('home', 'MainController@getAll');
 Route::get('/', 'MainController@getAll');
