@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Libraries\CacheHandler;
+use App\Handlers\CacheHandler;
 use Auth;
 use Illuminate\Support\ServiceProvider;
 
@@ -32,6 +32,9 @@ class CacheManagerServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind('App\Interfaces\CacheHandlerInterface', function(){
+            return new CacheHandler();
+        });
+        $this->app->bind('App\Interfaces\UserCacheHandlerInterface', function(){
             return new CacheHandler(Auth::user());
         });
     }
@@ -43,6 +46,9 @@ class CacheManagerServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return ['App\Interfaces\CacheHandlerInterface'];
+        return [
+            'App\Interfaces\CacheHandlerInterface',
+            'App\Interfaces\UserCacheHandlerInterface'
+        ];
     }
 }

@@ -49,11 +49,11 @@ class ItemRepository extends BaseRepository implements ItemRepositoryInterface, 
      * Get a paginated result set of Items for a specific User
      *
      * @param $amount int
-     * @return mixed
+     * @return \Illuminate\Pagination\Paginator
      */
     public function getItemsPaginated($amount)
     {
-        return Item::where('user_id', '=', $this->user->id)
+        return Item::with('itemable')->where('user_id', '=', $this->user->id)
             ->orderBy('created_at', 'desc')
             ->simplePaginate($amount);
     }
@@ -66,7 +66,7 @@ class ItemRepository extends BaseRepository implements ItemRepositoryInterface, 
      */
     public function itemsForTags($tags)
     {
-        $query = Item::whereHas('tags', function ($query) use ($tags) {
+        $query = Item::with('itemable')->whereHas('tags', function ($query) use ($tags) {
                 $query->whereIn('name', $tags);
             });
 
@@ -87,7 +87,7 @@ class ItemRepository extends BaseRepository implements ItemRepositoryInterface, 
         $tags = $tagRepo->recent(10)->lists('name');
 
         // Get items for recent tags
-        $query = Item::whereHas('tags', function ($query) use ($tags) {
+        $query = Item::with('itemable')->whereHas('tags', function ($query) use ($tags) {
                 $query->whereIn('name', $tags);
             })
             ->where('itemable_type', 'App\Models\Link')

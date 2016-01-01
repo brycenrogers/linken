@@ -9,6 +9,6 @@ namespace App\Interfaces;
  */
 interface SearchHandlerInterface
 {
-    public function search($term);
+    public function search($term, $sortColumn = null, $sortDirection = 'desc', $limit = 50);
     public function reindex();
 }

@@ -14,6 +14,8 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         \App\Console\Commands\GenerateThumbnails::class,
+        \App\Console\Commands\GenerateAllDiscoverCache::class,
+        \App\Console\Commands\GeneratePopularDiscoverCache::class
     ];
 
     /**
@@ -24,7 +26,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('generateThumbnails')
-                 ->everyMinute();
+        $schedule->command('generateThumbnails')->everyMinute();
+        //$schedule->command('generatePopularDiscoverCache')->everyMinute();
+        $schedule->command('generateAllDiscoverCache')->everyMinute();
     }
 }

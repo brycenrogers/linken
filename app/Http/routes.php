@@ -38,6 +38,9 @@ Route::post('settings/changePassword', 'UserSettingsController@changePassword');
 Route::post('user/photo/upload', 'UserPhotoController@upload');
 Route::post('link/parse', 'LinkParseController@postLinkParse');
 Route::post('item/store', 'ItemController@store');
+
+//Route::get('test', 'MainController@test');
+
 Route::get('item/destroy/{id}', 'ItemController@destroy');
 Route::get('search/reindex', 'SearchController@reindex');
 Route::get('search', 'SearchController@search');

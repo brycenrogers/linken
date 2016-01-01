@@ -32,6 +32,9 @@ abstract class BaseRepository {
             throw new \Exception('ACL error while deleting');
         }
 
+		// Delete subclass
+		$obj->itemable->delete();
+
         // Delete
         $obj->delete();
 	}

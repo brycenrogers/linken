@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Handlers\DiscoverCacheHandler;
 use App\Interfaces\CacheHandlerInterface;
+use App\Interfaces\SearchHandlerInterface;
+use App\Interfaces\UserCacheHandlerInterface;
 use App\Interfaces\UserItemRepositoryInterface;
 use Illuminate\Http\Request;
 
@@ -21,22 +24,22 @@ class MainController extends Controller
      * Get items for display
      *
      * @param Request $request
-     * @param CacheHandlerInterface $cacheHandler
+     * @param UserCacheHandlerInterface $cacheHandler
      * @param UserItemRepositoryInterface $itemRepo
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getAll(Request $request, CacheHandlerInterface $cacheHandler, UserItemRepositoryInterface $itemRepo)
+    public function getAll(Request $request, UserCacheHandlerInterface $cacheHandler, UserItemRepositoryInterface $itemRepo)
     {
         if ((!$request->has('page') || ($request->has('page') && $request->input('page') == 1))) {
             // Requesting the main page, load from cache if available
-            if ($cacheHandler->has(CacheHandlerInterface::MAINPAGE)) {
-                $items = $cacheHandler->get(CacheHandlerInterface::MAINPAGE);
+            if ($cacheHandler->has(UserCacheHandlerInterface::MAINPAGE)) {
+                $items = $cacheHandler->get(UserCacheHandlerInterface::MAINPAGE);
             } else {
                 // Cache not available, get all items for user
                 $items = $itemRepo->getItemsPaginated(20);
 
                 // Save in cache for next request
-                $cacheHandler->set(CacheHandlerInterface::MAINPAGE, $items);
+                $cacheHandler->set(UserCacheHandlerInterface::MAINPAGE, $items);
             }
         } else {
             // Page other than front page was requested, pull from db
@@ -45,5 +48,13 @@ class MainController extends Controller
 
         $title = "List";
         return view('all', ['items' => $items, 'title' => $title]);
+    }
+
+    public function test(
+        DiscoverCacheHandler $discoverCacheHandler,
+        SearchHandlerInterface $searchHandler,
+        CacheHandlerInterface $cacheHandler)
+    {
+        $discoverCacheHandler->generateAll($searchHandler, $cacheHandler);
     }
 }

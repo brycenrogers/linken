@@ -12,6 +12,9 @@ $( document ).ready(function() {
     var addButtonSpinner;
     var infoPaneSpinner;
 
+    autosize($('textarea#add'));
+    autosize($('textarea#add-description'));
+
     if ($('div#blue-hitbox-add-pane.flash').length) {
 
         // Show the message
@@ -137,10 +140,10 @@ $( document ).ready(function() {
     });
     function showHitboxAlert(type, message) {
 
-        var successBackgroundColor = "#dff0d8";
-        var successTextColor = "#3c763d";
-        var errorBackgroundColor = "#f2dede";
-        var errorTextColor = "#a94442";
+        var successBackgroundColor = "#4ed962";
+        var successTextColor = "#ffffff";
+        var errorBackgroundColor = "#dc4c4c";
+        var errorTextColor = "#ffffff";
 
         var backgroundColor;
         var textColor;
@@ -222,8 +225,6 @@ $( document ).ready(function() {
             return;
         }
         $('div#add-pane').attr('data-toggle', 'open');
-        autosize($('textarea#add'));
-        autosize($('textarea#add-description'));
         var height = 160;
         if($('input#add-pane-height').val() != '') {
             height = $('input#add-pane-height').val();
@@ -320,16 +321,19 @@ $( document ).ready(function() {
 
     function updateInfoPane(image, title)
     {
+        var imageContainer = $("#info-image-container");
+        var titleContainer = $("#info-title");
         infoPaneSpinner.stop();
         if (image) {
-            var imageContainer = $("#info-image-container");
-            imageContainer.css("background-image", "url('" + image + "')").fadeIn('fast');
+            imageContainer.css("background-image", "url('" + image + "')");
             imageContainer.attr('data-image-url', image);
         }
         if (title) {
             var decoded = $('#info-title-decode').html($.trim(title)).text();
-            $("#info-title").val(decoded).fadeIn('fast');
+            titleContainer.val(decoded);
         }
+        imageContainer.fadeIn('fast');
+        titleContainer.fadeIn('fast');
     }
 
     function openInfoPane(image, title)

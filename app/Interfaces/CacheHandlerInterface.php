@@ -9,11 +9,13 @@ namespace App\Interfaces;
  */
 interface CacheHandlerInterface
 {
-    const MAINPAGE      = 'main.page.';
-    const TAGS          = 'tags.';
-    const EXPIRATION    = 1440;
-    public function set($type, $value);
-    public function get($type);
-    public function del($type);
-    public function has($type);
+    const MAINPAGE              = 'main.page.';
+    const TAGS                  = 'tags.';
+    const DISCOVER_TAG          = 'discover.tag.';
+    const EXPIRATION            = 1440;
+
+    public function set($type, $value, $uniqueId = null);
+    public function get($type, $uniqueId = null);
+    public function del($type, $uniqueId = null);
+    public function has($type, $uniqueId = null);
 }

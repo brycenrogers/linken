@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Libraries\SearchHandler;
+use App\Handlers\SearchHandler;
 use Illuminate\Support\ServiceProvider;
 use Auth;
 

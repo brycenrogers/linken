@@ -7,13 +7,13 @@
         </div>
         <div class="col-md-7">
             <div class="btn-group" role="group" aria-label="...">
-                <a href="/discover" type="button" class="btn btn-default<?php if($title == 'Discover') { echo " active"; } ?>" title="Discover">
-                    <span class="glyphicon glyphicon-road" aria-hidden="true"></span>
-                    &nbsp;Discover
-                </a>
                 <a href="/" type="button" class="btn btn-default<?php if($title == 'List') { echo " active"; } ?>" title="List">
                     <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
                     &nbsp;List
+                </a>
+                <a href="/discover" type="button" class="btn btn-default<?php if($title == 'Discover') { echo " active"; } ?>" title="Discover">
+                    <span class="glyphicon glyphicon-road" aria-hidden="true"></span>
+                    &nbsp;Discover
                 </a>
                 <div class="btn-group">
                     <button title="Tags" id="tags-dropdown" type="button" class="btn btn-default dropdown-toggle<?php if($title == 'Tags') { echo " active"; } ?>" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

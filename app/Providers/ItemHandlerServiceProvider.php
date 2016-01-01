@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Auth;
-use App\Libraries\CacheHandler;
+use App\Handlers\CacheHandler;
 use App\Models\Item;
 use App\Repositories\ItemRepository;
 use App\Models\Note;
@@ -13,7 +13,7 @@ use App\Models\Link;
 use App\Repositories\LinkRepository;
 use App\Models\Tag;
 use App\Repositories\TagRepository;
-use App\Libraries\ItemHandler;
+use App\Handlers\ItemHandler;
 
 /**
  * Class ItemHandlerServiceProvider

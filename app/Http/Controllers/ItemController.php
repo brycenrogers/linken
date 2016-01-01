@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Interfaces\ItemHandlerInterface;
-use App\Interfaces\UserItemRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 

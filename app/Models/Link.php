@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Model,
 
 class Link extends Model implements Searchable
 {
-    public function items()
+    public function item()
     {
-        return $this->morphMany('App\Models\Item', 'itemable');
+        return $this->morphOne('App\Models\Item', 'itemable');
     }
 
     /**
@@ -36,7 +36,7 @@ class Link extends Model implements Searchable
     public function getSearchableBody()
     {
         /* @var $item \App\Models\Item */
-        $item = $this->items()->getResults()->first();
+        $item = $this->item;
         $tags = $item->tagsAsArray();
         $searchableProperties = [
             'user_id' => $item->user_id,
@@ -67,6 +67,6 @@ class Link extends Model implements Searchable
      */
     public function getSearchableId()
     {
-        return $this->items()->getResults()->first()->id;
+        return $this->item->id;
     }
 }

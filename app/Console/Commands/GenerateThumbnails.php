@@ -2,9 +2,10 @@
 
 namespace App\Console\Commands;
 
+use App\Interfaces\CacheHandlerInterface;
 use App\Interfaces\ImageHandlerInterface;
-use App\Models\Link,
-    Illuminate\Console\Command;
+use App\Models\Link;
+use Illuminate\Console\Command;
 use SearchIndex;
 
 class GenerateThumbnails extends Command
@@ -29,10 +30,13 @@ class GenerateThumbnails extends Command
      * @param ImageHandlerInterface $imageHandler
      * @return mixed
      */
-    public function handle(ImageHandlerInterface $imageHandler)
+    public function handle(ImageHandlerInterface $imageHandler, CacheHandlerInterface $cacheHandler)
     {
         // Find all links with photos URLs that need thumbnails
-        $links = Link::whereNotNull('photo_url')->get();
+        $links = Link::with('item', 'item.user')
+            ->whereNull('photo')
+            ->take(100)
+            ->get();
 
         /* @var $link \App\Models\Link */
         foreach ($links as $link) {
@@ -41,9 +45,11 @@ class GenerateThumbnails extends Command
                 $generatedFilename = $imageHandler->generateThumbnail($link->photo_url);
                 if ($generatedFilename) {
                     $link->photo = $generatedFilename;
-                    $link->photo_url = null;
                     $link->save();
                     SearchIndex::upsertToIndex($link);
+
+                    // Update cache for user
+                    $cacheHandler->del(CacheHandlerInterface::MAINPAGE, $link->item->user);
                 }
             }
             catch (\Exception $e) {

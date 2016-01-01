@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Libraries;
+namespace App\Handlers;
 
 use App\Interfaces\CacheHandlerInterface;
+use App\Interfaces\UserCacheHandlerInterface;
 use App\Models\User;
 use App\Interfaces\UserItemRepositoryInterface;
 use App\Interfaces\UserLinkRepositoryInterface;
@@ -17,7 +18,7 @@ use SearchIndex;
  *
  * This class has access to all Repositories and the CacheHandler
  *
- * @package App\Libraries
+ * @package App\Handlers
  */
 class ItemHandler implements ItemHandlerInterface {
 
@@ -59,7 +60,7 @@ class ItemHandler implements ItemHandlerInterface {
     /**
      * The Cache Handler library instance
      *
-     * @var \App\Interfaces\CacheHandlerInterface
+     * @var \App\Interfaces\UserCacheHandlerInterface
      */
     protected $cacheHandler;
 
@@ -74,7 +75,7 @@ class ItemHandler implements ItemHandlerInterface {
      * @param User $user
      */
     public function __construct(
-        CacheHandlerInterface $cacheHandler,
+        UserCacheHandlerInterface $cacheHandler,
         UserItemRepositoryInterface $items,
         UserLinkRepositoryInterface $links,
         UserNoteRepositoryInterface $notes,
@@ -108,7 +109,7 @@ class ItemHandler implements ItemHandlerInterface {
                 $link = $this->linksRepo->store($inputs);
 
                 // Associate it to the Item
-                $link->items()->save($item);
+                $link->item()->save($item);
 
                 // Save it to the search index
                 SearchIndex::upsertToIndex($link);
@@ -119,7 +120,7 @@ class ItemHandler implements ItemHandlerInterface {
                 $note = $this->notesRepo->store($inputs);
 
                 // Associate it to the Item
-                $note->items()->save($item);
+                $note->item()->save($item);
 
                 // Save it to the search index
                 SearchIndex::upsertToIndex($note);
