@@ -52,4 +52,44 @@ $( document ).ready(function() {
                 });
         }
     });
+
+    $('#changePasswordSubmit').click(function() {
+
+        var errorDiv = $('#changePasswordError');
+        var csrf = $('input#csrf_token').val();
+        var old = $('input#oldPassword').val();
+        var password = $('input#newPassword').val();
+        var confirm = $('input#newPasswordConfirmation').val();
+
+        errorDiv.hide();
+
+        $.ajax({
+            url: "/settings/changePassword",
+            cache: false,
+            method: 'post',
+            data: {
+                _token: csrf,
+                old: old,
+                password: password,
+                password_confirmation: confirm
+            }
+        })
+        .fail(function (response) {
+            var errors = "";
+            var responseText = JSON.parse(response.responseText);
+            $.each(responseText, function (fieldName, errorText) {
+                errors += errorText[0] + '<br>';
+            });
+            errors.slice(0,-4);
+            errorDiv.html(errors).fadeIn("fast");
+        })
+        .done(function( response ) {
+            var changePasswordModal = $('#changePasswordModal');
+            // Close modal and show success message
+            changePasswordModal.on('hidden.bs.modal', function () {
+                showHitboxAlert('success', 'Password changed!');
+            });
+            changePasswordModal.modal('hide');
+        });
+    });
 });

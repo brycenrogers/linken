@@ -2,45 +2,34 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ChangePasswordPostRequest;
 use Auth;
-use Exception;
-use Illuminate\Http\Request;
 use Hash;
+use Validator;
 
 class UserSettingsController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
+
+        // Add a custom validation rule for checking the user's current password
+        Validator::extend('currentPasswordMatches', function($attribute, $value, $parameters, $validator) {
+            return Hash::check($value, Auth::user()->password);
+        }, 'The current password is incorrect');
     }
 
     /**
      * Validate and update the User's password
      *
-     * @param Request $request
+     * @param ChangePasswordPostRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function changePassword(Request $request)
+    public function changePassword(ChangePasswordPostRequest $request)
     {
-        $user = Auth::user();
-        try {
-            $this->validate($request, [
-                '_token' => 'required',
-                'old' => 'required',
-                'password' => 'required|min:6|confirmed',
-            ]);
-        }
-        catch (Exception $e) {
-            return response()->json(['error' => $e->getMessage()]);
-        }
-        $credentials = $request->only('old', 'password');
-
-        // Verify old password matches
-        if ( ! Hash::check($credentials['old'], $user->password)) {
-            return response()->json(['error' => 'Current Password is not correct']);
-        }
-
         // Update the user's password
+        $credentials = $request->only('old', 'password');
+        $user = Auth::user();
         $user->password = Hash::make($credentials['password']);
         $user->save();
 

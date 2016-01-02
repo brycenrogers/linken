@@ -65,7 +65,10 @@
                     </li>
                     <li role="separator" class="divider"></li>
                     <li>
-                        <a href="/auth/logout">Logout</a>
+                        <a href="/auth/logout">
+                            <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
+                            Logout
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -94,21 +97,13 @@
     <div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="changePasswordModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <form method="POST" action="/settings/changePassword" class="form-horizontal">
+                <div class="form-horizontal">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title" id="changePasswordModalLabel">Change Password</h4>
                     </div>
                     <div class="modal-body">
-                        @if (count($errors) > 0)
-                            <div class="alert alert-danger">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
+                            <div id="changePasswordError" class="alert alert-danger"></div>
                             {!! csrf_field() !!}
                             <div class="form-group">
                                 <label for="email" class="col-sm-4 control-label">Current Password</label>
@@ -131,9 +126,9 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save New Password</button>
+                        <button type="button" class="btn btn-primary" id="changePasswordSubmit">Save New Password</button>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>

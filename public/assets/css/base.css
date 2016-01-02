@@ -76,12 +76,14 @@ body {
   font-size: 12pt !important; }
 
 #blue-hitbox-add-pane.flash.flash-success {
-  background-color: #4ed962;
-  text-shadow: 0 1px 1px #1f7a2c; }
+  background-color: #5cb85c; }
+  #blue-hitbox-add-pane.flash.flash-success .flash-message {
+    text-shadow: 0 1px 1px #1f7a2c; }
 
 #blue-hitbox-add-pane.flash.flash-error {
-  background-color: #dc4c4c;
-  text-shadow: 0 1px 1px #832e2e; }
+  background-color: #dc4c4c; }
+  #blue-hitbox-add-pane.flash.flash-error .flash-message {
+    text-shadow: 0 1px 1px #832e2e; }
 
 #blue-hitbox-add-pane {
   float: left;
@@ -99,7 +101,9 @@ body {
     font-weight: 700;
     font-size: 16pt;
     margin: 2px 0;
-    color: #ffffff; }
+    color: #ffffff;
+    text-align: center;
+    width: 100%; }
   #blue-hitbox-add-pane textarea#add {
     float: left;
     width: 100%;
@@ -338,6 +342,9 @@ div#subcontrol-pane {
   padding: 15px;
   border-top: 1px solid #e3e3e3;
   margin: 8px 0 -15px; }
+
+#changePasswordError {
+  display: none; }
 
 table#discover-table td#discover-sidebar-td {
   width: 200px;

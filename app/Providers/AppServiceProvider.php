@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
+use Auth;
+use Hash;
 use Illuminate\Support\ServiceProvider;
+use Validator;
 
 class AppServiceProvider extends ServiceProvider
 {

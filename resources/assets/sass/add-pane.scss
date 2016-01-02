@@ -11,12 +11,16 @@
     font-size: 12pt !important;
 }
 #blue-hitbox-add-pane.flash.flash-success {
-    background-color: #4ed962;
-    text-shadow: 0 1px 1px #1f7a2c;
+    background-color: #5cb85c;
+    .flash-message {
+        text-shadow: 0 1px 1px #1f7a2c;
+    }
 }
 #blue-hitbox-add-pane.flash.flash-error {
     background-color: #dc4c4c;
-    text-shadow: 0 1px 1px #832e2e;
+    .flash-message {
+        text-shadow: 0 1px 1px #832e2e;
+    }
 }
 #blue-hitbox-add-pane {
     float: left;
@@ -36,6 +40,8 @@
         font-size: 16pt;
         margin: 2px 0;
         color: #ffffff;
+        text-align: center;
+        width: 100%;
     }
 
     textarea#add {
