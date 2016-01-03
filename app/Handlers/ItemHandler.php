@@ -176,7 +176,11 @@ class ItemHandler implements ItemHandlerInterface {
         // Cache
         $this->cacheHandler->del(CacheHandlerInterface::MAINPAGE);
 
+        // Save
         $item->save();
+
+        // Update Search
+        SearchIndex::upsertToIndex($item->itemable);
 
         return $item;
     }
