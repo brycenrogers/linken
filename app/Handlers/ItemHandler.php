@@ -67,7 +67,7 @@ class ItemHandler implements ItemHandlerInterface {
     /**
      * ItemService constructor
      *
-     * @param CacheHandlerInterface $cacheHandler
+     * @param UserCacheHandlerInterface $cacheHandler
      * @param UserItemRepositoryInterface $items
      * @param UserLinkRepositoryInterface $links
      * @param UserNoteRepositoryInterface $notes
@@ -133,8 +133,9 @@ class ItemHandler implements ItemHandlerInterface {
         // Attach Tags to the Item
         $item->tags()->attach($tags);
 
-        // Reset cache
+        // Reset caches
         $this->cacheHandler->del(CacheHandlerInterface::MAINPAGE);
+        $this->cacheHandler->del(CacheHandlerInterface::TAGS);
 
         return $item;
     }
@@ -149,5 +150,34 @@ class ItemHandler implements ItemHandlerInterface {
 
         // Delete from Search Index
         SearchIndex::removeFromIndexByTypeAndId('item', $id);
+    }
+
+    /**
+     * Update an item
+     *
+     * @param $inputs
+     * @return bool
+     */
+    public function update($inputs)
+    {
+        $item = $this->itemsRepo->get($inputs['itemId']);
+
+        $item->value = $inputs['value'];
+        $item->description = $inputs['description'];
+
+        $subclass = get_class($item->itemable);
+
+        if ($subclass == 'App\Models\Link') {
+            $item->itemable->title = $inputs['value'];
+        }
+
+        // Tags
+
+        // Cache
+        $this->cacheHandler->del(CacheHandlerInterface::MAINPAGE);
+
+        $item->save();
+
+        return $item;
     }
 }

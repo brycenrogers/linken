@@ -1,4 +1,4 @@
-<div class="container-item-pane container">
+<div class="container-item-pane container" id="item-pane-{{ $item->id }}">
     <div class="col-md-12">
         <div class="media link-padding">
             <div class="media-left">
@@ -30,7 +30,7 @@
                         {{ $item->value }}
                     </h4>
                 @endif
-                @if ($item->description)
+                @if ($item->description && $item->user == Auth::user())
                     <div class="media-description">
                         {{ $item->description }}
                     </div>

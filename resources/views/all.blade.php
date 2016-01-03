@@ -21,10 +21,11 @@
             {!! $items->render() !!}
         </div>
     @endif
-            <!-- Item Settings Modal -->
+        <!-- Item Settings Modal -->
         <div class="modal fade" id="itemSettingsModal" tabindex="-1" role="dialog" aria-labelledby="itemSettingsModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
+                    <div id="itemSettingsErrors" class="alert alert-danger"></div>
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title" id="itemSettingsModalLabel"></h4>
@@ -36,13 +37,14 @@
                         </div>
                         <div class="form-group">
                             <label for="settingsValue">Description</label>
-                            <textarea name="description" id="settingsDescription" class="form-control input-lg" rows="6"></textarea>
+                            <textarea name="description" id="settingsDescription" class="form-control input-lg" rows="4"></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <a href="" id="destroyItem" class="btn btn-danger">Delete</a>
+                        <input type="hidden" id="settingsItemId" value="">
+                        <a href="" id="destroyItem" class="btn btn-danger pull-left">Delete</a>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <button type="button" class="btn btn-primary" id="updateLinkSettingsSubmit">Save changes</button>
                     </div>
                 </div>
             </div>

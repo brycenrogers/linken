@@ -22,13 +22,13 @@ $( document ).ready(function() {
         $('.cropit-image-input').click();
     });
 
-    $('.cropit-image-preview').click(function() {
-        if ($(this).data('clicked') == false) {
-            $('.cropit-image-input').click();
-            $(this).data('clicked', true);
-            $(this).css('cursor', 'move');
-        }
-    });
+    //$('.cropit-image-preview').click(function() {
+    //    if ($(this).data('clicked') == false) {
+    //        $('.cropit-image-input').click();
+    //        $(this).data('clicked', true);
+    //        $(this).css('cursor', 'move');
+    //    }
+    //});
 
     $('#updatePhotoSubmit').click(function() {
         var dataURI = $('#image-cropper').cropit('export', {
@@ -42,19 +42,22 @@ $( document ).ready(function() {
 
     $('#tags-dropdown').click(function() {
         if ($(this).attr('aria-expanded') == "false") {
+            // Show spinner
+            var spinner = addSpinnerToElement(document.getElementById('tags-pane-spinner'), "133px", "#448dff");
             $.ajax({
                 url: "/tags/pane",
                 cache: false,
                 method: 'get'
             })
-                .done(function( response ) {
-                    $('#tags-dropdown-pane').html(response);
-                });
+            .done(function(response) {
+                spinner.stop();
+                spinner = null;
+                $('#tags-dropdown-pane').html(response);
+            });
         }
     });
 
     $('#changePasswordSubmit').click(function() {
-
         var errorDiv = $('#changePasswordError');
         var csrf = $('input#csrf_token').val();
         var old = $('input#oldPassword').val();
@@ -86,10 +89,12 @@ $( document ).ready(function() {
         .done(function( response ) {
             var changePasswordModal = $('#changePasswordModal');
             // Close modal and show success message
-            changePasswordModal.on('hidden.bs.modal', function () {
-                showHitboxAlert('success', 'Password changed!');
-            });
             changePasswordModal.modal('hide');
+            showHitboxAlert('success', 'Password changed!');
+            // Clear out fields
+            $('input#oldPassword').val("");
+            $('input#newPassword').val("");
+            $('input#newPasswordConfirmation').val("");
         });
     });
 });

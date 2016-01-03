@@ -14,22 +14,24 @@
 
     <div class="row">
         <div class="col-md-12">
+            <div class="blurb">
+                Here you can find links added by other users based on common tagging interests
+            </div>
             <table id="discover-table">
-                <tr>
-                    <td id="discover-sidebar-td">
-
-                    </td>
-                    <td id="discover-list-td">
-                        <div id="discover-list-container">
-                            @each('item', $items, 'item')
-                        </div>
-                        @if ( ! is_array($items))
-                            <div id="pager-container">
-                                {!! $items->render() !!}
+                @foreach ($items as $tag => $itemArray)
+                    <tr>
+                        <td class="discover-sidebar-td">
+                            <div class="discover-sidebar-container">
+                                {{ $tag }}
                             </div>
-                        @endif
-                    </td>
-                </tr>
+                        </td>
+                        <td class="discover-list-td">
+                            <div class="discover-list-container">
+                                @each('item', $itemArray, 'item')
+                            </div>
+                        </td>
+                    </tr>
+                @endforeach
             </table>
         </div>
     </div>

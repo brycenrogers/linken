@@ -6,7 +6,9 @@
 //    This file contains styles for the base HTML layout of Linken
 
 //  ===========================================================
-
+a {
+    color: $blue;
+}
 .btn-primary {
     background-color: $blue;
     text-shadow: 0 1px 1px #405da3;

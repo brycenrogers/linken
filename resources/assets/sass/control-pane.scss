@@ -78,6 +78,21 @@
         width: 275px;
         height: 200px;
         overflow: scroll;
+
+        ul {
+            padding: 0 20px 40px;
+            list-style-type: none;
+
+            .letter-headers {
+                font-family: $fontFace;
+                margin-top: 20px;
+                font-weight: 700;
+            }
+
+            a {
+                font-family: $fontFace;
+            }
+        }
     }
 }
 div.letter-header {

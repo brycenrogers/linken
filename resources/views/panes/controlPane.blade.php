@@ -22,7 +22,9 @@
                         &nbsp;&nbsp;<span class="caret"></span>
                     </button>
                     <div class="dropdown-menu">
-                        <div id="tags-dropdown-pane"></div>
+                        <div id="tags-dropdown-pane">
+                            <div id="tags-pane-spinner"></div>
+                        </div>
                     </div>
                 </div>
                 <a href="/help" type="button" class="btn btn-default<?php if($title == 'Help') { echo " active"; } ?>" title="Help">

@@ -74,4 +74,16 @@ class TagRepository extends BaseRepository implements TagRepositoryInterface, Us
         return $query;
     }
 
+    /**
+     * Return all Tags
+     * @return mixed
+     */
+    public function all()
+    {
+        if ($this->user) {
+            return Tag::where('user_id', $this->user->id)->get();
+        }
+
+        return Tag::all();
+    }
 }

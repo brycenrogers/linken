@@ -6,7 +6,9 @@
 //    This file contains styles for the item pane HTML layout of Linken
 
 //  ===========================================================
-
+#itemSettingsErrors {
+    display: none;
+}
 .container-item-pane {
     border-bottom: 1px solid $greyLineColor;
     width: 100%;

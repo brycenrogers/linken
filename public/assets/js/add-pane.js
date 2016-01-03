@@ -12,9 +12,6 @@ $( document ).ready(function() {
     var addButtonSpinner;
     var infoPaneSpinner;
 
-    autosize($('textarea#add'));
-    autosize($('textarea#add-description'));
-
     if ($('div#blue-hitbox-add-pane.flash').length) {
 
         // Show the message
@@ -31,6 +28,8 @@ $( document ).ready(function() {
     });
     $('textarea#add').focus(function() {
         $(this).attr('placeholder', '');
+        autosize($('textarea#add'));
+        autosize($('textarea#add-description'));
         openAddPane();
         triggerInfoPane();
     });
@@ -44,9 +43,6 @@ $( document ).ready(function() {
         placeholder: "Tags"
     });
     $('input.select2-search__field').prop('tabindex', "3");
-    $('div#add-fader').click(function() {
-        closeAddPane();
-    });
     $('button#add-button').click(function() {
         var button = $(this);
         button.prop("disabled", true);
@@ -78,7 +74,7 @@ $( document ).ready(function() {
         });
 
         $.ajax({
-            url: "/item/store",
+            url: "/item/add",
             cache: false,
             method: 'post',
             data: {
@@ -204,7 +200,9 @@ $( document ).ready(function() {
                         $('div#add-pane button').velocity({
                             opacity: 1
                         }, 200, function() {
-
+                            $('div#add-fader').on("click", function() {
+                                closeAddPane();
+                            });
                         });
                     });
                 });
@@ -214,6 +212,7 @@ $( document ).ready(function() {
 
     function closeAddPane(newItemData)
     {
+        $('div#add-fader').off("click");
         if ($('div#add-pane').attr('data-toggle') == 'closed') {
             return;
         }
@@ -331,44 +330,6 @@ $( document ).ready(function() {
                 });
             });
         }
-    }
-
-    function addSpinnerToElement(element, left, color)
-    {
-        var opts = {
-            lines: 13 // The number of lines to draw
-            , length: 5 // The length of each line
-            , width: 3 // The line thickness
-            , radius: 8 // The radius of the inner circle
-            , scale: 1 // Scales overall size of the spinner
-            , corners: 1 // Corner roundness (0..1)
-            , color: '#fff' // #rgb or #rrggbb or array of colors
-            , opacity: 0.25 // Opacity of the lines
-            , rotate: 0 // The rotation offset
-            , direction: 1 // 1: clockwise, -1: counterclockwise
-            , speed: 1 // Rounds per second
-            , trail: 60 // Afterglow percentage
-            , fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
-            , zIndex: 2e9 // The z-index (defaults to 2000000000)
-            , className: 'spinner' // The CSS class to assign to the spinner
-            , top: '50%' // Top position relative to parent
-            , left: '50%' // Left position relative to parent
-            , shadow: false // Whether to render a shadow
-            , hwaccel: true // Whether to use hardware acceleration
-            , position: 'absolute' // Element positioning
-        };
-
-        if (color) {
-            opts.color = color;
-        }
-
-        if (left) {
-            opts.left = left;
-        }
-
-        var spinner = new Spinner(opts).spin(element);
-
-        return spinner;
     }
 
 });

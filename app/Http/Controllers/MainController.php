@@ -50,11 +50,11 @@ class MainController extends Controller
         return view('all', ['items' => $items, 'title' => $title]);
     }
 
-    public function test(
-        DiscoverCacheHandler $discoverCacheHandler,
-        SearchHandlerInterface $searchHandler,
-        CacheHandlerInterface $cacheHandler)
-    {
-        $discoverCacheHandler->generateAll($searchHandler, $cacheHandler);
-    }
+//    public function test(
+//        DiscoverCacheHandler $discoverCacheHandler,
+//        SearchHandlerInterface $searchHandler,
+//        CacheHandlerInterface $cacheHandler)
+//    {
+//        $links = $searchHandler->filteredSearch('tags', 'imgur', 'created_at', 'desc', 10);
+//    }
 }

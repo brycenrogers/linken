@@ -50,4 +50,19 @@ abstract class BaseRepository {
 		return $this->model->findOrFail($id);
 	}
 
+	/**
+     * Get an Item from storage with optional relations
+     *
+     * @param $id
+     * @param array $with
+     * @return Item
+     */
+    public function get($id, $with = [])
+    {
+        if (count($with)) {
+            return $this->model->where('id', '=', $id)->with($with)->first();
+        }
+        return $this->model->find($id);
+    }
+
 }

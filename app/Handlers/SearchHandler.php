@@ -35,6 +35,31 @@ class SearchHandler implements SearchHandlerInterface, UserSearchHandlerInterfac
         }
     }
 
+    public function search($term, $sortColumn = null, $sortDirection = 'desc', $limit = 50)
+    {
+        return $this->basicSearch($term, $sortColumn, $sortDirection, $limit);
+    }
+
+    public function basicSearch($term, $sortColumn = null, $sortDirection = 'desc', $limit = 50)
+    {
+        $userId = null;
+        if ($this->user) {
+            $userId = $this->user->id;
+        }
+
+        return $this->performSearch($this->basicQuery($term, $sortColumn, $sortDirection, $limit, $userId));
+    }
+
+    public function filteredSearch($type, $term, $sortColumn = null, $sortDirection = 'desc', $limit = 50)
+    {
+        $userId = null;
+        if ($this->user) {
+            $userId = $this->user->id;
+        }
+
+        return $this->performSearch($this->filteredQuery($type, $term, $sortColumn, $sortDirection, $limit, $userId));
+    }
+
     /**
      * Perform a search for the query term
      *
@@ -44,14 +69,9 @@ class SearchHandler implements SearchHandlerInterface, UserSearchHandlerInterfac
      * @param int $limit
      * @return array
      */
-    public function search($term, $sortColumn = null, $sortDirection = 'desc', $limit = 50)
+    public function performSearch($queryType)
     {
-        $userId = null;
-        if ($this->user) {
-            $userId = $this->user->id;
-        }
-
-        $hits = SearchIndex::getResults($this->basicQuery($term, $sortColumn, $sortDirection, $limit, $userId));
+        $hits = SearchIndex::getResults($queryType);
 
         // Loop through the search hits and return Eloquent models for them
         $items = [];
@@ -79,10 +99,73 @@ class SearchHandler implements SearchHandlerInterface, UserSearchHandlerInterfac
                 }
                 $item->tags = $tagsObjArray;
             }
+            $item->user_id = $itemArray['user_id'];
             $items[] = $item;
         }
 
         return $items;
+    }
+
+    /**
+     * Perform a basic search on the index
+     *
+     * @param $term
+     * @param $userId
+     * @param $sortCol
+     * @param $sortDirection
+     * @return array
+     */
+    public function filteredQuery($type, $term, $sortCol, $sortDirection, $limit, $userId)
+    {
+        // Add user constraint if specified
+        if ($userId) {
+            $query = [
+                'body' => [
+                    'from' => 0,
+                    'size' => $limit,
+                    'query' => [
+                        'bool' => [
+                            'must' => [
+                                [
+                                    'term' => [
+                                        'user_id' => $userId
+                                    ]
+                                ],
+                                [
+                                    'term' => [
+                                        $type => $term
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ];
+        } else {
+            $query = [
+                'body' => [
+                    'from' => 0,
+                    'size' => $limit,
+                    'query' => [
+                        'bool' => [
+                            'must' => [
+                                [
+                                    'term' => [
+                                        $type => $term
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ];
+        }
+
+        if ($sortCol) {
+            $query['body']['sort'] = ['created_at' => ['order' => $sortDirection]];
+        }
+
+        return $query;
     }
 
     /**

@@ -1,4 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Oxygen:400,300,700|Montserrat);
+a {
+  color: #448dff; }
+
 .btn-primary {
   background-color: #448dff;
   text-shadow: 0 1px 1px #405da3; }
@@ -211,6 +214,9 @@ div#add-fader {
   height: 100%;
   z-index: 100; }
 
+#itemSettingsErrors {
+  display: none; }
+
 .container-item-pane {
   border-bottom: 1px solid #e3e3e3;
   width: 100%;
@@ -330,6 +336,15 @@ div#pager-container {
     width: 275px;
     height: 200px;
     overflow: scroll; }
+    .container-control-pane div#tags-dropdown-pane ul {
+      padding: 0 20px 40px;
+      list-style-type: none; }
+      .container-control-pane div#tags-dropdown-pane ul .letter-headers {
+        font-family: "Oxygen", sans-serif;
+        margin-top: 20px;
+        font-weight: 700; }
+      .container-control-pane div#tags-dropdown-pane ul a {
+        font-family: "Oxygen", sans-serif; }
 
 div.letter-header {
   width: 100%;
@@ -346,9 +361,30 @@ div#subcontrol-pane {
 #changePasswordError {
   display: none; }
 
-table#discover-table td#discover-sidebar-td {
+.blurb {
+  padding: 20px 15px;
+  font-family: "Oxygen", sans-serif;
+  font-size: 12pt;
+  font-weight: 300;
+  color: #aaa; }
+
+table#discover-table td.discover-sidebar-td {
   width: 200px;
   background-color: #fafafa;
-  border-right: 1px solid #e3e3e3; }
+  border-right: 1px solid #e3e3e3;
+  text-align: right;
+  vertical-align: top; }
+  table#discover-table td.discover-sidebar-td .discover-sidebar-container {
+    border-top: 1px solid #e3e3e3;
+    margin-top: -1px;
+    padding: 20px;
+    font-family: "Oxygen", sans-serif;
+    font-size: 14pt;
+    color: #777; }
+
+table#discover-table td.discover-list-td .discover-list-container .container-item-pane {
+  border-top: 1px solid #e3e3e3;
+  border-bottom: none;
+  margin-top: -1px; }
 
 /*# sourceMappingURL=base.css.map */

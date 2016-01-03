@@ -49,7 +49,7 @@ class GenerateThumbnails extends Command
                     SearchIndex::upsertToIndex($link);
 
                     // Update cache for user
-                    $cacheHandler->del(CacheHandlerInterface::MAINPAGE, $link->item->user);
+                    $cacheHandler->del(CacheHandlerInterface::MAINPAGE, $link->item->user->id);
                 }
             }
             catch (\Exception $e) {

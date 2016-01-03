@@ -155,7 +155,8 @@ return [
         App\Providers\TagRepositoryServiceProvider::class,
         App\Providers\ItemRepositoryServiceProvider::class,
         App\Providers\SearchHandlerServiceProvider::class,
-        App\Providers\LinkParserServiceProvider::class
+        App\Providers\LinkParserServiceProvider::class,
+        App\Providers\TagHandlerServiceProvider::class
     ],
 
     /*

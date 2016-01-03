@@ -37,14 +37,14 @@ Route::get('/welcome', function () {
 Route::post('settings/changePassword', 'UserSettingsController@changePassword');
 Route::post('user/photo/upload', 'UserPhotoController@upload');
 Route::post('link/parse', 'LinkParseController@postLinkParse');
-Route::post('item/store', 'ItemController@store');
+Route::post('item/add', 'ItemController@add');
+Route::post('item/update', 'ItemController@update');
 
-//Route::get('test', 'MainController@test');
-
+Route::get('test', 'MainController@test');
 Route::get('item/destroy/{id}', 'ItemController@destroy');
 Route::get('search/reindex', 'SearchController@reindex');
 Route::get('search', 'SearchController@search');
-Route::get('discover', 'TagController@discover');
+Route::get('discover', 'DiscoverController@discover');
 Route::get('tags/pane', 'TagController@getTagsPane');
 Route::get('tags/search', 'TagController@search');
 Route::get('tags', 'TagController@findItemsForTags');

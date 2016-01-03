@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AddItemPostRequest;
+use App\Http\Requests\UpdateItemPostRequest;
 use App\Interfaces\ItemHandlerInterface;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Response;
 
 /**
  * Class ItemController
@@ -14,13 +15,13 @@ class ItemController extends Controller
 {
 
     /**
-     * Store a newly created Item in storage.
+     * Add a newly created Item to storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param AddItemPostRequest $request
      * @param ItemHandlerInterface $itemHandler
      * @return Response
      */
-    public function store(Request $request, ItemHandlerInterface $itemHandler)
+    public function add(AddItemPostRequest $request, ItemHandlerInterface $itemHandler)
     {
         $item = $itemHandler->create($request->input());
         return view('item', ['item' => $item]);
@@ -39,8 +40,27 @@ class ItemController extends Controller
             $itemHandler->destroy($id);
         }
         catch (\Exception $e) {
-            return \Response::redirectTo('/')->with('error', $e->getMessage());
+            return response()->json(['type' => 'error', 'message' => $e->getMessage()], 422);
         }
-        return \Response::redirectTo('/');
+        return response()->json(['type' => 'success']);
+    }
+
+    /**
+     * Update an item
+     *
+     * @param UpdateItemPostRequest $request
+     * @param ItemHandlerInterface $itemHandler
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function update(UpdateItemPostRequest $request, ItemHandlerInterface $itemHandler)
+    {
+        $inputs = $request->input();
+        try {
+            $item = $itemHandler->update($inputs);
+            return view('item', ['item' => $item]);
+        }
+        catch (\Exception $e) {
+            return response()->json(['type' => 'error', 'message' => $e->getMessage()], 422);
+        }
     }
 }

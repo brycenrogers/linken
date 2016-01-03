@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Interfaces\SearchHandlerInterface;
+use App\Interfaces\TagHandlerInterface;
+use App\Interfaces\UserCacheHandlerInterface;
 use App\Interfaces\UserItemRepositoryInterface;
+use App\Interfaces\UserSearchHandlerInterface;
 use App\Interfaces\UserTagRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Http\Requests;
-use Cache;
-use Auth;
-use App\Models\Tag;
-use App\Models\Item;
 
 class TagController extends Controller
 {
@@ -35,71 +35,43 @@ class TagController extends Controller
         return \Response::json($tags);
     }
 
-    public function getTagsPane()
-    {
-        $user = Auth::user();
-        $cacheKey = 'getTagsPane' . $user->id;
-        // Get the list from the cache, or regenerate it
-        if (Cache::store('memcached')->has($cacheKey)) {
-            $display = Cache::store('memcached')->get($cacheKey);
-        } else {
-            $tags = Tag::where('user_id', '=', Auth::user()->id)->orderBy('name', 'asc')->get();
-            $tagsDisplayArray = [];
-            foreach ($tags as $tag) {
+    public function getTagsPane
+    (
+        TagHandlerInterface $tagHandler,
+        UserCacheHandlerInterface $cacheHandler,
+        UserTagRepositoryInterface $tagRepo
+    ) {
+        $tags = $tagHandler->getTagsForUser($cacheHandler, $tagRepo);
+        sort($tags, SORT_STRING);
 
-                // Get first letter of tag and add to the array if it doesn't exist
-                $letter = strtoupper(substr($tag->name, 0, 1));
-                if(!array_key_exists($letter, $tagsDisplayArray)) {
-                    $tagsDisplayArray[$letter] = [];
-                }
+        // Create an array to denote the starting letter of the tags
+        $tagsDisplayArray = [];
+        foreach ($tags as $tag) {
 
-                // Add tag to array for letter
-                $tagsDisplayArray[$letter][] = $tag->name;
+            // Get first letter of tag and add to the array if it doesn't exist
+            $letter = strtoupper(substr($tag, 0, 1));
+            if(!array_key_exists($letter, $tagsDisplayArray)) {
+                $tagsDisplayArray[$letter] = [];
             }
-            // Build display
-            $display = "<ul>";
-            foreach ($tagsDisplayArray as $letter => $tagNameArray) {
-                $display .= "<div class='letter-headers'>$letter</div>";
-                $display .= "<li class='divider' role='separator'></li>";
-                foreach ($tagNameArray as $tag) {
-                    $display .= "<li><div class='tag'>$tag</div></li>";
-                }
-            }
-            $display .= "</ul>";
-            // Save in cache
-            Cache::store('memcached')->put($cacheKey, $display, 2880);
+
+            // Add tag to array for letter
+            $tagsDisplayArray[$letter][] = $tag;
         }
-        return \Response::view('panes.tagsPane', ['display' => $display]);
-    }
 
-    /**
-     * Find links for the current user based on their recent tags, excluding any they added themselves
-     *
-     * @param UserItemRepositoryInterface $itemRepo
-     * @param UserTagRepositoryInterface $tagRepo
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function discover(UserItemRepositoryInterface $itemRepo, UserTagRepositoryInterface $tagRepo)
-    {
-        // Get discovered items
-        $items = $itemRepo->discovered($tagRepo);
-
-        $title = "Discover";
-        return view('discover', ['items' => $items, 'title' => $title]);
+        return \Response::view('panes.tagsPane', ['tags' => $tagsDisplayArray]);
     }
 
     /**
      * Find items that relate to the tags passed in
      *
      * @param Request $request
-     * @param UserItemRepositoryInterface $itemRepo
+     * @param UserSearchHandlerInterface $searchHandler
      * @return \Illuminate\View\View
      */
-    public function findItemsForTags(Request $request, UserItemRepositoryInterface $itemRepo)
+    public function findItemsForTags(Request $request, UserSearchHandlerInterface $searchHandler)
     {
         $q = $request->input('q');
-        $tags = explode(",", $q);
-        $items = $itemRepo->itemsForTags($tags);
+        $items = $searchHandler->filteredSearch('tags', $q, 'created_at', 'desc');
         $title = "Tag : " . $q;
         return view('all', ['items' => $items, 'title' => $title]);
     }

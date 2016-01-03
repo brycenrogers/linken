@@ -32,6 +32,10 @@ class ChangePasswordPostRequest extends Request
         ];
     }
 
+    /**
+     * Custom error messages
+     * @return array
+     */
     public function messages()
     {
         return [
