@@ -39,6 +39,10 @@
                             <label for="settingsValue">Description</label>
                             <textarea name="description" id="settingsDescription" class="form-control input-lg" rows="4"></textarea>
                         </div>
+                        <div class="form-group">
+                            <label for="settingsValue">Tags</label>
+                            <select multiple class="form-control input-lg select2" id="edit-tags" style="width: 100%; padding: 10px;" aria-hidden="true"></select>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <input type="hidden" id="settingsItemId" value="">

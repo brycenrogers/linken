@@ -11,6 +11,8 @@ $( document ).ready(function() {
         var value = button.data('value');
         var description = button.data('description');
         var itemId = button.data('itemid');
+        var tagsStr = button.data('tags');
+        var tags = tagsStr.split(',');
 
         var modal = $(this);
         modal.find('.modal-title').text(type + ' Settings');
@@ -21,6 +23,31 @@ $( document ).ready(function() {
 
         autosize(settingsValueTextarea);
         autosize(settingsDescriptionTextarea);
+
+        // Tags
+        var tagsInput = $('#edit-tags');
+        tagsInput.html("");
+        $.each(tags, function(key, tag) {
+            if (tag != '') {
+                var child = "<option value='" + tag + "' selected>" + tag + "</option>";
+                tagsInput.append(child);
+            }
+        });
+
+        tagsInput.select2({
+            tags: true,
+            tokenSeparators: [','],
+            placeholder: "Tags",
+            ajax: {
+                url: '/tags/search',
+                delay: 250,
+                processResults: function (data) {
+                    return {
+                        results: data.items
+                        }
+                    }
+                }
+            });
     });
 
     $('#updateLinkSettingsSubmit').on("click", function() {

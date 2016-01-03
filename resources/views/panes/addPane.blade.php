@@ -38,11 +38,7 @@ if (Session::has('success')) {
             <br>
         </div>
         <div class="col-md-10">
-            <select multiple class="form-control input-lg select2" id="add-tags" style="width: 100%; padding: 10px;" aria-hidden="true">
-                @foreach ($tags as $tag)
-                    <option name="{{ $tag->name }}">{{ $tag->name }}</option>
-                @endforeach
-            </select>
+            <select multiple class="form-control input-lg select2" id="add-tags" style="width: 100%; padding: 10px;" aria-hidden="true"></select>
         </div>
         <div class="col-md-2">
             <button tabindex="4" class="btn btn-success btn-lg btn-block" id="add-button">

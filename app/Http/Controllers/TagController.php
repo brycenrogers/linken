@@ -18,21 +18,38 @@ class TagController extends Controller
         $this->middleware('auth');
     }
 
-    public function search(Request $request, UserTagRepositoryInterface $tagRepo)
-    {
+    /**
+     * Search for Tags, used by Select2
+     *
+     * @param Request $request
+     * @param TagHandlerInterface $tagHandler
+     * @param UserCacheHandlerInterface $cacheHandler
+     * @param UserTagRepositoryInterface $tagRepo
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function search
+    (
+        Request $request,
+        TagHandlerInterface $tagHandler,
+        UserCacheHandlerInterface $cacheHandler,
+        UserTagRepositoryInterface $tagRepo
+    ) {
         // Get the query term
         $query = $request->input('q');
 
-        // Find any tags that match the query term
-        $tagObjs = $tagRepo->search($query);
+        // Get the tags from cache and search them
+        $input = preg_quote($query, '~');
+        $tags = $tagHandler->getTagsForUser($cacheHandler, $tagRepo);
+        $results = preg_grep('~^' . $input . '~', $tags);
 
-        // Format the results for the UI
-        $tags = [];
-        foreach($tagObjs as $tag) {
-            $tags[] = ['tag_id' => $tag->id, 'tag_value' => $tag->name];
+        // Format the hits for select2
+        $hits = [];
+        foreach($results as $tag) {
+            $hits['id'] = $tag;
+            $hits['text'] = $tag;
         }
 
-        return \Response::json($tags);
+        return response()->json(['items' => [$hits]]);
     }
 
     public function getTagsPane

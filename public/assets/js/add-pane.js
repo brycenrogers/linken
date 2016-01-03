@@ -40,7 +40,16 @@ $( document ).ready(function() {
     $('select#add-tags').select2({
         tags: true,
         tokenSeparators: [','],
-        placeholder: "Tags"
+        placeholder: "Tags",
+        ajax: {
+            url: '/tags/search',
+            delay: 250,
+            processResults: function (data) {
+                return {
+                    results: data.items
+                    };
+            }
+        }
     });
     $('input.select2-search__field').prop('tabindex', "3");
     $('button#add-button').click(function() {

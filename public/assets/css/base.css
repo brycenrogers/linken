@@ -235,6 +235,17 @@ div#add-fader {
     padding-top: 15px; }
   .container-item-pane div.media-footer {
     padding-top: 15px; }
+    .container-item-pane div.media-footer .user-photo {
+      float: left;
+      width: 25px;
+      height: 25px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      border-radius: 50%;
+      border: 0;
+      outline: none;
+      margin-right: 15px; }
     .container-item-pane div.media-footer div.media-tags {
       min-height: 22px;
       float: left; }

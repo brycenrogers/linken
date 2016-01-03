@@ -36,6 +36,11 @@
                     </div>
                 @endif
                 <div class="media-footer">
+                    @if (Auth::user()->id != $item->user->id)
+                        <div class="media-userphoto">
+                            <div class="user-photo" style="background-image: url('{{ asset('/assets/images/uploads/' . $item->user->user_photo) }}');"></div>
+                        </div>
+                    @endif
                     <div class="media-tags">
                         @foreach ($item->tags as $tag)
                             <a href="/tags?q={{ $tag->name }}" class="tag-link">
@@ -46,13 +51,14 @@
                     <div class="media-options">
                         @if ($item->user == Auth::user())
                         <a href="#itemSettingsModal"
-                           class="settings-link"
-                           title="Settings"
-                           data-toggle="modal"
-                           data-itemid="{{ $item->id }}"
-                           data-type="{{ (get_class($item->itemable) == "App\Models\Link") ? "Link" : "Note" }}"
-                           data-value="{{ $item->value }}"
-                           data-description="{{ $item->description }}">
+                            class="settings-link"
+                            title="Settings"
+                            data-toggle="modal"
+                            data-itemid="{{ $item->id }}"
+                            data-type="{{ (get_class($item->itemable) == "App\Models\Link") ? "Link" : "Note" }}"
+                            data-value="{{ $item->value }}"
+                            data-description="{{ $item->description }}"
+                            data-tags="@foreach ($item->tags as $tag){{ $tag->name }},@endforeach">
                             <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
                         </a>
                         @endif

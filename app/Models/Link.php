@@ -40,6 +40,7 @@ class Link extends Model implements Searchable
         $tags = $item->tagsAsArray();
         $searchableProperties = [
             'user_id' => $item->user_id,
+            'user_photo' => $item->user->user_photo,
             'value' => $item->value,
             'url' => $this->url,
             'photo' => $this->photo,
@@ -67,6 +68,6 @@ class Link extends Model implements Searchable
      */
     public function getSearchableId()
     {
-        return $this->item->id;
+        return intval($this->item->id);
     }
 }

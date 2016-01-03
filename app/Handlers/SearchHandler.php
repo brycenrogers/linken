@@ -83,6 +83,7 @@ class SearchHandler implements SearchHandlerInterface, UserSearchHandlerInterfac
                 $item->itemable = new Link();
                 $item->itemable->url = $itemArray['url'];
                 $item->itemable->photo = $itemArray['photo'];
+
             } else {
                 $item->itemable = new Note();
             }
@@ -100,6 +101,9 @@ class SearchHandler implements SearchHandlerInterface, UserSearchHandlerInterfac
                 $item->tags = $tagsObjArray;
             }
             $item->user_id = $itemArray['user_id'];
+            $item->user = new User();
+            $item->user->id = $itemArray['user_id'];
+            $item->user->user_photo = $itemArray['user_photo'];
             $items[] = $item;
         }
 
@@ -242,14 +246,14 @@ class SearchHandler implements SearchHandlerInterface, UserSearchHandlerInterfac
             SearchIndex::clearIndex();
         } catch (\Exception $e) {
             error_log($e->getMessage());
-            throw $e;
         }
 
         // Get all items and reindex them
-        $items = Item::all();
-        foreach ($items as $item) {
-            SearchIndex::upsertToIndex($item->itemable);
-        }
+        Item::chunk(100, function($items) {
+            foreach ($items as $item) {
+                SearchIndex::upsertToIndex($item->itemable);
+            }
+        });
 
         return true;
     }
