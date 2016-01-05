@@ -38,9 +38,10 @@ class Link extends Model implements Searchable
         /* @var $item \App\Models\Item */
         $item = $this->item;
         $tags = $item->tagsAsArray();
+        $userPhoto = ($item->user->user_photo != null ? $item->user->user_photo : 'new-link.png');
         $searchableProperties = [
             'user_id' => $item->user_id,
-            'user_photo' => $item->user->user_photo,
+            'user_photo' => $userPhoto,
             'value' => $item->value,
             'url' => $this->url,
             'photo' => $this->photo,

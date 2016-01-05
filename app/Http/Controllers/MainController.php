@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Console\Commands\GenerateThumbnails;
 use App\Handlers\DiscoverCacheHandler;
 use App\Interfaces\CacheHandlerInterface;
+use App\Interfaces\ImageHandlerInterface;
 use App\Interfaces\SearchHandlerInterface;
 use App\Interfaces\UserCacheHandlerInterface;
 use App\Interfaces\UserItemRepositoryInterface;
@@ -51,10 +53,10 @@ class MainController extends Controller
     }
 
 //    public function test(
-//        DiscoverCacheHandler $discoverCacheHandler,
-//        SearchHandlerInterface $searchHandler,
+//        ImageHandlerInterface $imageHandler,
 //        CacheHandlerInterface $cacheHandler)
 //    {
-//        $links = $searchHandler->filteredSearch('tags', 'imgur', 'created_at', 'desc', 10);
+//        $generate = new GenerateThumbnails();
+//        $generate->handle($imageHandler, $cacheHandler);
 //    }
 }

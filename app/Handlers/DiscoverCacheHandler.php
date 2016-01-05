@@ -37,14 +37,16 @@ class DiscoverCacheHandler
 
         // Filter out their own links
         foreach ($items as $tag => $itemArray) {
-            foreach ($itemArray as $key => $item) {
-                if ($item->user_id == Auth::user()->id) {
-                    unset($items[$tag][$key]);
+            if (isset($itemArray)) {
+                foreach ($itemArray as $key => $item) {
+                    if ($item->user_id == Auth::user()->id) {
+                        unset($items[$tag][$key]);
+                    }
                 }
-            }
-            // If all items are filtered out, remove them from the list
-            if (count($items[$tag]) === 0) {
-                unset($items[$tag]);
+                // If all items are filtered out, remove them from the list
+                if (count($items[$tag]) === 0) {
+                    unset($items[$tag]);
+                }
             }
         }
 
