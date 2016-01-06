@@ -13,4 +13,7 @@ interface SearchHandlerInterface
     public function basicSearch($term, $sortColumn = null, $sortDirection = 'desc', $limit = 50);
     public function filteredSearch($type, $term, $sortColumn = null, $sortDirection = 'desc', $limit = 50);
     public function reindex();
+    public function add(Searchable $item);
+    public function update(Searchable $item);
+    public function remove(Searchable $item);
 }

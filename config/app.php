@@ -140,6 +140,7 @@ return [
         /*
          * Application Service Providers...
          */
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
@@ -148,8 +149,6 @@ return [
         App\Providers\ImageServiceProvider::class,
         App\Providers\ItemHandlerServiceProvider::class,
         App\Providers\CacheManagerServiceProvider::class,
-        Spatie\SearchIndex\SearchIndexServiceProvider::class,
-        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         App\Providers\LinkRepositoryServiceProvider::class,
         App\Providers\NoteRepositoryServiceProvider::class,
         App\Providers\TagRepositoryServiceProvider::class,
@@ -204,8 +203,7 @@ return [
         'Storage'   => Illuminate\Support\Facades\Storage::class,
         'URL'       => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
-        'View'      => Illuminate\Support\Facades\View::class,
-        'SearchIndex' => Spatie\SearchIndex\SearchIndexFacade::class
+        'View'      => Illuminate\Support\Facades\View::class
 
     ],
 

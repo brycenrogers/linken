@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "8462865bd19a9234a43ac037d429c6a3",
-    "content-hash": "a2957eabeb54692fbe9aae1b64c2a302",
+    "hash": "1227d6abc58a528323a6fb89ec018fb2",
+    "content-hash": "4de4e443f01634d58abe02af7f7830ec",
     "packages": [
         {
             "name": "barryvdh/laravel-ide-helper",
@@ -1202,61 +1202,6 @@
             "time": "2015-09-11 15:10:35"
         },
         {
-            "name": "predis/predis",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/nrk/predis.git",
-                "reference": "6bc1a38123f61efde92d8b4a73adabf168e09442"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/nrk/predis/zipball/6bc1a38123f61efde92d8b4a73adabf168e09442",
-                "reference": "6bc1a38123f61efde92d8b4a73adabf168e09442",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.9"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~4.0"
-            },
-            "suggest": {
-                "ext-curl": "Allows access to Webdis when paired with phpiredis",
-                "ext-phpiredis": "Allows faster serialization and deserialization of the Redis protocol"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.1-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Predis\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Daniele Alessandri",
-                    "email": "suppakilla@gmail.com",
-                    "homepage": "http://clorophilla.net"
-                }
-            ],
-            "description": "Flexible and feature-complete PHP client library for Redis",
-            "homepage": "http://github.com/nrk/predis",
-            "keywords": [
-                "nosql",
-                "predis",
-                "redis"
-            ],
-            "time": "2015-07-30 18:51:15"
-        },
-        {
             "name": "psr/log",
             "version": "1.0.0",
             "source": {
@@ -1367,53 +1312,59 @@
             "time": "2015-11-12 16:18:56"
         },
         {
-            "name": "spatie/searchindex",
-            "version": "3.2.0",
+            "name": "ruflin/elastica",
+            "version": "3.0.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/spatie/searchindex.git",
-                "reference": "c454a158596ac3cd4cc0eab09290a8bc8258dbd2"
+                "url": "https://github.com/ruflin/Elastica.git",
+                "reference": "5446ff64692add886a11e2a329f37f0c0b547dbe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/searchindex/zipball/c454a158596ac3cd4cc0eab09290a8bc8258dbd2",
-                "reference": "c454a158596ac3cd4cc0eab09290a8bc8258dbd2",
+                "url": "https://api.github.com/repos/ruflin/Elastica/zipball/5446ff64692add886a11e2a329f37f0c0b547dbe",
+                "reference": "5446ff64692add886a11e2a329f37f0c0b547dbe",
                 "shasum": ""
             },
             "require": {
-                "illuminate/support": "^5.1",
-                "php": ">=5.5.0"
+                "php": ">=5.4.0",
+                "psr/log": "~1.0"
             },
             "require-dev": {
-                "algolia/algoliasearch-client-php": "^1.6",
-                "elasticsearch/elasticsearch": "^1.3",
-                "phpspec/phpspec": "^2.1",
-                "phpunit/phpunit": "4.*"
+                "guzzlehttp/guzzle": "5.3.*"
             },
             "suggest": {
-                "algolia/algoliasearch-client-php": "Install if you want use Algolia as your search index",
-                "elasticsearch/elasticsearch": "Install if you want use Elasticsearch as your search index"
+                "egeloen/http-adapter": "Allow using httpadapter transport",
+                "guzzlehttp/guzzle": "Allow using guzzle 5.3.x as the http transport (Requires php 5.4)",
+                "monolog/monolog": "Logging request"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.0.x-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
-                    "Spatie\\SearchIndex\\": "src/"
+                    "Elastica\\": "lib/Elastica/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
-            "description": "Store and retrieve objects from Elasticsearch or Algolia",
-            "homepage": "https://github.com/spatie/searchindex",
+            "authors": [
+                {
+                    "name": "Nicolas Ruflin",
+                    "homepage": "http://ruflin.com/"
+                }
+            ],
+            "description": "Elasticsearch Client",
+            "homepage": "http://elastica.io/",
             "keywords": [
-                "algolia",
-                "elasticsearch",
-                "index",
-                "laravel",
+                "client",
                 "search"
             ],
-            "time": "2015-08-16 17:58:43"
+            "time": "2016-01-05 14:01:39"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -3569,9 +3520,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "predis/predis": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.1.28 (LTS) on 2016-01-02.
+ * Generated for Laravel 5.1.28 (LTS) on 2016-01-06.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -8146,61 +8146,6 @@ namespace {
     }
 
 
-    class Redis extends \Illuminate\Support\Facades\Redis{
-        
-        /**
-         * Get a specific Redis connection instance.
-         *
-         * @param string $name
-         * @return \Predis\ClientInterface|null 
-         * @static 
-         */
-        public static function connection($name = 'default'){
-            return \Illuminate\Redis\Database::connection($name);
-        }
-        
-        /**
-         * Run a command against the Redis database.
-         *
-         * @param string $method
-         * @param array $parameters
-         * @return mixed 
-         * @static 
-         */
-        public static function command($method, $parameters = array()){
-            return \Illuminate\Redis\Database::command($method, $parameters);
-        }
-        
-        /**
-         * Subscribe to a set of given channels for messages.
-         *
-         * @param array|string $channels
-         * @param \Closure $callback
-         * @param string $connection
-         * @param string $method
-         * @return void 
-         * @static 
-         */
-        public static function subscribe($channels, $callback, $connection = null, $method = 'subscribe'){
-            \Illuminate\Redis\Database::subscribe($channels, $callback, $connection, $method);
-        }
-        
-        /**
-         * Subscribe to a set of given channels with wildcards.
-         *
-         * @param array|string $channels
-         * @param \Closure $callback
-         * @param string $connection
-         * @return void 
-         * @static 
-         */
-        public static function psubscribe($channels, $callback, $connection = null){
-            \Illuminate\Redis\Database::psubscribe($channels, $callback, $connection);
-        }
-        
-    }
-
-
     class Request extends \Illuminate\Support\Facades\Request{
         
         /**
@@ -12161,84 +12106,6 @@ namespace {
          */
         public static function getNames(){
             return \Illuminate\View\Factory::getNames();
-        }
-        
-    }
-
-
-    class SearchIndex extends \Spatie\SearchIndex\SearchIndexFacade{
-        
-        /**
-         * Set the name of the index that should be used by default.
-         *
-         * @param $indexName
-         * @return $this 
-         * @static 
-         */
-        public static function setIndexName($indexName){
-            return \Spatie\SearchIndex\SearchIndexHandlers\Elasticsearch::setIndexName($indexName);
-        }
-        
-        /**
-         * Add or update the given searchable subject to the index.
-         *
-         * @param \Spatie\SearchIndex\SearchIndexHandlers\Searchable $subject
-         * @static 
-         */
-        public static function upsertToIndex($subject){
-            return \Spatie\SearchIndex\SearchIndexHandlers\Elasticsearch::upsertToIndex($subject);
-        }
-        
-        /**
-         * Remove the given subject from the search index.
-         *
-         * @param \Spatie\SearchIndex\SearchIndexHandlers\Searchable $subject
-         * @static 
-         */
-        public static function removeFromIndex($subject){
-            return \Spatie\SearchIndex\SearchIndexHandlers\Elasticsearch::removeFromIndex($subject);
-        }
-        
-        /**
-         * Remove an item from the search index by type and id.
-         *
-         * @param string $type
-         * @param int $id
-         * @static 
-         */
-        public static function removeFromIndexByTypeAndId($type, $id){
-            return \Spatie\SearchIndex\SearchIndexHandlers\Elasticsearch::removeFromIndexByTypeAndId($type, $id);
-        }
-        
-        /**
-         * Remove everything from the index.
-         *
-         * @return mixed 
-         * @static 
-         */
-        public static function clearIndex(){
-            return \Spatie\SearchIndex\SearchIndexHandlers\Elasticsearch::clearIndex();
-        }
-        
-        /**
-         * Get the results for the given query.
-         *
-         * @param array $query
-         * @return mixed 
-         * @static 
-         */
-        public static function getResults($query){
-            return \Spatie\SearchIndex\SearchIndexHandlers\Elasticsearch::getResults($query);
-        }
-        
-        /**
-         * Get the underlying client.
-         *
-         * @return \Spatie\SearchIndex\SearchIndexHandlers\Elasticsearch 
-         * @static 
-         */
-        public static function getClient(){
-            return \Spatie\SearchIndex\SearchIndexHandlers\Elasticsearch::getClient();
         }
         
     }

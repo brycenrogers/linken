@@ -4,6 +4,7 @@ namespace App\Handlers;
 
 use App\Interfaces\CacheHandlerInterface;
 use App\Interfaces\UserCacheHandlerInterface;
+use App\Interfaces\UserSearchHandlerInterface;
 use App\Models\User;
 use App\Interfaces\UserItemRepositoryInterface;
 use App\Interfaces\UserLinkRepositoryInterface;
@@ -11,7 +12,6 @@ use App\Interfaces\UserNoteRepositoryInterface;
 use App\Interfaces\UserTagRepositoryInterface;
 use App\Interfaces\ItemHandlerInterface;
 use App\Models\Item;
-use SearchIndex;
 
 /**
  * Class ItemHandler
@@ -65,8 +65,16 @@ class ItemHandler implements ItemHandlerInterface {
     protected $cacheHandler;
 
     /**
+     * The Search Handler library instance
+     *
+     * @var \App\Interfaces\UserSearchHandlerInterface
+     */
+    protected $searchHandler;
+
+    /**
      * ItemService constructor
      *
+     * @param UserSearchHandlerInterface $searchHandler
      * @param UserCacheHandlerInterface $cacheHandler
      * @param UserItemRepositoryInterface $items
      * @param UserLinkRepositoryInterface $links
@@ -75,6 +83,7 @@ class ItemHandler implements ItemHandlerInterface {
      * @param User $user
      */
     public function __construct(
+        UserSearchHandlerInterface $searchHandler,
         UserCacheHandlerInterface $cacheHandler,
         UserItemRepositoryInterface $items,
         UserLinkRepositoryInterface $links,
@@ -82,6 +91,7 @@ class ItemHandler implements ItemHandlerInterface {
         UserTagRepositoryInterface $tags,
         User $user)
     {
+        $this->searchHandler = $searchHandler;
         $this->cacheHandler = $cacheHandler;
         $this->itemsRepo = $items;
         $this->linksRepo = $links;
@@ -101,6 +111,12 @@ class ItemHandler implements ItemHandlerInterface {
         // Create the item
         $item = $this->itemsRepo->store($inputs);
 
+        // Save Tags
+        $tags = $this->tagsRepo->store($inputs);
+
+        // Attach Tags to the Item
+        $item->tags()->attach($tags);
+
         // Create the derived type
         switch($inputs['type']) {
 
@@ -112,7 +128,8 @@ class ItemHandler implements ItemHandlerInterface {
                 $link->item()->save($item);
 
                 // Save it to the search index
-                SearchIndex::upsertToIndex($link);
+                $this->searchHandler->add($link);
+
                 break;
 
             case 'Note':
@@ -123,15 +140,10 @@ class ItemHandler implements ItemHandlerInterface {
                 $note->item()->save($item);
 
                 // Save it to the search index
-                SearchIndex::upsertToIndex($note);
+                $this->searchHandler->add($note);
+
                 break;
         }
-
-        // Save Tags
-        $tags = $this->tagsRepo->store($inputs);
-
-        // Attach Tags to the Item
-        $item->tags()->attach($tags);
 
         // Reset caches
         $this->cacheHandler->del(CacheHandlerInterface::MAINPAGE);
@@ -149,7 +161,7 @@ class ItemHandler implements ItemHandlerInterface {
         $this->cacheHandler->del(CacheHandlerInterface::MAINPAGE);
 
         // Delete from Search Index
-        SearchIndex::removeFromIndexByTypeAndId('item', $id);
+        $this->searchHandler->remove($id);
     }
 
     /**
@@ -180,7 +192,7 @@ class ItemHandler implements ItemHandlerInterface {
         $item->save();
 
         // Update Search
-        SearchIndex::upsertToIndex($item->itemable);
+        $this->searchHandler->update($item->itemable);
 
         return $item;
     }

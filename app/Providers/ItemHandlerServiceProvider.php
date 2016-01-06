@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Handlers\SearchHandler;
 use Illuminate\Support\ServiceProvider;
 use Auth;
 use App\Handlers\CacheHandler;
@@ -42,12 +43,13 @@ class ItemHandlerServiceProvider extends ServiceProvider
     {
         $this->app->bind('App\Interfaces\ItemHandlerInterface', function() {
             $user = Auth::user();
+            $search = new SearchHandler($user);
             $cache = new CacheHandler($user);
             $items = new ItemRepository(new Item(), $user);
             $links = new LinkRepository(new Link(), $user);
             $notes = new NoteRepository(new Note(), $user);
             $tags  = new TagRepository(new Tag(), $user);
-            return new ItemHandler($cache, $items, $links, $notes, $tags, $user);
+            return new ItemHandler($search, $cache, $items, $links, $notes, $tags, $user);
         });
     }
 

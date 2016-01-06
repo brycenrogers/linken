@@ -52,11 +52,12 @@ class MainController extends Controller
         return view('all', ['items' => $items, 'title' => $title]);
     }
 
-//    public function test(
-//        ImageHandlerInterface $imageHandler,
-//        CacheHandlerInterface $cacheHandler)
-//    {
-//        $generate = new GenerateThumbnails();
-//        $generate->handle($imageHandler, $cacheHandler);
-//    }
+    public function test(
+        ImageHandlerInterface $imageHandler,
+        CacheHandlerInterface $cacheHandler,
+        SearchHandlerInterface $searchHandler)
+    {
+        $generate = new GenerateThumbnails();
+        $generate->handle($imageHandler, $cacheHandler, $searchHandler);
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Handlers;
 
+use App\Interfaces\Searchable;
 use App\Interfaces\SearchHandlerInterface;
 use App\Interfaces\UserSearchHandlerInterface;
 use App\Models\Item;
@@ -9,7 +10,12 @@ use App\Models\Link;
 use App\Models\Note;
 use App\Models\Tag;
 use App\Models\User;
-use SearchIndex;
+use Elastica\Document;
+use Elastica\Query;
+use Elastica\Query\BoolQuery;
+use Elastica\Query\Fuzzy;
+use Elastica\Query\Term as TermQuery;
+use Elastica\ResultSet;
 
 /**
  * Class SearchHandler
@@ -20,6 +26,11 @@ use SearchIndex;
  * @provider App\Providers\SearchHandlerServiceProvider
  */
 class SearchHandler implements SearchHandlerInterface, UserSearchHandlerInterface {
+
+    /**
+     * The Elastica Client instance
+     */
+    public $client;
 
     /**
      * Current User
@@ -33,52 +44,111 @@ class SearchHandler implements SearchHandlerInterface, UserSearchHandlerInterfac
         if ($user) {
             $this->user = $user;
         }
-    }
-
-    public function search($term, $sortColumn = null, $sortDirection = 'desc', $limit = 50)
-    {
-        return $this->basicSearch($term, $sortColumn, $sortDirection, $limit);
-    }
-
-    public function basicSearch($term, $sortColumn = null, $sortDirection = 'desc', $limit = 50)
-    {
-        $userId = null;
-        if ($this->user) {
-            $userId = $this->user->id;
-        }
-
-        return $this->performSearch($this->basicQuery($term, $sortColumn, $sortDirection, $limit, $userId));
-    }
-
-    public function filteredSearch($type, $term, $sortColumn = null, $sortDirection = 'desc', $limit = 50)
-    {
-        $userId = null;
-        if ($this->user) {
-            $userId = $this->user->id;
-        }
-
-        return $this->performSearch($this->filteredQuery($type, $term, $sortColumn, $sortDirection, $limit, $userId));
+        $this->client = new \Elastica\Client();
     }
 
     /**
-     * Perform a search for the query term
+     * Perform the default search (currently fuzzy)
      *
-     * @param $term string
+     * @param $term
      * @param null $sortColumn
      * @param string $sortDirection
      * @param int $limit
      * @return array
      */
-    public function performSearch($queryType)
+    public function search($term, $sortColumn = null, $sortDirection = 'desc', $limit = 50)
     {
-        $hits = SearchIndex::getResults($queryType);
+        return $this->basicSearch($term, $sortColumn, $sortDirection, $limit);
+    }
 
+    /**
+     * Perform a basic search (currently fuzzy)
+     *
+     * @param $term
+     * @param null $sortColumn
+     * @param string $sortDirection
+     * @param int $limit
+     * @return array
+     */
+    public function basicSearch($term, $sortColumn = null, $sortDirection = 'desc', $limit = 50)
+    {
+        $query = new Query();
+        $query->setFrom(0);
+        $query->setSize($limit);
+
+        $fuzzy = new Fuzzy();
+        $fuzzy->setField('_all', $term);
+        $fuzzy->setFieldOption('fuzziness', 2);
+
+        if ($this->user) {
+            $userId = $this->user->id;
+            $boolQuery = new BoolQuery();
+            $matchQuery = new Query\Match('user_id', $userId);
+            $boolQuery->addMust($matchQuery);
+            $boolQuery->addMust($fuzzy);
+            $query->setQuery($boolQuery);
+        }
+
+        if ($sortColumn) {
+            $query->addSort([$sortColumn => ['order' => $sortDirection]]);
+        }
+
+        $resultSet = $this->getTypedIndex()->search($query);
+
+        return $this->getModels($resultSet);
+    }
+
+    /**
+     * Perform a search based on the specified filter
+     *
+     * @param $type
+     * @param $term
+     * @param null $sortColumn
+     * @param string $sortDirection
+     * @param int $limit
+     * @return array
+     */
+    public function filteredSearch($type, $term, $sortColumn = null, $sortDirection = 'desc', $limit = 50)
+    {
+        $query = new Query();
+        $query->setFrom(0);
+        $query->setSize($limit);
+
+        $boolQuery = new BoolQuery();
+        $termQueryType = new TermQuery([$type => $term]);
+        $boolQuery->addMust($termQueryType);
+        $query->setQuery($boolQuery);
+
+        if ($this->user) {
+            $userId = $this->user->id;
+            $termQueryUser = new TermQuery(['user_id' => $userId]);
+            $boolQuery->addMust($termQueryUser);
+        }
+
+        if ($sortColumn) {
+            $query->addSort([$sortColumn => ['order' => $sortDirection]]);
+        }
+
+        $resultSet = $this->getTypedIndex()->search($query);
+
+        return $this->getModels($resultSet);
+    }
+
+    /**
+     * Get a list of the models for the result set
+     *
+     * @param ResultSet $resultSet
+     * @return array
+     */
+    public function getModels(ResultSet $resultSet)
+    {
         // Loop through the search hits and return Eloquent models for them
         $items = [];
-        foreach($hits['hits']['hits'] as $hit) {
-            $itemArray = $hit['_source'];
+        $hits = $resultSet->getResults();
+        foreach($hits as $hit) {
+            $itemArray = $hit->getSource();
             $item = new Item();
-            $item->id = intval($hit['_id']);
+            $item->id = intval($hit->getId());
             if (array_key_exists('url', $itemArray)) {
                 $item->itemable = new Link();
                 $item->itemable->url = $itemArray['url'];
@@ -111,127 +181,56 @@ class SearchHandler implements SearchHandlerInterface, UserSearchHandlerInterfac
     }
 
     /**
-     * Perform a basic search on the index
+     * Get the Item index
      *
-     * @param $term
-     * @param $userId
-     * @param $sortCol
-     * @param $sortDirection
-     * @return array
+     * @return \Elastica\Index
      */
-    public function filteredQuery($type, $term, $sortCol, $sortDirection, $limit, $userId)
+    private function getIndex()
     {
-        // Add user constraint if specified
-        if ($userId) {
-            $query = [
-                'body' => [
-                    'from' => 0,
-                    'size' => $limit,
-                    'query' => [
-                        'bool' => [
-                            'must' => [
-                                [
-                                    'term' => [
-                                        'user_id' => $userId
-                                    ]
-                                ],
-                                [
-                                    'term' => [
-                                        $type => $term
-                                    ]
-                                ]
-                            ]
-                        ]
-                    ]
-                ]
-            ];
-        } else {
-            $query = [
-                'body' => [
-                    'from' => 0,
-                    'size' => $limit,
-                    'query' => [
-                        'bool' => [
-                            'must' => [
-                                [
-                                    'term' => [
-                                        $type => $term
-                                    ]
-                                ]
-                            ]
-                        ]
-                    ]
-                ]
-            ];
-        }
-
-        if ($sortCol) {
-            $query['body']['sort'] = ['created_at' => ['order' => $sortDirection]];
-        }
-
-        return $query;
+        return $this->client->getIndex('items');
     }
 
     /**
-     * Perform a basic search on the index
+     * Get the Item index for Items
      *
-     * @param $term
-     * @param $userId
-     * @param $sortCol
-     * @param $sortDirection
-     * @return array
+     * @return \Elastica\Type
      */
-    public function basicQuery($term, $sortCol, $sortDirection, $limit, $userId)
+    private function getTypedIndex()
     {
-        // Add user constraint if specified
-        if ($userId) {
-            $query = [
-                'body' => [
-                    'from' => 0,
-                    'size' => $limit,
-                    'query' => [
-                        'bool' => [
-                            'must' => [
-                                [
-                                    'fuzzy_like_this' => [
-                                        '_all' => [
-                                            'like_text' => $term,
-                                            'fuzziness' => 0.5
-                                        ]
-                                    ]
-                                ],
-                                [
-                                    'match' => [
-                                        'user_id' => $userId
-                                    ]
-                                ]
-                            ]
-                        ]
-                    ]
-                ]
-            ];
-        } else {
-            $query = [
-                'body' => [
-                    'from' => 0,
-                    'size' => $limit,
-                    'query' => [
-                        'fuzzy_like_this' => [
-                            '_all' => [
-                                'like_text' => $term,
-                                'fuzziness' => 0.5
-                            ]
-                        ]
-                    ]
-                ]
-            ];
-        }
+        return $this->getIndex()->getType('item');
+    }
 
-        if ($sortCol) {
-            $query['body']['sort'] = ['date' => ['order' => $sortDirection]];
-        }
+    /**
+     * Add an item to the index
+     *
+     * @param Searchable $item
+     * @return \Elastica\Response
+     */
+    public function add(Searchable $item)
+    {
+        return $this->getTypedIndex()->addDocument(new Document($item->getSearchableId(), $item->getSearchableBody()));
+    }
 
-        return $query;
+    /**
+     * Update an existing item in the index
+     *
+     * @param Searchable $item
+     * @return \Elastica\Response
+     */
+    public function update(Searchable $item)
+    {
+        return $this->getTypedIndex()->updateDocument(new Document($item->getSearchableId(), $item->getSearchableBody()));
+    }
+
+    /**
+     * Remove an item from the index
+     *
+     * @param Searchable $item
+     * @return \Elastica\Response
+     */
+    public function remove(Searchable $item)
+    {
+        return $this->getTypedIndex()->deleteById($item->getSearchableId());
     }
 
     /**
@@ -242,17 +241,20 @@ class SearchHandler implements SearchHandlerInterface, UserSearchHandlerInterfac
     public function reindex()
     {
         // Clear the search index
-        try {
-            SearchIndex::clearIndex();
-        } catch (\Exception $e) {
-            error_log($e->getMessage());
+        if ($this->getIndex()->exists()) {
+            $this->getIndex()->delete();
+            $this->getIndex()->create();
         }
 
         // Get all items and reindex them
-        Item::chunk(100, function($items) {
-            foreach ($items as $item) {
-                SearchIndex::upsertToIndex($item->itemable);
+        Item::with('itemable')->chunk(100, function($items) {
+            $documents = [];
+            foreach($items as $item) {
+                /* @var $itemable Searchable */
+                $itemable = $item->itemable;
+                $documents[] = new Document($itemable->getSearchableId(), $itemable->getSearchableBody());
             }
+            $this->getTypedIndex()->addDocuments($documents);
         });
 
         return true;

@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model,
-    Spatie\SearchIndex\Searchable;
+use Illuminate\Database\Eloquent\Model;
+use App\Interfaces\Searchable;
 
 class Link extends Model implements Searchable
 {
@@ -40,6 +40,7 @@ class Link extends Model implements Searchable
         $tags = $item->tagsAsArray();
         $userPhoto = ($item->user->user_photo != null ? $item->user->user_photo : 'new-link.png');
         $searchableProperties = [
+            'type' => get_class($this),
             'user_id' => $item->user_id,
             'user_photo' => $userPhoto,
             'value' => $item->value,
