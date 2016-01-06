@@ -36,11 +36,15 @@ class DiscoverCacheHandler
         }
 
         // Filter out their own links
+        $itemIds = [];
         foreach ($items as $tag => $itemArray) {
             if (isset($itemArray)) {
                 foreach ($itemArray as $key => $item) {
-                    if ($item->user_id == Auth::user()->id) {
+                    if ($item->user_id == Auth::user()->id || isset($itemIds[$item->id])) {
                         unset($items[$tag][$key]);
+                    } else {
+                        // Track item id's so we can remove dups
+                        $itemIds[$item->id] = $item->id;
                     }
                 }
                 // If all items are filtered out, remove them from the list
