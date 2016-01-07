@@ -30,7 +30,7 @@
                         {{ $item->value }}
                     </h4>
                 @endif
-                @if ($item->description && $item->user == Auth::user())
+                @if ($item->description && $item->user->id == Auth::user()->id)
                     <div class="media-description">
                         {{ $item->description }}
                     </div>

@@ -5,6 +5,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="msapplication-TileImage" content="{{ asset('assets/images/linken-logo-144.png') }}"/>
+    <meta name="msapplication-TileColor" content="#efefef"/>
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" href="{{ asset('assets/images/linken-logo-57.png') }}">
+    <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('assets/images/linken-logo-72.png') }}">
+    <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('assets/images/linken-logo-114.png') }}">
 
     <!-- CSS -->
     <!-- build:css /assets/dist/css/linken.min.css -->
