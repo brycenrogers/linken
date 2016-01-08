@@ -69,7 +69,7 @@ body {
 
 @media only screen and (-moz-min-device-pixel-ratio: 1.5), only screen and (-o-min-device-pixel-ratio: 3/2), only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-devicepixel-ratio: 1.5), only screen and (min-resolution: 1.5dppx) {
   .container-header .linken-logo {
-    background-image: url(../images/linken-logo@2x.png);
+    background-image: url(../images/linken-logo@2X.png);
     background-size: 90px 98px; } }
 
 .container-header .container-header-pane {
