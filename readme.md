@@ -1,7 +1,6 @@
+![Linken Logo](https://linken.me/assets/images/linken-logo.png "Linken")
 Linken
 ======
-
-![Linken Logo](https://linken.me/assets/images/linken-logo.png "Linken")
 
 Linken is a tool for remembering things. Work in progress.
 
