@@ -8,3 +8,4 @@ Homestead.json
 /public/assets/images/thumbs/*.png
 /public/assets/images/uploads/*.png
 !/public/assets/images/uploads/default-user.png
+_ide_helper.php
