@@ -1,81 +1,112 @@
-<div class="container-control-pane">
-    <div class="row no-margin">
-        <div class="col-md-4">
-            <div class="page-title">
-                {{ $title }}
-            </div>
-        </div>
-        <div class="col-md-7">
-            <div class="btn-group" role="group" aria-label="...">
-                <a href="/" type="button" class="btn btn-default<?php if($title == 'List') { echo " active"; } ?>" title="List">
-                    <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-                    &nbsp;List
-                </a>
-                <a href="/discover" type="button" class="btn btn-default<?php if($title == 'Discover') { echo " active"; } ?>" title="Discover">
-                    <span class="glyphicon glyphicon-road" aria-hidden="true"></span>
-                    &nbsp;Discover
-                </a>
-                <div class="btn-group">
-                    <button title="Tags" id="tags-dropdown" type="button" class="btn btn-default dropdown-toggle<?php if($title == 'Tags') { echo " active"; } ?>" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="glyphicon glyphicon-tags" aria-hidden="true"></span>
-                        &nbsp;Tags
-                        &nbsp;&nbsp;<span class="caret"></span>
+ <div class="container-control-pane">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+
+                <!-- Brand and Hamburger Menu -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#control-pane-navbar-collapse" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
                     </button>
-                    <div class="dropdown-menu">
-                        <div id="tags-dropdown-pane">
-                            <div id="tags-pane-spinner"></div>
-                        </div>
+                    <div class="navbar-brand">
+                        {{ $title }}
                     </div>
                 </div>
-                <a href="/help" type="button" class="btn btn-default<?php if($title == 'Help') { echo " active"; } ?>" title="Help">
-                    <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
-                    &nbsp;Help
-                </a>
+
+                <div class="collapse navbar-collapse" id="control-pane-navbar-collapse">
+
+                    <!-- Menu Options -->
+                    <ul class="nav navbar-nav">
+                        <li class="<?php if($title == 'List') echo " active"; ?>">
+                            <a href="/" type="button" class="" title="List">
+                                <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                                <span class="">&nbsp;List</span>
+                            </a>
+                        </li>
+                        <li class="<?php if($title == 'Discover') echo " active"; ?>">
+                            <a href="/discover" type="button" class="<?php if($title == 'Discover') { echo " active"; } ?>" title="Discover">
+                                <span class="glyphicon glyphicon-road" aria-hidden="true"></span>
+                                <span class="">&nbsp;Discover</span>
+                            </a>
+                        </li>
+                        <li id="tags-dropdown-container" class="dropdown">
+                            <a href="#" id="tags-dropdown" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <span class="glyphicon glyphicon-tags" aria-hidden="true"></span>
+                                <span class="">&nbsp;Tags</span>
+                                &nbsp;<span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <div id="tags-dropdown-pane">
+                                        <div id="tags-pane-spinner"></div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="<?php if($title == 'Help') echo " active"; ?>">
+                            <a href="/help" type="button" class="<?php if($title == 'Help') { echo " active"; } ?>" title="Help">
+                                <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                                <span class="">&nbsp;Help</span>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <!-- Account Options -->
+                    <ul class="nav navbar-nav navbar-right">
+                        <li id="account-dropdown-container" class="dropdown">
+                            <a href="#" type="button" title="Logged in as {{ $user->name }}" class="account-button dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="user-photo" style="background-image: url('{!! asset('/assets/images/uploads/' . Auth::user()->user_photo) !!}');"></span>
+                                <span class="visible-xs username">
+                                    Account
+                                    &nbsp;<span class="caret"></span>
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <span class="menu-username">{{ $user->name }}</span>
+                                </li>
+                                <li class="divider" role="separator"></li>
+                                <li>
+                                    <a href="#userSettingsModal" data-toggle="modal" aria-hidden="true">
+                                        <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Settings
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#changePasswordModal" data-toggle="modal" aria-hidden="true">
+                                        <span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Change Password
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#updatePhotoModal" data-toggle="modal" aria-hidden="true">
+                                        <span class="glyphicon glyphicon-camera" aria-hidden="true"></span> Update Photo
+                                    </a>
+                                </li>
+                                <li role="separator" class="divider"></li>
+                                <li>
+                                    <a href="/auth/logout">
+                                        <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
+                                        Logout
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <!-- Search Form -->
+                    <form action="/search" method="get" class="navbar-form navbar-right" role="search">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="searchField" placeholder="Search" name="q" value="{{ (isset($q)) ? $q : null }}">
+                            <span class="input-group-btn">
+                                <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                            </span>
+                        </div>
+                    </form>
+
+                </div>
             </div>
-            <div class="pull-right">
-                <form action="/search" method="get" class="form-inline" style="margin-bottom: 0;">
-                    <div class="form-group">
-                        <input type="input" class="form-control" id="searchField" placeholder="Search" name="q" value="{{ (isset($q)) ? $q : null }}">
-                        <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <div class="container-account-pane col-md-1">
-            <div class="dropdown pull-right">
-                <button type="button" title="Logged in as {{ $user->name }}" class="user-photo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-image: url('{!! asset('/assets/images/uploads/' . Auth::user()->user_photo) !!}');">
-                </button>
-                <ul class="dropdown-menu">
-                    <li>
-                        <span class="menu-username">{{ $user->name }}</span>
-                    </li>
-                    <li class="divider" role="separator"></li>
-                    <li>
-                        <a href="#userSettingsModal" data-toggle="modal" aria-hidden="true">
-                            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Settings
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#changePasswordModal" data-toggle="modal" aria-hidden="true">
-                            <span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Change Password
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#updatePhotoModal" data-toggle="modal" aria-hidden="true">
-                            <span class="glyphicon glyphicon-camera" aria-hidden="true"></span> Update Photo
-                        </a>
-                    </li>
-                    <li role="separator" class="divider"></li>
-                    <li>
-                        <a href="/auth/logout">
-                            <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
-                            Logout
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
+        </nav>
     <!-- User Settings Modal -->
     <div class="modal fade" id="userSettingsModal" tabindex="-1" role="dialog" aria-labelledby="userSettingsModalLabel">
         <div class="modal-dialog" role="document">

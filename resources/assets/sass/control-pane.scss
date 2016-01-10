@@ -9,33 +9,124 @@
 
 .container-control-pane {
     width: 100%;
-    float: left;
-    padding: 15px 0;
+    padding: 0;
     border-bottom: 1px solid $greyLineColor;
 
-    .page-title {
-        font-family: $fontFace;
-        font-weight: 300;
-        font-size: 16pt;
-        margin: 7px 0;
-        color: #aaa;
+    .navbar {
+        background-color: transparent;
+        border: none;
+        border-radius: 0;
+        margin-bottom: 0;
+
+        .navbar-brand {
+            font-family: $fontFace;
+            font-weight: 300;
+            font-size: 16pt;
+            width: 150px;
+            color: #aaa;
+        }
+
+        li.active,
+        li.dropdown.open {
+            a {
+                background-color: #fafafa;
+                border-right: 1px solid #e3e3e3;
+                border-left: 1px solid #e3e3e3;
+            }
+            ul a {
+                background-color: transparent;
+                border: 0;
+            }
+        }
+
+        #tags-dropdown-container.dropdown.open {
+            margin-left: -1px;
+            margin-right: -1px;
+
+            ul.dropdown-menu {
+                border-top: 1px solid #e3e3e3;
+                li.active a {
+                    margin-left: 0;
+                }
+            }
+        }
+
+        @media (max-width: 767px) {
+            li.active,
+            li.dropdown.open {
+                a {
+                    background-color: #fafafa;
+                    border-top: 1px solid #e3e3e3;
+                    border-bottom: 1px solid #e3e3e3;
+                    border-right: 0;
+                    border-left: 0;
+                }
+                ul a {
+                    background-color: transparent;
+                    border: 0;
+                }
+            }
+            #tags-dropdown-container.dropdown.open,
+            #account-dropdown-container.dropdown.open {
+                margin: -1px 0;
+
+                ul.dropdown-menu {
+                    border: 0;
+                    li.active a {
+                        margin-left: 0;
+                    }
+                }
+            }
+        }
+
+        #account-dropdown-container {
+
+            ul.dropdown-menu {
+                margin-top: 2px;
+                border-top: 1px solid #e3e3e3;
+            }
+        }
+
+        .account-button {
+            color: #777;
+            padding: 0;
+
+            .user-photo {
+                float: left;
+                width: 40px;
+                height: 40px;
+                margin: 4px 2px;
+                background-size: contain;
+                background-repeat: no-repeat;
+                background-position: center;
+                border-radius: 50%;
+                border: 0;
+                outline: none;
+            }
+        }
+
+        .collapsing, .collapse.in {
+            .account-button {
+                padding: 10px;
+
+                .user-photo {
+                    width: 25px;
+                    height: 25px;
+                    margin: -3px 6px 0 0;
+                }
+            }
+            form {
+                border-bottom: none;
+                margin-bottom: 0;
+            }
+        }
     }
 
     .container-account-pane {
         height: 34px;
+        padding-right: 30px;
     }
 
-    .user-photo {
-        width: 45px;
-        height: 45px;
-        margin: -6px;
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: center;
-        border-radius: 50%;
-        border: 0;
-        outline: none;
-    }
     .menu-username {
         font-weight: bold;
         padding: 0 15px;
@@ -74,7 +165,7 @@
     input.cropit-image-input {
         visibility: hidden;
     }
-    div#tags-dropdown-pane {
+    #tags-dropdown-pane {
         width: 275px;
         height: 200px;
         overflow: scroll;
@@ -94,15 +185,21 @@
             }
         }
     }
+    @media (max-width: 767px) {
+        #tags-dropdown-pane {
+            width: 100%;
+            border-bottom: 1px solid #e3e3e3;
+        }
+    }
 }
-div.letter-header {
+.letter-header {
     width: 100%;
     margin: 0 0 10px;
     font-weight: bold;
     font-size: 15pt;
     border-bottom: 1px solid #ccc;
 }
-div#subcontrol-pane {
+#subcontrol-pane {
     padding: 15px;
     border-top: 1px solid #e3e3e3;
     margin: 8px 0 -15px;

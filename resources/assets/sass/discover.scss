@@ -8,6 +8,8 @@
 //  ===========================================================
 
 .blurb {
+    float: left;
+    width: 100%;
     padding: 20px 15px;
     font-family: $fontFace;
     font-size: 12pt;
@@ -15,15 +17,16 @@
     color: #aaa;
 }
 
-table#discover-table {
-    td.discover-sidebar-td {
-        width: 200px;
+#discover-container {
+    .discover-header {
+        float: left;
+        width: 100%;
         background-color: #fafafa;
-        border-right: 1px solid $greyLineColor;
-        text-align: right;
+        border-bottom: 1px solid $greyLineColor;
+        text-align: left;
         vertical-align: top;
 
-        .discover-sidebar-container {
+        .discover-header-container {
             border-top: 1px solid $greyLineColor;
             margin-top: -1px;
             padding: 20px;
@@ -32,7 +35,7 @@ table#discover-table {
             color: #777;
         }
     }
-    td.discover-list-td {
+    .discover-list-item {
         .discover-list-container {
             .container-item-pane {
                 border-top: 1px solid $greyLineColor;

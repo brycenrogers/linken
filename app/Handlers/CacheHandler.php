@@ -3,32 +3,33 @@
 namespace App\Handlers;
 
 use App\Interfaces\CacheHandlerInterface;
+use App\Interfaces\CacheStoreInterface;
 use App\Interfaces\UserCacheHandlerInterface;
-use Cache;
 use App\Models\User;
 
 class CacheHandler implements CacheHandlerInterface, UserCacheHandlerInterface {
 
     /**
-     * @var \App\Models\User|null
+     * @var $user \App\Models\User|null
      */
     private $user;
 
-    function __construct(User $user = null)
+    /**
+     * @var $cacheStore CacheStoreInterface
+     */
+    private $cacheStore;
+
+    /**
+     * CacheHandler constructor.
+     * @param CacheStoreInterface $cacheStore
+     * @param User|null $user
+     */
+    function __construct(CacheStoreInterface $cacheStore, User $user = null)
     {
         if ($user) {
             $this->user = $user;
         }
-    }
-
-    /**
-     * Get the cache provider
-     *
-     * @return Cache
-     */
-    function getCacheInstance()
-    {
-        return Cache::store('memcached');
+        $this->cacheStore = $cacheStore;
     }
 
     /**
@@ -55,7 +56,7 @@ class CacheHandler implements CacheHandlerInterface, UserCacheHandlerInterface {
      */
     function del($typeConstant, $uniqueId = null)
     {
-        return $this->getCacheInstance()->forget($this->getCacheKey($typeConstant, $uniqueId));
+        return $this->cacheStore->forget($this->getCacheKey($typeConstant, $uniqueId));
     }
 
     /**
@@ -67,7 +68,7 @@ class CacheHandler implements CacheHandlerInterface, UserCacheHandlerInterface {
      */
     function get($typeConstant, $uniqueId = null)
     {
-        return $this->getCacheInstance()->get($this->getCacheKey($typeConstant, $uniqueId));
+        return $this->cacheStore->get($this->getCacheKey($typeConstant, $uniqueId));
     }
 
     /**
@@ -79,7 +80,7 @@ class CacheHandler implements CacheHandlerInterface, UserCacheHandlerInterface {
      */
     function has($typeConstant, $uniqueId = null)
     {
-        return $this->getCacheInstance()->has($this->getCacheKey($typeConstant, $uniqueId));
+        return $this->cacheStore->has($this->getCacheKey($typeConstant, $uniqueId));
     }
 
     /**
@@ -91,6 +92,6 @@ class CacheHandler implements CacheHandlerInterface, UserCacheHandlerInterface {
      */
     function set($typeConstant, $value, $uniqueId = null)
     {
-        $this->getCacheInstance()->put($this->getCacheKey($typeConstant, $uniqueId), $value, CacheHandlerInterface::EXPIRATION);
+        return $this->cacheStore->put($this->getCacheKey($typeConstant, $uniqueId), $value, CacheHandlerInterface::EXPIRATION);
     }
 }

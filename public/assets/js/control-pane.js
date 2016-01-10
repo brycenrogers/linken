@@ -22,14 +22,6 @@ $( document ).ready(function() {
         $('.cropit-image-input').click();
     });
 
-    //$('.cropit-image-preview').click(function() {
-    //    if ($(this).data('clicked') == false) {
-    //        $('.cropit-image-input').click();
-    //        $(this).data('clicked', true);
-    //        $(this).css('cursor', 'move');
-    //    }
-    //});
-
     $('#updatePhotoSubmit').click(function() {
         var dataURI = $('#image-cropper').cropit('export', {
             type: 'image/png',

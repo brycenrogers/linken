@@ -15,21 +15,31 @@
     float: left;
     padding: 30px 0;
 
-    div.media-link-image {
+    .media-link-image {
         width: 100px;
         height: 100px;
-        margin: 5px 10px 0 5px;
+        margin: 5px 5px 0;
         background-size: contain;
         background-repeat: no-repeat;
         background-position: center;
     }
-    div.link-padding {
+    @media (max-width: 767px) {
+        .media-link-image {
+            width: 40px;
+            height: 40px;
+            margin: 0;
+        }
+        .media-body {
+            padding-left: 5px !important;
+        }
+    }
+    .link-padding {
         padding: 10px;
     }
-    div.media-description {
+    .media-description {
         padding-top: 15px;
     }
-    div.media-footer {
+    .media-footer {
         padding-top: 15px;
 
         .user-photo {
@@ -62,7 +72,8 @@
         }
         div.media-options {
             float: left;
-            padding-left: 5px;
+            padding-top: 10px;
+            clear: both;
             a {
                 margin: 3px 10px 0 3px;
                 float: left;
@@ -76,12 +87,15 @@
     }
     h4.media-heading {
         font-family: $fontFace;
-        font-size: 24px;
+        font-size: 16pt;
         color: #BE5C00;
         margin-bottom: 0;
         a {
             text-decoration: none;
         }
+    }
+    @media (max-width: 767px) {
+        font-size: 12pt;
     }
     div.media-url {
         font-size: 9pt;

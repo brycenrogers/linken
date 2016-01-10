@@ -50,7 +50,7 @@
                 <div class="container-footer">
                     <!-- Footer -->
                     <div class="footer">
-                        &copy; Linken 2015
+                        &copy; Linken {{ date("Y") }}
                     </div>
                 </div>
             </div>

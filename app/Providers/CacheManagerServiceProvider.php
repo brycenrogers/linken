@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Handlers\CacheHandler;
+use App\Libraries\CacheStore;
 use Auth;
 use Illuminate\Support\ServiceProvider;
 
@@ -32,10 +33,10 @@ class CacheManagerServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind('App\Interfaces\CacheHandlerInterface', function(){
-            return new CacheHandler();
+            return new CacheHandler(new CacheStore());
         });
         $this->app->bind('App\Interfaces\UserCacheHandlerInterface', function(){
-            return new CacheHandler(Auth::user());
+            return new CacheHandler(new CacheStore(), Auth::user());
         });
     }
 

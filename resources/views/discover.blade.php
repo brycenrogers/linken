@@ -17,22 +17,20 @@
             <div class="blurb">
                 Here you can find links added by other users based on common tagging interests
             </div>
-            <table id="discover-table">
+            <div id="discover-container">
                 @foreach ($items as $tag => $itemArray)
-                    <tr>
-                        <td class="discover-sidebar-td">
-                            <div class="discover-sidebar-container">
-                                {{ $tag }}
-                            </div>
-                        </td>
-                        <td class="discover-list-td">
-                            <div class="discover-list-container">
-                                @each('item', $itemArray, 'item')
-                            </div>
-                        </td>
-                    </tr>
+                    <div class="discover-header">
+                        <div class="discover-header-container">
+                            {{ $tag }}
+                        </div>
+                    </div>
+                    <div class="discover-list-item">
+                        <div class="discover-list-container">
+                            @each('item', $itemArray, 'item')
+                        </div>
+                    </div>
                 @endforeach
-            </table>
+            </div>
         </div>
     </div>
 

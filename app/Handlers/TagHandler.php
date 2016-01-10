@@ -20,11 +20,10 @@ class TagHandler implements TagHandlerInterface {
         // Check to see if there is a cache item
         $tags = $cacheHandler->get(CacheHandlerInterface::TAGS);
 
+        // No tags found in cache, check DB, cache them, and return them
         if ( ! $tags) {
-            // No tags found in cache, check DB and cache them
             $tags = $tagRepo->all();
             $tagNames = [];
-
             foreach ($tags as $tag) {
                 $tagNames[] = $tag->name;
             }
@@ -32,7 +31,6 @@ class TagHandler implements TagHandlerInterface {
 
             return $tagNames;
         }
-
         return $tags;
     }
 
