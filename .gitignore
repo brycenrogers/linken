@@ -7,5 +7,7 @@ Homestead.json
 .idea/
 /public/assets/images/thumbs/*.png
 /public/assets/images/uploads/*.png
+/public/assets/css/base.css
+/public/assets/css/base.css.map
 !/public/assets/images/uploads/default-user.png
 _ide_helper.php
