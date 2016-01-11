@@ -12,7 +12,7 @@ module.exports = function(grunt) {
                     'public/assets/js/libs/*.js',
                     'public/assets/js/*.js'
                 ],
-                dest: 'public/assets/js/linken.min.js'
+                dest: 'public/assets/dist/js/linken.min.js'
             }
         },
         watch: {
