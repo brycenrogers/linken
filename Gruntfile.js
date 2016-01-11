@@ -12,7 +12,7 @@ module.exports = function(grunt) {
                     'public/assets/js/libs/*.js',
                     'public/assets/js/*.js'
                 ],
-                dest: 'resources/assets/js/linken.min.js'
+                dest: 'public/assets/js/linken.min.js'
             }
         },
         watch: {
@@ -50,7 +50,7 @@ module.exports = function(grunt) {
             },
             target: {
                 files: {
-                    'public/assets/css/linken.min.css': ['public/assets/css/*.css']
+                    'public/assets/dist/css/linken.min.css': ['public/assets/css/*.css']
                 }
             }
         }
