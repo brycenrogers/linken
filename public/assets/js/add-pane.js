@@ -97,14 +97,14 @@ $( document ).ready(function() {
                 _token: csrf
             }
         })
-            .done(function(response) {
-                closeAddPane(response);
-                addButtonSpinner.stop();
-                addButtonSpinner = null;
-                button.html('Add');
-                button.prop("disabled", false);
-                clearAddPane();
-            });
+        .done(function(response) {
+            closeAddPane(response);
+            addButtonSpinner.stop();
+            addButtonSpinner = null;
+            button.html('Add');
+            button.prop("disabled", false);
+            clearAddPane();
+        });
     });
     $('textarea#add-description').on('autosize:resized', function() {
         adjustPaneHeight();
@@ -150,7 +150,7 @@ $( document ).ready(function() {
         $('textarea#add-description').html("");
         $("select#add-tags").select2("val", "");
         $("input#info-title").val("");
-        $("div#info-image-container").html("");
+        $("div#info-image-container").attr('style', '');
     }
     function triggerInfoPane()
     {
