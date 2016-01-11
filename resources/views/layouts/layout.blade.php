@@ -58,8 +58,9 @@
     </div>
 </div>
 
-<!-- build:js /assets/dist/js/linken.min.js -->
 <script src="{{ asset('assets/js/libs/jquery.min.js') }}"></script>
+
+<!-- build:js /assets/dist/js/linken.min.js -->
 <script src="{{ asset('assets/js/libs/velocity.min.js') }}"></script>
 <script src="{{ asset('assets/js/libs/bootstrap.min.js') }}"></script>
 <script src="{{ asset('assets/js/libs/select2.min.js') }}"></script>
