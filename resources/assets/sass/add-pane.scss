@@ -87,7 +87,6 @@ div#add-pane {
     z-index: 110;
     background-color: white;
     border-bottom: 1px solid #e3e3e3;
-    float: left;
     height: 0;
     padding: 15px;
     min-height: 0;
@@ -99,6 +98,11 @@ div#add-pane {
     }
     textarea#add-description:focus {
         border: 1px solid $blue !important;
+    }
+    @media (max-width: 767px) {
+        #add-button {
+            margin-top: 15px;
+        }
     }
     .select2-container--focus {
         .select2-selection {

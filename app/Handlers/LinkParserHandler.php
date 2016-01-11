@@ -160,7 +160,7 @@ class LinkParserHandler implements LinkParserInterface {
         $urlArray = parse_url($url);
 
         // If the URL is from Imgur, find it's information using the main imgur URL
-        if ($urlArray['host'] == 'i.imgur.com') {
+        if (isset($urlArray['host']) && $urlArray['host'] == 'i.imgur.com') {
             // Adjust the path
             $path = $urlArray['path'];
             $pieces = explode('.', $path);

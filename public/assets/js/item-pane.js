@@ -40,7 +40,7 @@ $( document ).ready(function() {
             placeholder: "Tags",
             ajax: {
                 url: '/tags/search',
-                delay: 250,
+                delay: 100,
                 processResults: function (data) {
                     return {
                         results: data.items

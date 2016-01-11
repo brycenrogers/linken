@@ -32,6 +32,7 @@ $( document ).ready(function() {
         autosize($('textarea#add-description'));
         openAddPane();
         triggerInfoPane();
+        $('input.select2-search__field').prop('tabindex', "3");
     });
     $('textarea#add').change(function() {
         // Load the info pane if necessary
@@ -43,7 +44,7 @@ $( document ).ready(function() {
         placeholder: "Tags",
         ajax: {
             url: '/tags/search',
-            delay: 250,
+            delay: 100,
             processResults: function (data) {
                 return {
                     results: data.items
@@ -51,7 +52,6 @@ $( document ).ready(function() {
             }
         }
     });
-    $('input.select2-search__field').prop('tabindex', "3");
     $('button#add-button').click(function() {
         var button = $(this);
         button.prop("disabled", true);
@@ -103,6 +103,7 @@ $( document ).ready(function() {
                 addButtonSpinner = null;
                 button.html('Add');
                 button.prop("disabled", false);
+                clearAddPane();
             });
     });
     $('textarea#add-description').on('autosize:resized', function() {
@@ -143,6 +144,14 @@ $( document ).ready(function() {
                 }
             });
     });
+    function clearAddPane()
+    {
+        $('textarea#add').html("");
+        $('textarea#add-description').html("");
+        $("select#add-tags").select2("val", "");
+        $("input#info-title").val("");
+        $("div#info-image-container").html("");
+    }
     function triggerInfoPane()
     {
         var entry = $.trim($('textarea#add').val());
@@ -190,7 +199,14 @@ $( document ).ready(function() {
             return;
         }
         $('div#add-pane').attr('data-toggle', 'open');
+        var windowWidth = $(window).width();
         var height = 160;
+
+        // For mobile screens, adjust the pane height and slide the blue hitbox into view
+        if (windowWidth <= 767) {
+            height = 220;
+            window.scrollTo(0, 135);
+        }
         if($('input#add-pane-height').val() != '') {
             height = $('input#add-pane-height').val();
         }

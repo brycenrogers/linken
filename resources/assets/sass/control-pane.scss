@@ -22,8 +22,14 @@
             font-family: $fontFace;
             font-weight: 300;
             font-size: 16pt;
-            width: 150px;
+            width: 383px;
             color: #aaa;
+        }
+
+        @media (max-width: 767px) {
+            .navbar-brand {
+                width: 265px;
+            }
         }
 
         li.active,
@@ -117,6 +123,16 @@
             }
             form {
                 border-bottom: none;
+                margin-bottom: 0;
+                margin-top: 0;
+            }
+            #nav-list-container {
+                margin-top: -1px;
+                margin-bottom: 0;
+                border-bottom: 1px solid #e3e3e3;
+            }
+            #account-list-container {
+                margin-top: -1px;
                 margin-bottom: 0;
             }
         }

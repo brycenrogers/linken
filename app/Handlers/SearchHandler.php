@@ -225,12 +225,12 @@ class SearchHandler implements SearchHandlerInterface, UserSearchHandlerInterfac
     /**
      * Remove an item from the index
      *
-     * @param Searchable $item
+     * @param $id String ID of Item to be removed
      * @return \Elastica\Response
      */
-    public function remove(Searchable $item)
+    public function remove($id)
     {
-        return $this->getTypedIndex()->deleteById($item->getSearchableId());
+        return $this->getTypedIndex()->deleteById($id);
     }
 
     /**

@@ -5,20 +5,19 @@
         <textarea id="info-title-decode" style="display: none;"></textarea>
     </div>
 </div>
-<div id="blue-hitbox-add-pane" class="
-<?php
-if (Session::has('success')) {
-    echo "flash flash-success";
-} else if (Session::has('error')) {
-    echo "flash flash-error";
-} ?>">
+<div id="blue-hitbox-add-pane" class="<?php
+            if (Session::has('success')) {
+                echo "flash flash-success";
+            } else if (Session::has('error')) {
+                echo "flash flash-error";
+            } ?>">
     <div class="container-input-add col-md-12">
         <div id="flash" class="flash-message<?php
-if (Session::has('success')) {
-    echo " success";
-} else if (Session::has('error')) {
-    echo " error";
-} ?>">
+            if (Session::has('success')) {
+                echo " success";
+            } else if (Session::has('error')) {
+                echo " error";
+            } ?>">
             <?php
             if (Session::has('success')) {
                 echo Session::get('success');

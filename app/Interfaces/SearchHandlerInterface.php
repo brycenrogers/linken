@@ -15,5 +15,5 @@ interface SearchHandlerInterface
     public function reindex();
     public function add(Searchable $item);
     public function update(Searchable $item);
-    public function remove(Searchable $item);
+    public function remove($id);
 }

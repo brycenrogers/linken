@@ -18,7 +18,7 @@
                 <div class="collapse navbar-collapse" id="control-pane-navbar-collapse">
 
                     <!-- Menu Options -->
-                    <ul class="nav navbar-nav">
+                    <ul id="nav-list-container" class="nav navbar-nav">
                         <li class="<?php if($title == 'List') echo " active"; ?>">
                             <a href="/" type="button" class="" title="List">
                                 <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
@@ -54,7 +54,7 @@
                     </ul>
 
                     <!-- Account Options -->
-                    <ul class="nav navbar-nav navbar-right">
+                    <ul id="account-list-container" class="nav navbar-nav navbar-right">
                         <li id="account-dropdown-container" class="dropdown">
                             <a href="#" type="button" title="Logged in as {{ $user->name }}" class="account-button dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="user-photo" style="background-image: url('{!! asset('/assets/images/uploads/' . Auth::user()->user_photo) !!}');"></span>

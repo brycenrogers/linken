@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/base.css') }}">
     <!-- /build -->
 
-    <title>Linken : @yield('title')</title>
+    <title>Linken</title>
 </head>
 <body>
 <div id="add-fader"></div>
