@@ -134,15 +134,15 @@ $( document ).ready(function() {
             method: 'post',
             data: { url: url, _token: csrf, image: true, image_number: nextImageNumber }
         })
-            .done(function( response ) {
-                if (response.image == '') {
-                    infoPaneSpinner.stop();
-                    container.css("background-image", originalUrl);
-                } else {
-                    updateInfoPane(response.image);
-                    $('#info-image-container').attr('data-image-number', response.image_number);
-                }
-            });
+        .done(function( response ) {
+            if (response.image == '') {
+                infoPaneSpinner.stop();
+                container.css("background-image", originalUrl);
+            } else {
+                updateInfoPane(response.image);
+                $('#info-image-container').attr('data-image-number', response.image_number);
+            }
+        });
     });
     function clearAddPane()
     {
