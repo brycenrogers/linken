@@ -63,6 +63,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-cssmin');
 
     grunt.registerTask('default', ['sass']);
-    grunt.registerTask('dist', ['uglify', 'sass', 'cssmin', 'processhtml']);
+    grunt.registerTask('dist', ['uglify', 'sass', 'cssmin']);
 
 };
