@@ -9,8 +9,8 @@ module.exports = function(grunt) {
             },
             build: {
                 src: [
-                    'resources/assets/js/libs/*.js',
-                    'resources/assets/js/*.js'
+                    'public/assets/js/libs/*.js',
+                    'public/assets/js/*.js'
                 ],
                 dest: 'resources/assets/js/linken.min.js'
             }
@@ -39,7 +39,7 @@ module.exports = function(grunt) {
             options: {},
             dist: {
                 files: {
-                    'dist/index.html': ['index.html']
+                    'resources/views/layouts/layout.blade.php': ['resources/views/layouts/layout.blade.php']
                 }
             }
         },
@@ -50,7 +50,7 @@ module.exports = function(grunt) {
             },
             target: {
                 files: {
-                    'assets/dist/css/linken.min.css': ['assets/dist/css/*.css']
+                    'public/assets/css/linken.min.css': ['public/assets/css/*.css']
                 }
             }
         }

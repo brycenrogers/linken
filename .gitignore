@@ -10,5 +10,6 @@ Homestead.json
 /public/assets/css/base.css
 /public/assets/css/base.css.map
 /public/assets/js/linken.min.js
+/public/assets/dist/*
 !/public/assets/images/uploads/default-user.png
 _ide_helper.php
