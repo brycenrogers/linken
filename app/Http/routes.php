@@ -48,5 +48,6 @@ Route::get('discover', 'DiscoverController@discover');
 Route::get('tags/pane', 'TagController@getTagsPane');
 Route::get('tags/search', 'TagController@search');
 Route::get('tags', 'TagController@findItemsForTags');
+Route::get('help', 'HelpController@index');
 Route::get('home', 'MainController@getAll');
 Route::get('/', 'MainController@getAll');

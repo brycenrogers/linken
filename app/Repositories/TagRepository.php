@@ -27,6 +27,12 @@ class TagRepository extends BaseRepository implements TagRepositoryInterface, Us
         }
     }
 
+    /**
+     * Stores new Tags in the DB
+     *
+     * @param $inputs
+     * @return array
+     */
     public function store($inputs)
     {
         $tags = $inputs['tags'];
@@ -48,6 +54,12 @@ class TagRepository extends BaseRepository implements TagRepositoryInterface, Us
         return $tagIds;
     }
 
+    /**
+     * Searches for Tags in the DB based on the query string
+     *
+     * @param $query
+     * @return mixed
+     */
     public function search($query)
     {
         $query = Tag::where('name', 'like', $query . "%");
@@ -58,6 +70,8 @@ class TagRepository extends BaseRepository implements TagRepositoryInterface, Us
     }
 
     /**
+     * Get recently added Tags from the DB based on the specified count
+     *
      * @param $count
      * @return mixed
      */
@@ -75,7 +89,8 @@ class TagRepository extends BaseRepository implements TagRepositoryInterface, Us
     }
 
     /**
-     * Return all Tags
+     * Return all Tags from the DB
+     *
      * @return mixed
      */
     public function all()

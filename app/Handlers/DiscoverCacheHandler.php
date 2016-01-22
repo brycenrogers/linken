@@ -5,6 +5,7 @@ namespace App\Handlers;
 use App\Interfaces\CacheHandlerInterface;
 use App\Interfaces\SearchHandlerInterface;
 use App\Interfaces\TagHandlerInterface;
+use App\Interfaces\TagRepositoryInterface;
 use App\Interfaces\UserCacheHandlerInterface;
 use App\Interfaces\UserTagRepositoryInterface;
 use App\Models\Tag;
@@ -21,13 +22,19 @@ class DiscoverCacheHandler
 {
     public function getLinksForUser
     (
-        UserTagRepositoryInterface $tagRepo,
+        UserTagRepositoryInterface $userTagRepo,
         TagHandlerInterface $tagHandler,
         UserCacheHandlerInterface $cacheHandler,
         $tag = null
     ) {
-        // Get user's tags
-        $tags = $tagHandler->getTagsForUser($cacheHandler, $tagRepo);
+
+        if (is_null($tag)) {
+            // Get user's tags
+            $tags = $tagHandler->getTagsForUser($cacheHandler, $userTagRepo);
+        } else {
+            // Find items for a specific tag only
+            $tags[] = $tag;
+        }
 
         // Find Discover Cache items for the user's Tags
         $items = [];
@@ -48,9 +55,12 @@ class DiscoverCacheHandler
                     }
                 }
                 // If all items are filtered out, remove them from the list
-                if (count($items[$tag]) === 0) {
+                if (count($items[$tag]) == 0) {
                     unset($items[$tag]);
                 }
+            } else {
+                // If there are no items found for the tag at all, remove it from the list
+                unset($items[$tag]);
             }
         }
 

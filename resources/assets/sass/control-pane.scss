@@ -38,6 +38,7 @@
                 background-color: #fafafa;
                 border-right: 1px solid #e3e3e3;
                 border-left: 1px solid #e3e3e3;
+                margin-left: -1px;
             }
             ul a {
                 background-color: transparent;
@@ -46,7 +47,6 @@
         }
 
         #tags-dropdown-container.dropdown.open {
-            margin-left: -1px;
             margin-right: -1px;
 
             ul.dropdown-menu {
