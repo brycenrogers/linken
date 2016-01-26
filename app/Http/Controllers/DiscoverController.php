@@ -33,7 +33,7 @@ class DiscoverController extends Controller
         UserCacheHandlerInterface $cacheHandler
     ) {
         // Get specified tag from GET
-        $tag = request()->get('tag');
+        $tag = request()->get('tags');
 
         if ($tag) {
             // Get discovered items for tag

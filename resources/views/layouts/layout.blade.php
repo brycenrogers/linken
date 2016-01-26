@@ -70,6 +70,7 @@
 <script src="{{ asset('assets/js/add-pane.js') }}"></script>
 <script src="{{ asset('assets/js/control-pane.js') }}"></script>
 <script src="{{ asset('assets/js/item-pane.js') }}"></script>
+<script src="{{ asset('assets/js/discover.js') }}"></script>
 <!-- /build -->
 </body>
 

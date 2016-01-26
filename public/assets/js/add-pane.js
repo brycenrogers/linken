@@ -43,7 +43,7 @@ $( document ).ready(function() {
         tokenSeparators: [','],
         placeholder: "Tags",
         ajax: {
-            url: '/tags/search',
+            url: '/tags/search?scope=user',
             delay: 100,
             processResults: function (data) {
                 return {

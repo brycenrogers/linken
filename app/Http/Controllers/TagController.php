@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Interfaces\SearchHandlerInterface;
 use App\Interfaces\TagHandlerInterface;
+use App\Interfaces\TagRepositoryInterface;
 use App\Interfaces\UserCacheHandlerInterface;
-use App\Interfaces\UserItemRepositoryInterface;
 use App\Interfaces\UserSearchHandlerInterface;
 use App\Interfaces\UserTagRepositoryInterface;
 use Illuminate\Http\Request;
@@ -20,27 +19,40 @@ class TagController extends Controller
 
     /**
      * Search for Tags, used by Select2
-     *
-     * @param Request $request
+     *\
      * @param TagHandlerInterface $tagHandler
      * @param UserCacheHandlerInterface $cacheHandler
-     * @param UserTagRepositoryInterface $tagRepo
+     * @param UserTagRepositoryInterface $userTagRepo
+     * @param TagRepositoryInterface $tagRepo
      * @return \Illuminate\Http\JsonResponse
      */
     public function search
     (
-        Request $request,
         TagHandlerInterface $tagHandler,
         UserCacheHandlerInterface $cacheHandler,
-        UserTagRepositoryInterface $tagRepo
+        UserTagRepositoryInterface $userTagRepo,
+        TagRepositoryInterface $tagRepo
     ) {
         // Get the query term
-        $query = $request->input('q');
+        $query = request()->input('q');
+        $scope = request()->input('scope');
 
         // Get the tags from cache and search them
-        $input = preg_quote($query, '~');
-        $tags = $tagHandler->getTagsForUser($cacheHandler, $tagRepo);
-        $results = preg_grep('~^' . $input . '~', $tags);
+        switch ($scope) {
+            case 'user':
+                // Search User's Tags
+                $input = preg_quote($query, '~');
+                $tags = $tagHandler->getTagsForUser($cacheHandler, $userTagRepo);
+                $results = preg_grep('~^' . $input . '~', $tags);
+                break;
+            case 'all':
+                // Search all Tags in DB
+                $results = $tagRepo->search($query);
+                break;
+            default:
+                $results = [];
+                break;
+        }
 
         // Format the hits for select2
         $hits = [];
