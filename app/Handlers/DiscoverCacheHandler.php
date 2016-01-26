@@ -110,7 +110,7 @@ class DiscoverCacheHandler
     private function generate($tag, CacheHandlerInterface $cacheHandler, SearchHandlerInterface $searchHandler)
     {
         // Find items for the requested Tag
-        $links = $searchHandler->filteredSearch('tags', $tag->name, 'created_at', 'desc', 10);
+        $links = $searchHandler->filteredSearch('tags', $tag->name, null, 'created_at', 'desc', 10);
         $cacheHandler->set(CacheHandlerInterface::DISCOVER_TAG, $links, $tag->name);
     }
 }

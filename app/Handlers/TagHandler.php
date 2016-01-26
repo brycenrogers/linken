@@ -5,6 +5,7 @@ namespace App\Handlers;
 use App\Interfaces\CacheHandlerInterface;
 use App\Interfaces\TagHandlerInterface;
 use App\Interfaces\TagRepositoryInterface;
+use Auth;
 
 class TagHandler implements TagHandlerInterface {
 

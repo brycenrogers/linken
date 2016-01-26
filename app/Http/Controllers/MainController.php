@@ -8,6 +8,7 @@ use App\Interfaces\CacheHandlerInterface;
 use App\Interfaces\ImageHandlerInterface;
 use App\Interfaces\SearchHandlerInterface;
 use App\Interfaces\ItemRepositoryInterface;
+use Auth;
 use Illuminate\Http\Request;
 
 /**
@@ -37,14 +38,14 @@ class MainController extends Controller
                 $items = $cacheHandler->get(CacheHandlerInterface::MAINPAGE);
             } else {
                 // Cache not available, get all items for user
-                $items = $itemRepo->getItemsPaginated(20);
+                $items = $itemRepo->getItemsPaginated(20, Auth::user());
 
                 // Save in cache for next request
                 $cacheHandler->set(CacheHandlerInterface::MAINPAGE, $items);
             }
         } else {
             // Page other than front page was requested, pull from db
-            $items = $itemRepo->getItemsPaginated(20);
+            $items = $itemRepo->getItemsPaginated(20, Auth::user());
         }
 
         $title = "List";
@@ -52,11 +53,14 @@ class MainController extends Controller
     }
 
     public function test(
+        DiscoverCacheHandler $discoverCacheHandler,
         ImageHandlerInterface $imageHandler,
         CacheHandlerInterface $cacheHandler,
         SearchHandlerInterface $searchHandler)
     {
         $generate = new GenerateThumbnails();
         $generate->handle($imageHandler, $cacheHandler, $searchHandler);
+
+        $discoverCacheHandler->generateAll($searchHandler, $cacheHandler);
     }
 }
