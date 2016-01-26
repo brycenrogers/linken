@@ -14,7 +14,13 @@
 
     <div class="row">
         <div class="col-md-4">
-            <select multiple class="form-control input-lg select2" id="discover-tags" style="width: 100%; padding: 10px;" aria-hidden="true"></select>
+            <div class="discover-tag-container">
+                <select multiple
+                        class="form-control input-lg select2"
+                        id="discover-tags"
+                        style="width: 100%; padding: 10px;"
+                        aria-hidden="true"></select>
+            </div>
         </div>
         <div class="col-md-8">
             <div class="blurb">

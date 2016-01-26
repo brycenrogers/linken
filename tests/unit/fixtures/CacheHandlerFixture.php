@@ -3,9 +3,8 @@
 namespace Tests\Unit\Fixtures;
 
 use App\Interfaces\CacheHandlerInterface;
-use App\Interfaces\UserCacheHandlerInterface;
 
-class CacheHandlerFixture implements CacheHandlerInterface, UserCacheHandlerInterface {
+class CacheHandlerFixture implements CacheHandlerInterface {
 
     public $set;
     public $get;

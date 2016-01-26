@@ -2,6 +2,8 @@
 
 namespace Tests\Unit\Handlers;
 
+use App\Models\User;
+use Auth;
 use TestCase;
 use App\Handlers\CacheHandler;
 use Tests\Unit\Fixtures\CacheStoreFixture;
@@ -25,6 +27,10 @@ class CacheHandlerTest extends TestCase
     public function setUp()
     {
         parent::setUp();
+
+        // Mock the Auth::user() object
+        Auth::shouldReceive('user')->andReturn($user = new User());
+
         $this->cacheStore = new CacheStoreFixture();
         $this->cacheHandler = new CacheHandler($this->cacheStore);
     }

@@ -2,6 +2,8 @@
 
 namespace App\Repositories;
 
+use Auth;
+
 abstract class BaseRepository {
 
     /**

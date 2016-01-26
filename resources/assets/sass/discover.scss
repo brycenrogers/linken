@@ -7,6 +7,22 @@
 
 //  ===========================================================
 
+.discover-tag-container {
+    padding: 12px 0 12px 15px;
+
+    .select2-container--default {
+        .select2-selection--multiple {
+            border: 1px solid #e3e3e3;
+        }
+    }
+
+    .select2-container--focus {
+        .select2-selection--multiple {
+            border: 1px solid #aaa;
+        }
+    }
+}
+
 .blurb {
     float: left;
     width: 100%;

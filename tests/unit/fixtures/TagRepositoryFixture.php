@@ -3,9 +3,8 @@
 namespace Tests\Unit\Fixtures;
 
 use App\Interfaces\TagRepositoryInterface;
-use App\Interfaces\UserTagRepositoryInterface;
 
-class TagRepositoryFixture implements TagRepositoryInterface, UserTagRepositoryInterface
+class TagRepositoryFixture implements TagRepositoryInterface
 {
 
     public $all;
@@ -13,22 +12,22 @@ class TagRepositoryFixture implements TagRepositoryInterface, UserTagRepositoryI
     public $store;
     public $recent;
 
-    public function all()
+    public function all($user = null)
     {
         return $this->all;
     }
 
-    public function search($query)
+    public function search($query, $user = null)
     {
         return $this->search;
     }
 
-    public function store($inputs)
+    public function store($inputs, $user)
     {
         return $this->store;
     }
 
-    public function recent($count)
+    public function recent($count, $user = null)
     {
         return $this->recent;
     }
