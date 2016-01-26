@@ -35,9 +35,6 @@ class CacheManagerServiceProvider extends ServiceProvider
         $this->app->bind('App\Interfaces\CacheHandlerInterface', function(){
             return new CacheHandler(new CacheStore());
         });
-        $this->app->bind('App\Interfaces\UserCacheHandlerInterface', function(){
-            return new CacheHandler(new CacheStore(), Auth::user());
-        });
     }
 
     /**
@@ -48,8 +45,7 @@ class CacheManagerServiceProvider extends ServiceProvider
     public function provides()
     {
         return [
-            'App\Interfaces\CacheHandlerInterface',
-            'App\Interfaces\UserCacheHandlerInterface'
+            'App\Interfaces\CacheHandlerInterface'
         ];
     }
 }

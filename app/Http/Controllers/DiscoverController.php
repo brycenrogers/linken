@@ -5,8 +5,7 @@ namespace App\Http\Controllers;
 use App\Handlers\DiscoverCacheHandler;
 use App\Interfaces\TagHandlerInterface;
 use App\Interfaces\TagRepositoryInterface;
-use App\Interfaces\UserCacheHandlerInterface;
-use App\Interfaces\UserTagRepositoryInterface;
+use App\Interfaces\CacheHandlerInterface;
 use App\Http\Requests;
 
 class DiscoverController extends Controller
@@ -20,17 +19,17 @@ class DiscoverController extends Controller
      * Find links for the current user based on their recent tags, excluding any they added themselves
      *
      * @param DiscoverCacheHandler $discoverHandler
-     * @param UserTagRepositoryInterface $userTagRepo
+     * @param TagRepositoryInterface $userTagRepo
      * @param TagHandlerInterface $tagHandler
-     * @param UserCacheHandlerInterface $cacheHandler
+     * @param CacheHandlerInterface $cacheHandler
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function discover
     (
         DiscoverCacheHandler $discoverHandler,
-        UserTagRepositoryInterface $userTagRepo,
+        TagRepositoryInterface $userTagRepo,
         TagHandlerInterface $tagHandler,
-        UserCacheHandlerInterface $cacheHandler
+        CacheHandlerInterface $cacheHandler
     ) {
         // Get specified tag from GET
         $tag = request()->get('tags');

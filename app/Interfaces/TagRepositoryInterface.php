@@ -9,8 +9,8 @@ namespace App\Interfaces;
  */
 interface TagRepositoryInterface
 {
-    public function all();
-    public function search($query);
-    public function store($inputs);
-    public function recent($count);
+    public function all($user = null);
+    public function search($query, $user = null);
+    public function store($inputs, $user);
+    public function recent($count, $user = null);
 }

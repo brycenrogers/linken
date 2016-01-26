@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AddItemPostRequest;
 use App\Http\Requests\UpdateItemPostRequest;
 use App\Interfaces\ItemHandlerInterface;
+use Auth;
 use Response;
 
 /**
@@ -23,7 +24,7 @@ class ItemController extends Controller
      */
     public function add(AddItemPostRequest $request, ItemHandlerInterface $itemHandler)
     {
-        $item = $itemHandler->create($request->input());
+        $item = $itemHandler->create($request->input(), Auth::user());
         return view('item', ['item' => $item]);
     }
 

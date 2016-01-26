@@ -12,13 +12,6 @@ abstract class BaseRepository {
 	protected $model;
 
 	/**
-     * Current User instance
-     *
-     * @var \App\Models\User
-     */
-    protected $user;
-
-	/**
 	 * Destroy a model.
 	 *
 	 * @param  int $id
@@ -28,7 +21,7 @@ abstract class BaseRepository {
 	{
         // Make sure they own it
 		$obj = $this->getById($id);
-        if ($obj->user != $this->user) {
+        if ($obj->user != Auth::user()) {
             throw new \Exception('ACL error while deleting');
         }
 

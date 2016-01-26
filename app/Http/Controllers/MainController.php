@@ -7,8 +7,7 @@ use App\Handlers\DiscoverCacheHandler;
 use App\Interfaces\CacheHandlerInterface;
 use App\Interfaces\ImageHandlerInterface;
 use App\Interfaces\SearchHandlerInterface;
-use App\Interfaces\UserCacheHandlerInterface;
-use App\Interfaces\UserItemRepositoryInterface;
+use App\Interfaces\ItemRepositoryInterface;
 use Illuminate\Http\Request;
 
 /**
@@ -26,22 +25,22 @@ class MainController extends Controller
      * Get items for display
      *
      * @param Request $request
-     * @param UserCacheHandlerInterface $cacheHandler
-     * @param UserItemRepositoryInterface $itemRepo
+     * @param CacheHandlerInterface $cacheHandler
+     * @param ItemRepositoryInterface $itemRepo
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getAll(Request $request, UserCacheHandlerInterface $cacheHandler, UserItemRepositoryInterface $itemRepo)
+    public function getAll(Request $request, CacheHandlerInterface $cacheHandler, ItemRepositoryInterface $itemRepo)
     {
         if ((!$request->has('page') || ($request->has('page') && $request->input('page') == 1))) {
             // Requesting the main page, load from cache if available
-            if ($cacheHandler->has(UserCacheHandlerInterface::MAINPAGE)) {
-                $items = $cacheHandler->get(UserCacheHandlerInterface::MAINPAGE);
+            if ($cacheHandler->has(CacheHandlerInterface::MAINPAGE)) {
+                $items = $cacheHandler->get(CacheHandlerInterface::MAINPAGE);
             } else {
                 // Cache not available, get all items for user
                 $items = $itemRepo->getItemsPaginated(20);
 
                 // Save in cache for next request
-                $cacheHandler->set(UserCacheHandlerInterface::MAINPAGE, $items);
+                $cacheHandler->set(CacheHandlerInterface::MAINPAGE, $items);
             }
         } else {
             // Page other than front page was requested, pull from db

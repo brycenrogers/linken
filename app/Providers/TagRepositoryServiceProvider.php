@@ -32,9 +32,6 @@ class TagRepositoryServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('App\Interfaces\UserTagRepositoryInterface', function() {
-            return new TagRepository(new Tag(), Auth::user());
-        });
         $this->app->bind('App\Interfaces\TagRepositoryInterface', function() {
             return new TagRepository(new Tag());
         });
@@ -48,8 +45,7 @@ class TagRepositoryServiceProvider extends ServiceProvider
     public function provides()
     {
         return [
-            'App\Interfaces\TagRepositoryInterface',
-            'App\Interfaces\UserTagRepositoryInterface'
+            'App\Interfaces\TagRepositoryInterface'
         ];
     }
 }

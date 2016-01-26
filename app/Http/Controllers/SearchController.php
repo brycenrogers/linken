@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Interfaces\UserSearchHandlerInterface;
-use App\Libraries\SearchHandler;
+use App\Interfaces\SearchHandlerInterface;
 use Auth;
 use Response;
 use Illuminate\Http\Request;
@@ -21,10 +20,10 @@ class SearchController extends Controller
      * Perform a User-based search for any Items that match the search term
      *
      * @param Request $request
-     * @param UserSearchHandlerInterface $searchHandler
+     * @param SearchHandlerInterface $searchHandler
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
-    public function search(Request $request, UserSearchHandlerInterface $searchHandler)
+    public function search(Request $request, SearchHandlerInterface $searchHandler)
     {
         $query = $request->input('q');
         $items = [];
@@ -32,7 +31,7 @@ class SearchController extends Controller
 
         if ($query) {
             try {
-                $items = $searchHandler->search($query);
+                $items = $searchHandler->search($query, Auth::user());
             }
             catch (\Exception $e) {
                 $items = [];
@@ -52,10 +51,10 @@ class SearchController extends Controller
     /**
      * Delete and rebuild the entire search index
      *
-     * @param UserSearchHandlerInterface $searchHandler
+     * @param SearchHandlerInterface $searchHandler
      * @return \Illuminate\Http\JsonResponse
      */
-    public function reindex(UserSearchHandlerInterface $searchHandler)
+    public function reindex(SearchHandlerInterface $searchHandler)
     {
         //TODO: Add ACL
         try {

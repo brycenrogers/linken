@@ -4,15 +4,9 @@ namespace App\Handlers;
 
 use App\Interfaces\CacheHandlerInterface;
 use App\Interfaces\CacheStoreInterface;
-use App\Interfaces\UserCacheHandlerInterface;
-use App\Models\User;
+use Auth;
 
-class CacheHandler implements CacheHandlerInterface, UserCacheHandlerInterface {
-
-    /**
-     * @var $user \App\Models\User|null
-     */
-    private $user;
+class CacheHandler implements CacheHandlerInterface {
 
     /**
      * @var $cacheStore CacheStoreInterface
@@ -22,13 +16,9 @@ class CacheHandler implements CacheHandlerInterface, UserCacheHandlerInterface {
     /**
      * CacheHandler constructor.
      * @param CacheStoreInterface $cacheStore
-     * @param User|null $user
      */
-    function __construct(CacheStoreInterface $cacheStore, User $user = null)
+    function __construct(CacheStoreInterface $cacheStore)
     {
-        if ($user) {
-            $this->user = $user;
-        }
         $this->cacheStore = $cacheStore;
     }
 
@@ -41,8 +31,8 @@ class CacheHandler implements CacheHandlerInterface, UserCacheHandlerInterface {
      */
     function getCacheKey($typeConstant, $uniqueId = null)
     {
-        if (is_null($uniqueId) && $this->user) {
-            $uniqueId = $this->user->id;
+        if (is_null($uniqueId)) {
+            $uniqueId = Auth::user()->id;
         }
         return $typeConstant . $uniqueId;
     }

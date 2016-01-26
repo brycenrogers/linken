@@ -3,7 +3,6 @@
 namespace App\Repositories;
 
 use App\Interfaces\TagRepositoryInterface;
-use App\Interfaces\UserTagRepositoryInterface;
 use App\Models\Tag;
 use App\Models\User;
 
@@ -11,29 +10,26 @@ use App\Models\User;
  * Class TagRepository
  * @package App\Repositories
  */
-class TagRepository extends BaseRepository implements TagRepositoryInterface, UserTagRepositoryInterface {
+class TagRepository extends BaseRepository implements TagRepositoryInterface {
 
     /**
      * Create a new ItemRepository instance.
      *
      * @param Tag $tag
-     * @param User $user
      */
-    public function __construct(Tag $tag, User $user = null)
+    public function __construct(Tag $tag)
     {
         $this->model = $tag;
-        if ($user) {
-            $this->user = $user;
-        }
     }
 
     /**
      * Stores new Tags in the DB
      *
      * @param $inputs
+     * @param $user
      * @return array
      */
-    public function store($inputs)
+    public function store($inputs, $user)
     {
         $tags = $inputs['tags'];
         $tags = explode("|", $tags);
@@ -43,9 +39,9 @@ class TagRepository extends BaseRepository implements TagRepositoryInterface, Us
                 continue;
             }
             $newTag = new Tag();
-            $newTag = $newTag->firstOrNew(['name' => $tag, 'user_id' => $this->user->id]);
+            $newTag = $newTag->firstOrNew(['name' => $tag, 'user_id' => $user->id]);
             if ( ! $newTag->id ) {
-                $newTag->user_id = $this->user->id;
+                $newTag->user_id = $user->id;
                 $newTag->save();
             }
             $tagIds[] = $newTag->id;
@@ -58,13 +54,14 @@ class TagRepository extends BaseRepository implements TagRepositoryInterface, Us
      * Searches for Tags in the DB based on the query string
      *
      * @param $query
+     * @param null|User $user
      * @return mixed
      */
-    public function search($query)
+    public function search($query, $user = null)
     {
         $query = Tag::where('name', 'like', $query . "%");
-        if ($this->user) {
-            $query->where('user_id', '=', $this->user->id);
+        if ($user) {
+            $query->where('user_id', '=', $user->id);
         }
         return $query->get();
     }
@@ -73,16 +70,17 @@ class TagRepository extends BaseRepository implements TagRepositoryInterface, Us
      * Get recently added Tags from the DB based on the specified count
      *
      * @param $count
+     * @param null|User $user
      * @return mixed
      */
-    public function recent($count)
+    public function recent($count, $user = null)
     {
         $query = Tag::query()
             ->orderBy('created_at', 'desc')
             ->take($count);
 
-        if ($this->user) {
-            $query->where('user_id', $this->user->id);
+        if ($user) {
+            $query->where('user_id', $user->id);
         }
 
         return $query;
@@ -91,12 +89,13 @@ class TagRepository extends BaseRepository implements TagRepositoryInterface, Us
     /**
      * Return all Tags from the DB
      *
+     * @param null|User $user
      * @return mixed
      */
-    public function all()
+    public function all($user = null)
     {
-        if ($this->user) {
-            return Tag::where('user_id', $this->user->id)->get();
+        if ($user) {
+            return Tag::where('user_id', $user->id)->get();
         }
 
         return Tag::all();

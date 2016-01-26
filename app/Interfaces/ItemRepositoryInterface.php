@@ -11,7 +11,7 @@ interface ItemRepositoryInterface
 {
     public function get($id, $with = []);
     public function destroy($id);
-    public function store($inputs);
-    public function getItemsPaginated($amount);
-    public function itemsForTags($tags);
+    public function store($inputs, $user);
+    public function getItemsPaginated($amount, $user = null);
+    public function itemsForTags($tags, $user = null);
 }

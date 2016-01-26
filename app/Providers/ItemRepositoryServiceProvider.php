@@ -32,9 +32,6 @@ class ItemRepositoryServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('App\Interfaces\UserItemRepositoryInterface', function() {
-            return new ItemRepository(new Item(), Auth::user());
-        });
         $this->app->bind('App\Interfaces\ItemRepositoryInterface', function() {
             return new ItemRepository(new Item());
         });
@@ -48,8 +45,7 @@ class ItemRepositoryServiceProvider extends ServiceProvider
     public function provides()
     {
         return [
-            'App\Interfaces\ItemRepositoryInterface',
-            'App\Interfaces\UserItemRepositoryInterface'
+            'App\Interfaces\ItemRepositoryInterface'
         ];
     }
 }

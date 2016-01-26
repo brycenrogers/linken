@@ -31,9 +31,6 @@ class SearchHandlerServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('App\Interfaces\UserSearchHandlerInterface', function() {
-            return new SearchHandler(Auth::user());
-        });
         $this->app->bind('App\Interfaces\SearchHandlerInterface', function() {
             return new SearchHandler();
         });
@@ -47,8 +44,7 @@ class SearchHandlerServiceProvider extends ServiceProvider
     public function provides()
     {
         return [
-            'App\Interfaces\SearchHandlerInterface',
-            'App\Interfaces\UserSearchHandlerInterface'
+            'App\Interfaces\SearchHandlerInterface'
         ];
     }
 }

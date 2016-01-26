@@ -32,9 +32,6 @@ class LinkRepositoryServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('App\Interfaces\UserLinkRepositoryInterface', function() {
-            return new LinkRepository(new Link(), Auth::user());
-        });
         $this->app->bind('App\Interfaces\LinkRepositoryInterface', function() {
             return new LinkRepository(new Link());
         });
@@ -48,8 +45,7 @@ class LinkRepositoryServiceProvider extends ServiceProvider
     public function provides()
     {
         return [
-            'App\Interfaces\LinkRepositoryInterface',
-            'App\Interfaces\UserLinkRepositoryInterface'
+            'App\Interfaces\LinkRepositoryInterface'
         ];
     }
 }

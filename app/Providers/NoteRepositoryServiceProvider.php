@@ -32,9 +32,6 @@ class NoteRepositoryServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('App\Interfaces\UserNoteRepositoryInterface', function() {
-            return new NoteRepository(new Note(), Auth::user());
-        });
         $this->app->bind('App\Interfaces\NoteRepositoryInterface', function() {
             return new NoteRepository(new Note());
         });
@@ -48,8 +45,7 @@ class NoteRepositoryServiceProvider extends ServiceProvider
     public function provides()
     {
         return [
-            'App\Interfaces\NoteRepositoryInterface',
-            'App\Interfaces\UserNoteRepositoryInterface'
+            'App\Interfaces\NoteRepositoryInterface'
         ];
     }
 }

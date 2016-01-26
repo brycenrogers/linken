@@ -9,5 +9,5 @@ namespace App\Interfaces;
  */
 interface TagHandlerInterface
 {
-    public function getTagsForUser(UserCacheHandlerInterface $cacheHandler, UserTagRepositoryInterface $tagRepo);
+    public function getTagsForUser(CacheHandlerInterface $cacheHandler, TagRepositoryInterface $tagRepo);
 }

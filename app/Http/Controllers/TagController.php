@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Interfaces\TagHandlerInterface;
 use App\Interfaces\TagRepositoryInterface;
-use App\Interfaces\UserCacheHandlerInterface;
-use App\Interfaces\UserSearchHandlerInterface;
-use App\Interfaces\UserTagRepositoryInterface;
+use App\Interfaces\CacheHandlerInterface;
+use App\Interfaces\SearchHandlerInterface;
+use Auth;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 
@@ -21,44 +21,50 @@ class TagController extends Controller
      * Search for Tags, used by Select2
      *\
      * @param TagHandlerInterface $tagHandler
-     * @param UserCacheHandlerInterface $cacheHandler
-     * @param UserTagRepositoryInterface $userTagRepo
+     * @param CacheHandlerInterface $cacheHandler
      * @param TagRepositoryInterface $tagRepo
      * @return \Illuminate\Http\JsonResponse
      */
     public function search
     (
         TagHandlerInterface $tagHandler,
-        UserCacheHandlerInterface $cacheHandler,
-        UserTagRepositoryInterface $userTagRepo,
+        CacheHandlerInterface $cacheHandler,
         TagRepositoryInterface $tagRepo
     ) {
         // Get the query term
         $query = request()->input('q');
         $scope = request()->input('scope');
+        $hits = [];
 
         // Get the tags from cache and search them
         switch ($scope) {
             case 'user':
                 // Search User's Tags
                 $input = preg_quote($query, '~');
-                $tags = $tagHandler->getTagsForUser($cacheHandler, $userTagRepo);
+                $tags = $tagHandler->getTagsForUser($cacheHandler, $tagRepo);
                 $results = preg_grep('~^' . $input . '~', $tags);
+
+                // Format the hits for select2
+                foreach($results as $tag) {
+                    $hits['id'] = $tag;
+                    $hits['text'] = $tag;
+                }
                 break;
+
             case 'all':
                 // Search all Tags in DB
                 $results = $tagRepo->search($query);
-                break;
-            default:
-                $results = [];
-                break;
-        }
 
-        // Format the hits for select2
-        $hits = [];
-        foreach($results as $tag) {
-            $hits['id'] = $tag;
-            $hits['text'] = $tag;
+                // Format the hits for select2
+                foreach($results as $tag) {
+                    $hits['id'] = $tag->id;
+                    $hits['text'] = $tag->name;
+                }
+                break;
+
+            default:
+                $hits = [];
+                break;
         }
 
         return response()->json(['items' => [$hits]]);
@@ -67,8 +73,8 @@ class TagController extends Controller
     public function getTagsPane
     (
         TagHandlerInterface $tagHandler,
-        UserCacheHandlerInterface $cacheHandler,
-        UserTagRepositoryInterface $tagRepo
+        CacheHandlerInterface $cacheHandler,
+        TagRepositoryInterface $tagRepo
     ) {
         $tags = $tagHandler->getTagsForUser($cacheHandler, $tagRepo);
         sort($tags, SORT_STRING);
@@ -94,13 +100,13 @@ class TagController extends Controller
      * Find items that relate to the tags passed in
      *
      * @param Request $request
-     * @param UserSearchHandlerInterface $searchHandler
+     * @param SearchHandlerInterface $searchHandler
      * @return \Illuminate\View\View
      */
-    public function findItemsForTags(Request $request, UserSearchHandlerInterface $searchHandler)
+    public function findItemsForTags(Request $request, SearchHandlerInterface $searchHandler)
     {
         $q = $request->input('q');
-        $items = $searchHandler->filteredSearch('tags', $q, 'created_at', 'desc');
+        $items = $searchHandler->filteredSearch('tags', $q, Auth::user(), 'created_at', 'desc');
         $title = "Tag : " . $q;
         return view('all', ['items' => $items, 'title' => $title]);
     }

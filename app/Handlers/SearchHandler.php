@@ -10,6 +10,7 @@ use App\Models\Link;
 use App\Models\Note;
 use App\Models\Tag;
 use App\Models\User;
+use Auth;
 use Elastica\Document;
 use Elastica\Query;
 use Elastica\Query\BoolQuery;
@@ -25,25 +26,15 @@ use Elastica\ResultSet;
  * @package App\Libraries
  * @provider App\Providers\SearchHandlerServiceProvider
  */
-class SearchHandler implements SearchHandlerInterface, UserSearchHandlerInterface {
+class SearchHandler implements SearchHandlerInterface {
 
     /**
      * The Elastica Client instance
      */
     public $client;
 
-    /**
-     * Current User
-     *
-     * @var User
-     */
-    public $user;
-
-    public function __construct(User $user = null)
+    public function __construct()
     {
-        if ($user) {
-            $this->user = $user;
-        }
         $this->client = new \Elastica\Client();
     }
 
@@ -51,26 +42,28 @@ class SearchHandler implements SearchHandlerInterface, UserSearchHandlerInterfac
      * Perform the default search (currently fuzzy)
      *
      * @param $term
+     * @param null $user
      * @param null $sortColumn
      * @param string $sortDirection
      * @param int $limit
      * @return array
      */
-    public function search($term, $sortColumn = null, $sortDirection = 'desc', $limit = 50)
+    public function search($term, $user = null, $sortColumn = null, $sortDirection = 'desc', $limit = 50)
     {
-        return $this->basicSearch($term, $sortColumn, $sortDirection, $limit);
+        return $this->basicSearch($term, $user, $sortColumn, $sortDirection, $limit);
     }
 
     /**
      * Perform a basic search (currently fuzzy)
      *
      * @param $term
+     * @param null $user
      * @param null $sortColumn
      * @param string $sortDirection
      * @param int $limit
      * @return array
      */
-    public function basicSearch($term, $sortColumn = null, $sortDirection = 'desc', $limit = 50)
+    public function basicSearch($term, $user = null, $sortColumn = null, $sortDirection = 'desc', $limit = 50)
     {
         $query = new Query();
         $query->setFrom(0);
@@ -80,8 +73,8 @@ class SearchHandler implements SearchHandlerInterface, UserSearchHandlerInterfac
         $fuzzy->setField('_all', $term);
         $fuzzy->setFieldOption('fuzziness', 2);
 
-        if ($this->user) {
-            $userId = $this->user->id;
+        if ($user) {
+            $userId = $user->id;
             $boolQuery = new BoolQuery();
             $matchQuery = new Query\Match('user_id', $userId);
             $boolQuery->addMust($matchQuery);
@@ -103,12 +96,13 @@ class SearchHandler implements SearchHandlerInterface, UserSearchHandlerInterfac
      *
      * @param $type
      * @param $term
+     * @param null $user
      * @param null $sortColumn
      * @param string $sortDirection
      * @param int $limit
      * @return array
      */
-    public function filteredSearch($type, $term, $sortColumn = null, $sortDirection = 'desc', $limit = 50)
+    public function filteredSearch($type, $term, $user = null, $sortColumn = null, $sortDirection = 'desc', $limit = 50)
     {
         $query = new Query();
         $query->setFrom(0);
@@ -119,8 +113,8 @@ class SearchHandler implements SearchHandlerInterface, UserSearchHandlerInterfac
         $boolQuery->addMust($termQueryType);
         $query->setQuery($boolQuery);
 
-        if ($this->user) {
-            $userId = $this->user->id;
+        if ($user) {
+            $userId = $user->id;
             $termQueryUser = new TermQuery(['user_id' => $userId]);
             $boolQuery->addMust($termQueryUser);
         }

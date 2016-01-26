@@ -2,8 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Http\Requests\Request;
-use App\Interfaces\UserItemRepositoryInterface;
+use App\Interfaces\ItemRepositoryInterface;
 use Auth;
 
 class UpdateItemPostRequest extends Request
@@ -11,10 +10,10 @@ class UpdateItemPostRequest extends Request
     /**
      * Determine if the user is authorized to make this request.
      *
-     * @param UserItemRepositoryInterface $itemRepo
+     * @param ItemRepositoryInterface $itemRepo
      * @return bool
      */
-    public function authorize(UserItemRepositoryInterface $itemRepo)
+    public function authorize(ItemRepositoryInterface $itemRepo)
     {
         $itemId = $this->input('itemId');
         $item = $itemRepo->get($itemId, ['user']);

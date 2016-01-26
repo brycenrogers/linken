@@ -22,15 +22,15 @@ class DiscoverCacheHandler
 {
     public function getLinksForUser
     (
-        UserTagRepositoryInterface $userTagRepo,
+        TagRepositoryInterface $tagRepo,
         TagHandlerInterface $tagHandler,
-        UserCacheHandlerInterface $cacheHandler,
+        CacheHandlerInterface $cacheHandler,
         $tag = null
     ) {
 
         if (is_null($tag)) {
             // Get user's tags
-            $tags = $tagHandler->getTagsForUser($cacheHandler, $userTagRepo);
+            $tags = $tagHandler->getTagsForUser($cacheHandler, $tagRepo);
         } else {
             // Find items for a specific tag only
             $tags[] = $tag;

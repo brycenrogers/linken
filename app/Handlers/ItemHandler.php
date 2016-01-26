@@ -3,13 +3,11 @@
 namespace App\Handlers;
 
 use App\Interfaces\CacheHandlerInterface;
-use App\Interfaces\UserCacheHandlerInterface;
-use App\Interfaces\UserSearchHandlerInterface;
-use App\Models\User;
-use App\Interfaces\UserItemRepositoryInterface;
-use App\Interfaces\UserLinkRepositoryInterface;
-use App\Interfaces\UserNoteRepositoryInterface;
-use App\Interfaces\UserTagRepositoryInterface;
+use App\Interfaces\SearchHandlerInterface;
+use App\Interfaces\ItemRepositoryInterface;
+use App\Interfaces\LinkRepositoryInterface;
+use App\Interfaces\NoteRepositoryInterface;
+use App\Interfaces\TagRepositoryInterface;
 use App\Interfaces\ItemHandlerInterface;
 use App\Models\Item;
 
@@ -51,45 +49,36 @@ class ItemHandler implements ItemHandlerInterface {
     protected $tagsRepo;
 
     /**
-     * The current User
-     *
-     * @var \App\Models\User
-     */
-    protected $user;
-
-    /**
      * The Cache Handler library instance
      *
-     * @var \App\Interfaces\UserCacheHandlerInterface
+     * @var \App\Interfaces\CacheHandlerInterface
      */
     protected $cacheHandler;
 
     /**
      * The Search Handler library instance
      *
-     * @var \App\Interfaces\UserSearchHandlerInterface
+     * @var \App\Interfaces\SearchHandlerInterface
      */
     protected $searchHandler;
 
     /**
      * ItemService constructor
      *
-     * @param UserSearchHandlerInterface $searchHandler
-     * @param UserCacheHandlerInterface $cacheHandler
-     * @param UserItemRepositoryInterface $items
-     * @param UserLinkRepositoryInterface $links
-     * @param UserNoteRepositoryInterface $notes
-     * @param UserTagRepositoryInterface $tags
-     * @param User $user
+     * @param SearchHandlerInterface $searchHandler
+     * @param CacheHandlerInterface $cacheHandler
+     * @param ItemRepositoryInterface $items
+     * @param LinkRepositoryInterface $links
+     * @param NoteRepositoryInterface $notes
+     * @param TagRepositoryInterface $tags
      */
     public function __construct(
-        UserSearchHandlerInterface $searchHandler,
-        UserCacheHandlerInterface $cacheHandler,
-        UserItemRepositoryInterface $items,
-        UserLinkRepositoryInterface $links,
-        UserNoteRepositoryInterface $notes,
-        UserTagRepositoryInterface $tags,
-        User $user)
+        SearchHandlerInterface $searchHandler,
+        CacheHandlerInterface $cacheHandler,
+        ItemRepositoryInterface $items,
+        LinkRepositoryInterface $links,
+        NoteRepositoryInterface $notes,
+        TagRepositoryInterface $tags)
     {
         $this->searchHandler = $searchHandler;
         $this->cacheHandler = $cacheHandler;
@@ -97,7 +86,6 @@ class ItemHandler implements ItemHandlerInterface {
         $this->linksRepo = $links;
         $this->notesRepo = $notes;
         $this->tagsRepo = $tags;
-        $this->user = $user;
     }
 
     /**
@@ -106,13 +94,13 @@ class ItemHandler implements ItemHandlerInterface {
      * @param $inputs
      * @return Item $item
      */
-    public function create($inputs)
+    public function create($inputs, $user)
     {
         // Create the item
-        $item = $this->itemsRepo->store($inputs);
+        $item = $this->itemsRepo->store($inputs, $user);
 
         // Save Tags
-        $tags = $this->tagsRepo->store($inputs);
+        $tags = $this->tagsRepo->store($inputs, $user);
 
         // Attach Tags to the Item
         $item->tags()->attach($tags);
