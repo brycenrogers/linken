@@ -57,7 +57,7 @@ class TagController extends Controller
 
                 // Format the hits for select2
                 foreach($results as $tag) {
-                    $hits['id'] = $tag->id;
+                    $hits['id'] = $tag->name;
                     $hits['text'] = $tag->name;
                 }
                 break;

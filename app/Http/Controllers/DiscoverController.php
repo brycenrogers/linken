@@ -32,17 +32,24 @@ class DiscoverController extends Controller
         CacheHandlerInterface $cacheHandler
     ) {
         // Get specified tag from GET
-        $tag = request()->get('tags');
+        $tags = request()->get('tags');
+        $tagsArray = [];
 
-        if ($tag) {
+        if ($tags) {
+            // Convert tags string into array and clean the tag names
+            $tagsArray = explode(' ', $tags);
+            foreach ($tagsArray as $key => $tag) {
+                $tagsArray[$key] = str_replace('_', ' ', $tag);
+            }
+
             // Get discovered items for tag
-            $items = $discoverHandler->getLinksForUser($userTagRepo, $tagHandler, $cacheHandler, $tag);
+            $items = $discoverHandler->getLinksForUser($userTagRepo, $tagHandler, $cacheHandler, $tagsArray);
         } else {
             // Get all discovered items
             $items = $discoverHandler->getLinksForUser($userTagRepo, $tagHandler, $cacheHandler);
         }
 
         $title = "Discover";
-        return view('discover', ['items' => $items, 'title' => $title]);
+        return view('discover', ['items' => $items, 'title' => $title, 'tags' => $tagsArray]);
     }
 }

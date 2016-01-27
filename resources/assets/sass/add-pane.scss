@@ -59,6 +59,7 @@
         text-shadow: 0 1px 1px #405da3;
         resize: none;
         z-index: 140;
+        overflow-y: hidden;
 
         &::-webkit-input-placeholder {
             color: #cddcff;
@@ -80,7 +81,7 @@
         }
     }
 }
-div#add-pane {
+#add-pane {
     float: left;
     display: none;
     position: relative;
@@ -120,7 +121,7 @@ div#add-pane {
         width: 100%;
     }
 }
-div#info-pane {
+#info-pane {
     display: none;
     position: absolute;
     top: 0;
@@ -128,17 +129,14 @@ div#info-pane {
     left: 15px;
     height: 60px;
     background-color: white;
-    border-left: 1px solid #e3e3e3;
-    border-right: 1px solid #e3e3e3;
-    border-top: 1px solid #e3e3e3;
     margin: 0 15px 0 0;
     z-index: 120;
 
-    div#info-image-container,
+    #info-image-container,
     input#info-title {
         display: none;
     }
-    div#info-image-container {
+    #info-image-container {
         float: left;
         width: 50px;
         height: 50px;
@@ -146,15 +144,22 @@ div#info-pane {
         background-size: contain;
         background-repeat: no-repeat;
         background-position: center;
+
+        .overlay {
+            float: left;
+            width: 50px;
+            height: 50px;
+        }
     }
-    div#info-title-container {
-        margin: 16px 0;
+    #info-title-container {
         font-weight: bold;
         font-family: $fontFace;
         font-size: 16pt;
         padding-left: 0;
         input#info-title {
-            width: 100%;
+            margin-top: 16px;
+            margin-bottom: 16px;
+            width: 80%;
             background-color: transparent;
             outline: none;
             border: 0;
@@ -163,8 +168,27 @@ div#info-pane {
             text-overflow: ellipsis;
         }
     }
+
+    #options-container {
+        height: 60px;
+        background-color: #e3e3e3;
+
+        .link-options {
+            padding-top: 8px;
+
+            label {
+                font-size: 10pt;
+                font-weight: 300;
+                margin-bottom: 2px;
+
+                .glyphicon {
+                    color: #aaa;
+                }
+            }
+        }
+    }
 }
-div#add-fader {
+#add-fader {
     display: none;
     position: fixed;
     background-color: #000;

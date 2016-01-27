@@ -25,15 +25,12 @@ class DiscoverCacheHandler
         TagRepositoryInterface $tagRepo,
         TagHandlerInterface $tagHandler,
         CacheHandlerInterface $cacheHandler,
-        $tag = null
+        $tags = []
     ) {
 
-        if (is_null($tag)) {
+        if (empty($tags)) {
             // Get user's tags
             $tags = $tagHandler->getTagsForUser($cacheHandler, $tagRepo);
-        } else {
-            // Find items for a specific tag only
-            $tags[] = $tag;
         }
 
         // Find Discover Cache items for the user's Tags
