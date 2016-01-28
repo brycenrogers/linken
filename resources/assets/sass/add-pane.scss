@@ -116,9 +116,26 @@
         padding: 7px 10px;
         border-radius: 6px;
     }
-    .foot {
-        height: 14px;
-        width: 100%;
+    .link-options {
+        opacity: 0;
+        padding-top: 15px;
+        text-align: left;
+        height: 40px;
+
+        label {
+            font-size: 10pt;
+            font-weight: 300;
+            margin-bottom: 2px;
+            margin-right: 10px;
+
+            .glyphicon {
+                color: #aaa;
+            }
+        }
+
+        #discoverable-label {
+            display: none;
+        }
     }
 }
 #info-pane {
@@ -159,32 +176,13 @@
         input#info-title {
             margin-top: 16px;
             margin-bottom: 16px;
-            width: 80%;
+            width: 100%;
             background-color: transparent;
             outline: none;
             border: 0;
             -o-text-overflow: ellipsis;
             -ms-text-overflow: ellipsis;
             text-overflow: ellipsis;
-        }
-    }
-
-    #options-container {
-        height: 60px;
-        background-color: #e3e3e3;
-
-        .link-options {
-            padding-top: 8px;
-
-            label {
-                font-size: 10pt;
-                font-weight: 300;
-                margin-bottom: 2px;
-
-                .glyphicon {
-                    color: #aaa;
-                }
-            }
         }
     }
 }

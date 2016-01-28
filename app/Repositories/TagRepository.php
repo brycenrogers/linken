@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Interfaces\TagRepositoryInterface;
+use App\Models\Item;
 use App\Models\Tag;
 use App\Models\User;
 
@@ -32,7 +33,6 @@ class TagRepository extends BaseRepository implements TagRepositoryInterface {
     public function store($inputs, $user)
     {
         $tags = $inputs['tags'];
-        $tags = explode("|", $tags);
         $tagIds = [];
         foreach ($tags as $tag) {
             if ($tag == "") {
@@ -99,5 +99,31 @@ class TagRepository extends BaseRepository implements TagRepositoryInterface {
         }
 
         return Tag::all();
+    }
+
+    /**
+     * Update Tags for a specific Item
+     *
+     * @param Item $item
+     * @param array $inputs
+     * @param User $user
+     */
+    public function updateForItem(Item $item, $inputs, $user)
+    {
+        // Clear out existing Tags
+        $item->tags()->detach();
+
+        // If no tags were included, they are clearing out all tags for the item, so just return
+        if (empty($inputs['tags'])) {
+            return;
+        }
+
+        // Save Tags
+        $tags = $this->store($inputs, $user);
+
+        // Attach Tags to the Item
+        $item->tags()->attach($tags);
+
+        return;
     }
 }

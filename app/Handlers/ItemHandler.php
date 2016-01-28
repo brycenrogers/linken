@@ -10,6 +10,7 @@ use App\Interfaces\NoteRepositoryInterface;
 use App\Interfaces\TagRepositoryInterface;
 use App\Interfaces\ItemHandlerInterface;
 use App\Models\Item;
+use Auth;
 
 /**
  * Class ItemHandler
@@ -160,6 +161,7 @@ class ItemHandler implements ItemHandlerInterface {
      */
     public function update($inputs)
     {
+        /* @var $item Item */
         $item = $this->itemsRepo->get($inputs['itemId']);
 
         $item->value = $inputs['value'];
@@ -172,9 +174,11 @@ class ItemHandler implements ItemHandlerInterface {
         }
 
         // Tags
+        $this->tagsRepo->updateForItem($item, $inputs, Auth::user());
 
         // Cache
         $this->cacheHandler->del(CacheHandlerInterface::MAINPAGE);
+        $this->cacheHandler->del(CacheHandlerInterface::TAGS);
 
         // Save
         $item->save();

@@ -1,11 +1,12 @@
 $( document ).ready(function() {
 
-    var settingsValueTextarea = $('#settingsValue');
-    var settingsDescriptionTextarea = $('#settingsDescription');
-    var destroyItem = $('#destroyItem');
-    var settingsItemIdInput = $('#settingsItemId');
+    var settingsValueTextarea = $('#settings-value');
+    var settingsDescriptionTextarea = $('#settings-description');
+    var tagsSelect = $('#edit-tags');
+    var destroyItem = $('#destroy-item');
+    var settingsItemIdInput = $('#settings-item-id');
 
-    $('#itemSettingsModal').on('show.bs.modal', function (event) {
+    $('#item-settings-modal').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
         var type = button.data('type');
         var value = button.data('value');
@@ -50,9 +51,9 @@ $( document ).ready(function() {
             });
     });
 
-    $('#updateLinkSettingsSubmit').on("click", function() {
-        var itemSettingsModal = $('#itemSettingsModal');
-        var errorDiv = $('#itemSettingsErrors');
+    $('#update-link-settings-submit').on("click", function() {
+        var itemSettingsModal = $('#item-settings-modal');
+        var errorDiv = $('#item-settings-errors');
         errorDiv.hide();
         var csrf = $('input#csrf_token').val();
         var itemId = settingsItemIdInput.val();
@@ -65,7 +66,8 @@ $( document ).ready(function() {
                 _token: csrf,
                 itemId: itemId,
                 value: settingsValueTextarea.val(),
-                description: settingsDescriptionTextarea.val()
+                description: settingsDescriptionTextarea.val(),
+                tags: tagsSelect.val()
             }
         })
         .fail(function (response) {
@@ -87,6 +89,46 @@ $( document ).ready(function() {
             // Close modal and show success message
             itemSettingsModal.modal('hide');
             showHitboxAlert('success', 'Saved!');
+
+            // Update the UI
+            var oldPane = $('#item-pane-' + itemId);
+            oldPane.hide();
+            $(response).insertAfter('#item-pane-' + itemId);
+            oldPane.remove();
+        });
+    });
+
+    $('#destroy-item').on("click", function() {
+        var itemSettingsModal = $('#item-settings-modal');
+        var errorDiv = $('#item-settings-errors');
+        errorDiv.hide();
+        var csrf = $('input#csrf_token').val();
+        var itemId = settingsItemIdInput.val();
+
+        $.ajax({
+            url: "/item/destroy/" + itemId,
+            cache: false,
+            method: 'get'
+        })
+        .fail(function (response) {
+            if (response.status == 403) {
+                showHitboxAlert('error', response.responseText);
+                // Close modal and show success message
+                itemSettingsModal.modal('hide');
+                return;
+            }
+            var errors = "";
+            var responseText = JSON.parse(response.responseText);
+            $.each(responseText, function (fieldName, errorText) {
+                errors += errorText[0] + '<br>';
+            });
+            errors.slice(0,-4);
+            errorDiv.html(errors).fadeIn("fast");
+        })
+        .done(function( response ) {
+            // Close modal and show success message
+            itemSettingsModal.modal('hide');
+            showHitboxAlert('success', response.message);
 
             // Update the UI
             var oldPane = $('#item-pane-' + itemId);

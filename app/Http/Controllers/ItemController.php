@@ -43,7 +43,7 @@ class ItemController extends Controller
         catch (\Exception $e) {
             return response()->json(['type' => 'error', 'message' => $e->getMessage()], 422);
         }
-        return response()->json(['type' => 'success']);
+        return response()->json(['type' => 'success', 'message' => 'Deleted!']);
     }
 
     /**

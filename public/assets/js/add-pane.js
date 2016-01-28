@@ -77,10 +77,7 @@ $( document ).ready(function() {
             title = $('input#info-title').val();
         }
 
-        var tags = "";
-        $("select#add-tags option:selected").each(function() {
-            tags += $( this ).text() + "|";
-        });
+        var tags = $("select#add-tags").val();
 
         $.ajax({
             url: "/item/add",
@@ -186,7 +183,7 @@ $( document ).ready(function() {
         var containerHeightPx = $('div#add-pane-container').css('height');
         var containerHeightAr = containerHeightPx.split('px');
         var containerHeight = containerHeightAr[0];
-        var addPaneNewHeight = parseInt(containerHeight) + 33;
+        var addPaneNewHeight = parseInt(containerHeight) + 27;
         $('div#add-pane').css('min-height', addPaneNewHeight + 'px');
     }
 
@@ -200,13 +197,8 @@ $( document ).ready(function() {
         }
         $('div#add-pane').attr('data-toggle', 'open');
         var windowWidth = $(window).width();
-        var height = 160;
+        var height = 180;
 
-        // For mobile screens, adjust the pane height and slide the blue hitbox into view
-        if (windowWidth <= 767) {
-            height = 220;
-            window.scrollTo(0, 135);
-        }
         if($('input#add-pane-height').val() != '') {
             height = $('input#add-pane-height').val();
         }
@@ -225,8 +217,12 @@ $( document ).ready(function() {
                         $('div#add-pane button').velocity({
                             opacity: 1
                         }, 200, function() {
-                            $('div#add-fader').on("click", function() {
-                                closeAddPane();
+                            $('div#add-pane .link-options').velocity({
+                                opacity: 1
+                            }, 200, function() {
+                                $('div#add-fader').on("click", function() {
+                                    closeAddPane();
+                                });
                             });
                         });
                     });
@@ -249,7 +245,7 @@ $( document ).ready(function() {
         $('input#add-pane-height').val(height[0]);
 
         // Fade out fields and slide up
-        $('div#add-pane textarea, div#add-pane .select2, div#add-pane button').velocity({
+        $('div#add-pane textarea, div#add-pane .select2, div#add-pane button, div#add-pane .link-options').velocity({
             opacity: 0
         }, 100, function() {
             $('div#add-pane').velocity({

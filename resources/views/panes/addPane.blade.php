@@ -1,20 +1,8 @@
 <div id="info-pane" class="row" data-loaded="false" data-url="" data-open="false">
-    <div id="info-title-container" class="col-md-10">
-        <div id="info-image-container"></div>
+    <div id="info-image-container" class="col-md-1"></div>
+    <div id="info-title-container" class="col-md-11">
         <input id="info-title" type="text" value="">
         <textarea id="info-title-decode" style="display: none;"></textarea>
-    </div>
-    <div id="options-container" class="col-md-2">
-        <div class="link-options">
-            <label>
-                <input type="checkbox" checked> Discoverable
-                <span class="glyphicon glyphicon-question-sign"></span>
-            </label>
-            <label>
-                <input type="checkbox"> Self-Destruct
-                <span class="glyphicon glyphicon-question-sign"></span>
-            </label>
-        </div>
     </div>
 </div>
 <div id="blue-hitbox-add-pane" class="<?php
@@ -57,7 +45,16 @@
             </button>
         </div>
         <div class="col-md-12">
-            <div class="foot"></div>
+            <div class="link-options">
+                <label id="reminder-label">
+                    <input type="checkbox"> Reminder
+                    <span class="glyphicon glyphicon-question-sign"></span>
+                </label>
+                <label id="discoverable-label">
+                    <input type="checkbox" checked> Discoverable
+                    <span class="glyphicon glyphicon-question-sign"></span>
+                </label>
+            </div>
         </div>
     </div>
 </div>
