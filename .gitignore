@@ -13,3 +13,4 @@ Homestead.json
 /public/assets/dist/*
 !/public/assets/images/uploads/default-user.png
 _ide_helper.php
+/resources/layouts/layoutDist.blade.php

@@ -62,7 +62,13 @@
                             <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
                         </a>
                         @endif
-                        <a href="#item-share-modal" class="share-link" title="Share" data-toggle="modal">
+                        <a href="#item-share-modal"
+                           class="share-link"
+                           title="Share"
+                           data-toggle="modal"
+                           data-itemid="{{ $item->id }}"
+                           data-url="{{ (get_class($item->itemable) == "App\Models\Link") ? $item->itemable->url : null }}"
+                           data-title="{{ $item->value }}">
                             <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
                         </a>
                     </div>

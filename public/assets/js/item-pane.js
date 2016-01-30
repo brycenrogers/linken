@@ -43,12 +43,10 @@ $( document ).ready(function() {
                 url: '/tags/search',
                 delay: 100,
                 processResults: function (data) {
-                    return {
-                        results: data.items
-                        }
-                    }
+                    return { results: data.items }
                 }
-            });
+            }
+        });
     });
 
     $('#update-link-settings-submit').on("click", function() {
@@ -136,5 +134,20 @@ $( document ).ready(function() {
             $(response).insertAfter('#item-pane-' + itemId);
             oldPane.remove();
         });
+    });
+
+    $('#item-share-modal').on('show.bs.modal', function (event) {
+
+        var button = $(event.relatedTarget);
+
+        $('#share-emails').select2({
+            tags: true,
+            tokenSeparators: [','],
+            placeholder: "Enter emails"
+        });
+
+        var a2a_config = a2a_config || {};
+        a2a_config.linkname = button.data('title');
+        a2a_config.linkurl = button.data('url');
     });
 });

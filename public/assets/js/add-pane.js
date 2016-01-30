@@ -69,12 +69,12 @@ $( document ).ready(function() {
         var photo_url = null;
         var title = null;
 
-        if ($('div#info-pane').attr('data-url') != "") {
+        if ($('#info-pane').attr('data-url') != "") {
             type = "Link";
-            value = $('input#info-title').val();
-            url = $('div#info-pane').attr('data-url');
-            photo_url = $('#info-image-container').attr('data-image-url');
-            title = $('input#info-title').val();
+            value = $('#info-pane .title').val();
+            url = $('#info-pane').attr('data-url');
+            photo_url = $('#info-pane .image-container').attr('data-image-url');
+            title = $('#info-pane .title').val();
         }
 
         var tags = $("select#add-tags").val();
@@ -109,7 +109,7 @@ $( document ).ready(function() {
     $('select#add-tags').on("change", function (e) {
         adjustPaneHeight();
     });
-    $("#info-image-container").click(function () {
+    $("#info-pane .image-container").click(function () {
 
         if (infoPaneSpinner) {
             infoPaneSpinner.stop();
@@ -121,9 +121,9 @@ $( document ).ready(function() {
 
         var originalUrl = $(this).css("background-image");
         $(this).css("background-image", "url('')");
-        infoPaneSpinner = addSpinnerToElement($('div#info-pane').get(0), '30px', '#448dff');
+        infoPaneSpinner = addSpinnerToElement($('#info-pane').get(0), '30px', '#448dff');
 
-        var nextImageNumber = parseInt($('#info-image-container').attr('data-image-number'));
+        var nextImageNumber = parseInt($('#info-pane .image-container').attr('data-image-number'));
 
         $.ajax({
             url: "/link/parse",
@@ -137,7 +137,7 @@ $( document ).ready(function() {
                 container.css("background-image", originalUrl);
             } else {
                 updateInfoPane(response.image);
-                $('#info-image-container').attr('data-image-number', response.image_number);
+                $('#info-pane .image-container').attr('data-image-number', response.image_number);
             }
         });
     });
@@ -146,22 +146,22 @@ $( document ).ready(function() {
         $('textarea#add').html("");
         $('textarea#add-description').html("");
         $("select#add-tags").select2("val", "");
-        $("input#info-title").val("");
-        $("div#info-image-container").attr('style', '');
+        $("#info-pane input.title").val("");
+        $("#info-pane .image-container").attr('style', '');
     }
     function triggerInfoPane()
     {
         var entry = $.trim($('textarea#add').val());
         var foundUrls = entry.match(/(([a-z]{3,6}:\/\/)|(^|\s))([a-zA-Z0-9\-]+\.)+[a-z]{2,13}[\.\?\=\&\%\/\w\-]*\b([^@]|$)/mg);
         var isUrl = false;
-        var infoPaneOpen = $('div#info-pane').attr('data-open');
+        var infoPaneOpen = $('#info-pane').attr('data-open');
         if(foundUrls && foundUrls.length > 0) {
             isUrl = true;
             var url = $.trim(foundUrls[0]);
 
             // If data has already been loaded for this url, just open
             var sameUrl = true;
-            var loadedUrl = $('div#info-pane').attr('data-url');
+            var loadedUrl = $('#info-pane').attr('data-url');
             if (loadedUrl != url) {
                 sameUrl = false;
             }
@@ -282,7 +282,7 @@ $( document ).ready(function() {
         openInfoPane();
 
         // Show the spinner
-        infoPaneSpinner = addSpinnerToElement($('div#info-pane').get(0), '30px', '#448dff');
+        infoPaneSpinner = addSpinnerToElement($('#info-pane').get(0), '30px', '#448dff');
 
         // Load info from URL and slide info pane up
         var csrf = $('input#csrf_token').val();
@@ -293,23 +293,23 @@ $( document ).ready(function() {
             data: { url: url, _token: csrf }
         })
             .done(function( response ) {
-                $('div#info-pane').attr('data-url', url);
+                $('#info-pane').attr('data-url', url);
                 updateInfoPane(response.image, response.title);
-                $('#info-image-container').attr('data-image-number', 0);
+                $('#info-pane .image-container').attr('data-image-number', 0);
             });
     }
 
     function updateInfoPane(image, title)
     {
-        var imageContainer = $("#info-image-container");
-        var titleContainer = $("#info-title");
+        var imageContainer = $("#info-pane .image-container");
+        var titleContainer = $("#info-pane .title");
         infoPaneSpinner.stop();
         if (image) {
             imageContainer.css("background-image", "url('" + image + "')");
             imageContainer.attr('data-image-url', image);
         }
         if (title) {
-            var decoded = $('#info-title-decode').html($.trim(title)).text();
+            var decoded = $('#info-pane .title-decode').html($.trim(title)).text();
             titleContainer.val(decoded);
         }
         imageContainer.fadeIn('fast');
@@ -318,7 +318,7 @@ $( document ).ready(function() {
 
     function openInfoPane(image, title)
     {
-        var infoPane = $('div#info-pane');
+        var infoPane = $('#info-pane');
         if (infoPane.attr('data-open') == 'false') {
             infoPane.delay(10).show().velocity({
                 top: [ -60, "easeOutCubic" ]
@@ -338,9 +338,9 @@ $( document ).ready(function() {
 
     function closeInfoPane()
     {
-        var infoPane = $('div#info-pane');
+        var infoPane = $('#info-pane');
         if (infoPane.attr('data-open') == 'true') {
-            $('div#info-pane').velocity({
+            $('#info-pane').velocity({
                 top: [0, "easeInCubic"]
             }, 100, function () {
                 $('div.container-header').velocity({

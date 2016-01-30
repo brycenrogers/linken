@@ -63,9 +63,15 @@
                         <h4 class="modal-title" id="item-share-modal-label">Share</h4>
                     </div>
                     <div class="modal-body">
-
+                        <label for="share-emails">Emails</label>
+                        <select id="share-emails"
+                                name="emails"
+                                class="form-control input-lg select2"
+                                style="width: 100%; padding: 10px;"
+                                aria-hidden="true" multiple></select>
                     </div>
                     <div class="modal-footer">
+                        <input type="hidden" id="share-item-id" value="">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                         <button type="button" class="btn btn-success">Send</button>
                     </div>

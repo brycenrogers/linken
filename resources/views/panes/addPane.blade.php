@@ -1,8 +1,8 @@
 <div id="info-pane" class="row" data-loaded="false" data-url="" data-open="false">
-    <div id="info-image-container" class="col-md-1"></div>
-    <div id="info-title-container" class="col-md-11">
-        <input id="info-title" type="text" value="">
-        <textarea id="info-title-decode" style="display: none;"></textarea>
+    <div id="" class="image-container col-md-1"></div>
+    <div id="" class="title-container col-md-11">
+        <input class="title" type="text" value="">
+        <textarea class="title-decode" style="display: none;"></textarea>
     </div>
 </div>
 <div id="blue-hitbox-add-pane" class="<?php

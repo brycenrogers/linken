@@ -3,14 +3,44 @@ module.exports = function(grunt) {
     // Project configuration.
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
+        concat: {
+            options: {
+                separator: ';'
+            },
+            libs: {
+                src: [
+                    'public/assets/js/libs/jquery.min.js',
+                    'public/assets/js/libs/velocity.min.js',
+                    'public/assets/js/libs/bootstrap.min.js',
+                    'public/assets/js/libs/select2.min.js',
+                    'public/assets/js/libs/autosize.min.js',
+                    'public/assets/js/libs/spin.min.js',
+                    'public/assets/js/libs/jquery.cropit.js'
+                ],
+                dest: 'public/assets/dist/js/libs.js'
+            },
+            linken: {
+                src: [
+                    'public/assets/js/common.js',
+                    'public/assets/js/add-pane.js',
+                    'public/assets/js/control-pane.js',
+                    'public/assets/js/item-pane.js',
+                    'public/assets/js/discover.js'
+                ],
+                dest: 'public/assets/dist/js/linken.js'
+            },
+            dist: {
+                src: ['public/assets/dist/js/libs.js', 'public/assets/dist/js/linken.js'],
+                dest: 'public/assets/dist/js/linken-dist.js'
+            }
+        },
         uglify: {
             options: {
                 banner: '/*! Linken <%= grunt.template.today("yyyy-mm-dd") %> */\n'
             },
             build: {
                 src: [
-                    'public/assets/js/libs/*.js',
-                    'public/assets/js/*.js'
+                    'public/assets/dist/js/linken-dist.js'
                 ],
                 dest: 'public/assets/dist/js/linken.min.js'
             }
@@ -63,6 +93,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-cssmin');
 
     grunt.registerTask('default', ['sass']);
-    grunt.registerTask('dist', ['uglify', 'sass', 'cssmin']);
+    grunt.registerTask('dist', ['concat:libs', 'concat:linken', 'concat:dist', 'uglify', 'sass', 'cssmin']);
 
 };
