@@ -53,29 +53,4 @@
                 </div>
             </div>
         </div>
-
-        <!-- Item Share Modal -->
-        <div class="modal fade" id="item-share-modal" tabindex="-1" role="dialog" aria-labelledby="item-share-modal-label">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="item-share-modal-label">Share</h4>
-                    </div>
-                    <div class="modal-body">
-                        <label for="share-emails">Emails</label>
-                        <select id="share-emails"
-                                name="emails"
-                                class="form-control input-lg select2"
-                                style="width: 100%; padding: 10px;"
-                                aria-hidden="true" multiple></select>
-                    </div>
-                    <div class="modal-footer">
-                        <input type="hidden" id="share-item-id" value="">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-success">Send</button>
-                    </div>
-                </div>
-            </div>
-        </div>
 @endsection

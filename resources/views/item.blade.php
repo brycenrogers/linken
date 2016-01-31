@@ -62,16 +62,46 @@
                             <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
                         </a>
                         @endif
-                        <a href="#item-share-modal"
+                        <a href="#item-share-modal-{{ $item->id }}"
                            class="share-link"
                            title="Share"
-                           data-toggle="modal"
-                           data-itemid="{{ $item->id }}"
-                           data-url="{{ (get_class($item->itemable) == "App\Models\Link") ? $item->itemable->url : null }}"
-                           data-title="{{ $item->value }}">
+                           data-toggle="modal">
                             <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
                         </a>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Item Share Modal -->
+    <div class="modal fade item-share-modal" id="item-share-modal-{{ $item->id }}" tabindex="-1" role="dialog" aria-labelledby="item-share-modal-label">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="item-share-modal-label">Share</h4>
+                </div>
+                <div class="modal-body">
+                    <label>Emails</label>
+                    <hr>
+                    <select name="emails"
+                            class="share-emails form-control input-lg select2"
+                            style="width: 100%; padding: 10px;"
+                            aria-hidden="true" multiple></select>
+                    <br>
+                    <button class="btn btn-success">Send to Emails</button>
+                    <label>Social</label>
+                    <hr>
+                    @if (get_class($item->itemable) == "App\Models\Link")
+                        <div class="fb-share-button" data-href="{{ $item->itemable->url }}" data-title="{{ $item->value }}" data-layout="button"></div>
+                        <a href="https://twitter.com/share" class="twitter-share-button" data-text="{{ $item->value }}" data-url="{{ $item->itemable->url }}">Tweet</a>
+                    @else
+
+                    @endif
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" id="share-item-id" value="{{ $item->id }}">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>

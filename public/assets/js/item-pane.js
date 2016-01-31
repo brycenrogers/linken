@@ -6,6 +6,12 @@ $( document ).ready(function() {
     var destroyItem = $('#destroy-item');
     var settingsItemIdInput = $('#settings-item-id');
 
+    $('.share-emails').select2({
+        tags: true,
+        tokenSeparators: [','],
+        placeholder: "Enter emails"
+    });
+
     $('#item-settings-modal').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
         var type = button.data('type');
@@ -134,20 +140,5 @@ $( document ).ready(function() {
             $(response).insertAfter('#item-pane-' + itemId);
             oldPane.remove();
         });
-    });
-
-    $('#item-share-modal').on('show.bs.modal', function (event) {
-
-        var button = $(event.relatedTarget);
-
-        $('#share-emails').select2({
-            tags: true,
-            tokenSeparators: [','],
-            placeholder: "Enter emails"
-        });
-
-        var a2a_config = a2a_config || {};
-        a2a_config.linkname = button.data('title');
-        a2a_config.linkurl = button.data('url');
     });
 });
