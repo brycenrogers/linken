@@ -15,6 +15,7 @@
 
     <!-- CSS -->
     <!-- build:css /assets/dist/css/linken.min.css -->
+    <link rel="stylesheet" href="{{ asset('assets/css/google-fonts-Montserrat.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/base.css') }}">
@@ -66,6 +67,7 @@
 <script src="{{ asset('assets/js/libs/autosize.min.js') }}"></script>
 <script src="{{ asset('assets/js/libs/spin.min.js') }}"></script>
 <script src="{{ asset('assets/js/libs/jquery.cropit.js') }}"></script>
+<script src="{{ asset('assets/js/libs/add-to-any.min.js') }}"></script>
 <script src="{{ asset('assets/js/common.js') }}"></script>
 <script src="{{ asset('assets/js/add-pane.js') }}"></script>
 <script src="{{ asset('assets/js/control-pane.js') }}"></script>

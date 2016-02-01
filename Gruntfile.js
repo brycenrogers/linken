@@ -15,7 +15,8 @@ module.exports = function(grunt) {
                     'public/assets/js/libs/select2.min.js',
                     'public/assets/js/libs/autosize.min.js',
                     'public/assets/js/libs/spin.min.js',
-                    'public/assets/js/libs/jquery.cropit.js'
+                    'public/assets/js/libs/jquery.cropit.js',
+                    'public/assets/js/libs/add-to-any.min.js'
                 ],
                 dest: 'public/assets/dist/js/libs.js'
             },
@@ -57,7 +58,7 @@ module.exports = function(grunt) {
         },
         sass: {
             options: {
-                sourceMap: true
+                sourceMap: false
             },
             dist: {
                 files: {
@@ -69,8 +70,24 @@ module.exports = function(grunt) {
             options: {},
             dist: {
                 files: {
-                    'resources/views/layouts/layout.blade.php': ['resources/views/layouts/layout.blade.php']
+                    'resources/views/layouts/layoutDist.blade.php': ['resources/views/layouts/layout.blade.php']
                 }
+            }
+        },
+        replace: {
+            dist: {
+                src: ['public/assets/dist/css/linken.min.css'],
+                overwrite: true,
+                replacements: [
+                    {
+                        from: '../images',
+                        to: '../../images'
+                    },
+                    {
+                        from: '../fonts',
+                        to: '../../fonts'
+                    }
+                ]
             }
         },
         cssmin: {
@@ -80,7 +97,12 @@ module.exports = function(grunt) {
             },
             target: {
                 files: {
-                    'public/assets/dist/css/linken.min.css': ['public/assets/css/*.css']
+                    'public/assets/dist/css/linken.min.css': [
+                        'public/assets/css/google-fonts-Montserrat.css',
+                        'public/assets/css/bootstrap.min.css',
+                        'public/assets/css/select2.min.css',
+                        'public/assets/css/base.css'
+                    ]
                 }
             }
         }
@@ -92,8 +114,9 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-sass');
     grunt.loadNpmTasks('grunt-processhtml');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
+    grunt.loadNpmTasks('grunt-text-replace');
 
     grunt.registerTask('default', ['sass']);
-    grunt.registerTask('dist', ['concat:libs', 'concat:linken', 'concat:dist', 'uglify', 'sass', 'cssmin']);
+    grunt.registerTask('dist', ['concat:libs', 'concat:linken', 'concat:dist', 'uglify', 'sass', 'processhtml', 'cssmin', 'replace']);
 
 };

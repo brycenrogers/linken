@@ -82,25 +82,31 @@
                     <h4 class="modal-title" id="item-share-modal-label">Share</h4>
                 </div>
                 <div class="modal-body">
-                    <label>Emails</label>
+                    <form class="form form-inline" method="post" action="/sharing/email">
+                        <input type="hidden" id="share-item-id" value="{{ $item->id }}">
+                        <label for="share-emails">Send to Email Addresses</label>
+                        <select name="emails"
+                                id="share-emails"
+                                class="share-emails form-control input-lg select2"
+                                style="width: 100%; padding: 10px;"
+                                aria-hidden="true" multiple></select>
+                        <button class="btn btn-success send-button">Send</button>
+                    </form>
                     <hr>
-                    <select name="emails"
-                            class="share-emails form-control input-lg select2"
-                            style="width: 100%; padding: 10px;"
-                            aria-hidden="true" multiple></select>
-                    <br>
-                    <button class="btn btn-success">Send to Emails</button>
                     <label>Social</label>
-                    <hr>
-                    @if (get_class($item->itemable) == "App\Models\Link")
-                        <div class="fb-share-button" data-href="{{ $item->itemable->url }}" data-title="{{ $item->value }}" data-layout="button"></div>
-                        <a href="https://twitter.com/share" class="twitter-share-button" data-text="{{ $item->value }}" data-url="{{ $item->itemable->url }}">Tweet</a>
-                    @else
-
-                    @endif
+                    <div class="a2a_kit a2a_default_style"
+                         data-a2a-url="{{ (get_class($item->itemable) == "App\Models\Link") ? $item->itemable->url : null }}"
+                         data-a2a-title="{{ $item->value }}">
+                        <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+                        <span class="a2a_divider"></span>
+                        <a class="a2a_button_facebook"></a>
+                        <a class="a2a_button_twitter"></a>
+                        <a class="a2a_button_google_plus"></a>
+                        <a class="a2a_button_pinterest"></a>
+                        <a class="a2a_button_reddit"></a>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <input type="hidden" id="share-item-id" value="{{ $item->id }}">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </div>

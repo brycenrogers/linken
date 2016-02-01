@@ -55,7 +55,7 @@
             margin-right: 15px;
         }
 
-        div.media-tags {
+        .media-tags {
             min-height: 22px;
             float: left;
             a.tag-link {
@@ -70,7 +70,7 @@
                 background-color: #777;
             }
         }
-        div.media-options {
+        .media-options {
             float: left;
             padding-top: 10px;
             clear: both;
@@ -97,7 +97,7 @@
     @media (max-width: 767px) {
         font-size: 12pt;
     }
-    div.media-url {
+    .media-url {
         font-size: 9pt;
         font-style: italic;
         padding-top: 5px;
@@ -105,13 +105,16 @@
             color: #aaa;
         }
     }
-    div.media-body {
+    .media-body {
         padding-left: 20px;
         font-size: 11pt;
         color: $fontColorGrey;
     }
 }
-div#pager-container {
+#pager-container {
     float: left;
     width: 100%;
+}
+.item-share-modal {
+    
 }

@@ -7,10 +7,10 @@ Homestead.json
 .idea/
 /public/assets/images/thumbs/*.png
 /public/assets/images/uploads/*.png
+/public/assets/css/linken.min.css
 /public/assets/css/base.css
-/public/assets/css/base.css.map
 /public/assets/js/linken.min.js
 /public/assets/dist/*
 !/public/assets/images/uploads/default-user.png
 _ide_helper.php
-/resources/layouts/layoutDist.blade.php
+/resources/views/layouts/layoutDist.blade.php

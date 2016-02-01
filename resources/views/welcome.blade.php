@@ -1,4 +1,4 @@
-@extends('layouts.layout')
+@extends((( App::environment() == 'dev') ? 'layouts.layout' : 'layouts.layoutDist' ))
 
 @section('title', ' - Save and share links')
 
