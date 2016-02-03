@@ -39,6 +39,7 @@ Route::post('user/photo/upload', 'UserPhotoController@upload');
 Route::post('link/parse', 'LinkParseController@postLinkParse');
 Route::post('item/add', 'ItemController@add');
 Route::post('item/update', 'ItemController@update');
+Route::post('item/email', 'ItemController@email');
 
 Route::get('test', 'MainController@test');
 Route::get('item/destroy/{id}', 'ItemController@destroy');

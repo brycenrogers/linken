@@ -82,16 +82,14 @@
                     <h4 class="modal-title" id="item-share-modal-label">Share</h4>
                 </div>
                 <div class="modal-body">
-                    <form class="form form-inline" method="post" action="/sharing/email">
-                        <input type="hidden" id="share-item-id" value="{{ $item->id }}">
-                        <label for="share-emails">Send to Email Addresses</label>
-                        <select name="emails"
-                                id="share-emails"
-                                class="share-emails form-control input-lg select2"
-                                style="width: 100%; padding: 10px;"
-                                aria-hidden="true" multiple></select>
-                        <button class="btn btn-success send-button">Send</button>
-                    </form>
+                    <div class="item-share-errors alert alert-danger" id="item-share-errors-{{ $item->id }}"></div>
+                    <label for="share-emails">Send to Email Addresses</label>
+                    <select name="emails"
+                            id="share-emails-{{ $item->id }}"
+                            class="share-emails form-control input-lg select2"
+                            style="width: 100%; padding: 10px;"
+                            aria-hidden="true" multiple></select>
+                    <button class="btn btn-success share-send-email" data-itemid="{{ $item->id }}">Send</button>
                     <hr>
                     <label>Social</label>
                     <div class="a2a_kit a2a_default_style"

@@ -11,6 +11,7 @@ use App\Interfaces\TagRepositoryInterface;
 use App\Interfaces\ItemHandlerInterface;
 use App\Models\Item;
 use Auth;
+use Mail;
 
 /**
  * Class ItemHandler
@@ -141,6 +142,11 @@ class ItemHandler implements ItemHandlerInterface {
         return $item;
     }
 
+    /**
+     * Delete an item
+     *
+     * @param $id
+     */
     public function destroy($id)
     {
         // Delete the item
@@ -151,6 +157,26 @@ class ItemHandler implements ItemHandlerInterface {
 
         // Delete from Search Index
         $this->searchHandler->remove($id);
+    }
+
+    public function email($inputs)
+    {
+        /* @var $item Item */
+        $item = $this->itemsRepo->get($inputs['itemId']);
+
+        // Get email addresses
+        $emails = $inputs['emails'];
+
+        // Get User
+        $user = Auth::user();
+
+        // Send emails
+        foreach ($emails as $email) {
+            Mail::send('emails.share', ['item' => $item, 'user' => $user], function ($m) use ($item, $user, $email) {
+                $m->from($user->email, $user->name);
+                $m->to($email, $user->name)->subject($item->value);
+            });
+        }
     }
 
     /**

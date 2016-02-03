@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Auth;
 
-class AddItemPostRequest extends Request
+class ShareEmailPostRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,11 +23,15 @@ class AddItemPostRequest extends Request
      */
     public function rules()
     {
-        return [
-            '_token' => 'required',
-            'value' => 'required',
-            'type' => 'required|in:Link,Note'
+        $rules = [
+            '_token' => 'required'
         ];
+
+        foreach($this->request->get('emails') as $key => $val) {
+            $rules['emails.'.$key] = 'required|email';
+        }
+
+        return $rules;
     }
 
     /**
@@ -37,10 +41,10 @@ class AddItemPostRequest extends Request
      */
     public function messages()
     {
-        return [
-            'value.required' => 'A link or note is required',
-            'type.required'  => 'Error determining type of content',
-            'type.in'  => 'Content must be either a Link or a Note',
-        ];
+        $messages = [];
+        foreach($this->request->get('emails') as $key => $val) {
+            $messages['emails.'.$key.'.email'] = 'The email address "' . $val . '" is invalid.';
+        }
+        return $messages;
     }
 }

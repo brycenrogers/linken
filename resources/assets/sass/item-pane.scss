@@ -116,5 +116,10 @@
     width: 100%;
 }
 .item-share-modal {
-    
+    .share-send-email {
+        margin-top: 10px;
+    }
+    .item-share-errors {
+        display: none;
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AddItemPostRequest;
+use App\Http\Requests\ShareEmailPostRequest;
 use App\Http\Requests\UpdateItemPostRequest;
 use App\Interfaces\ItemHandlerInterface;
 use Auth;
@@ -44,6 +45,24 @@ class ItemController extends Controller
             return response()->json(['type' => 'error', 'message' => $e->getMessage()], 422);
         }
         return response()->json(['type' => 'success', 'message' => 'Deleted!']);
+    }
+
+    /**
+     * Share item with email addresses
+     *
+     * @param ShareEmailPostRequest $request
+     * @param ItemHandlerInterface $itemHandler
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function email(ShareEmailPostRequest $request, ItemHandlerInterface $itemHandler)
+    {
+        try {
+            $itemHandler->email($request->input());
+        }
+        catch (\Exception $e) {
+            return response()->json(['type' => 'error', 'message' => $e->getMessage()], 422);
+        }
+        return response()->json(['type' => 'success', 'message' => 'Shares sent!']);
     }
 
     /**

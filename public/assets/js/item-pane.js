@@ -117,7 +117,7 @@ $( document ).ready(function() {
         .fail(function (response) {
             if (response.status == 403) {
                 showHitboxAlert('error', response.responseText);
-                // Close modal and show success message
+                // Close modal and show error message
                 itemSettingsModal.modal('hide');
                 return;
             }
@@ -133,12 +133,46 @@ $( document ).ready(function() {
             // Close modal and show success message
             itemSettingsModal.modal('hide');
             showHitboxAlert('success', response.message);
+        });
+    });
 
-            // Update the UI
-            var oldPane = $('#item-pane-' + itemId);
-            oldPane.hide();
-            $(response).insertAfter('#item-pane-' + itemId);
-            oldPane.remove();
+    $('.share-send-email').on("click", function() {
+        var csrf = $('input#csrf_token').val();
+        var itemId = $(this).data('itemid');
+        var itemShareModal = $('#item-share-modal-' + itemId);
+        var emails = $('#share-emails-' + itemId).val();
+        var errorDiv = $('#item-share-errors-' + itemId);
+        errorDiv.hide();
+
+        $.ajax({
+            url: "/item/email",
+            cache: false,
+            method: 'post',
+            data: {
+                _token: csrf,
+                itemId: itemId,
+                emails: emails
+            }
+        })
+        .fail(function (response) {
+            if (response.status == 403) {
+                showHitboxAlert('error', response.responseText);
+                // Close modal and show error message
+                itemShareModal.modal('hide');
+                return;
+            }
+            var errors = "";
+            var responseText = JSON.parse(response.responseText);
+            $.each(responseText, function (fieldName, errorText) {
+                errors += errorText[0] + '<br>';
+            });
+            errors.slice(0,-4);
+            errorDiv.html(errors).fadeIn("fast");
+        })
+        .done(function( response ) {
+            // Close modal and show success message
+            itemShareModal.modal('hide');
+            showHitboxAlert('success', response.message);
         });
     });
 });
