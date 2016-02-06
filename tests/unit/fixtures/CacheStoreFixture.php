@@ -6,20 +6,14 @@ use App\Interfaces\CacheStoreInterface;
 
 class CacheStoreFixture implements CacheStoreInterface {
 
-    public $store;
-    public $forget;
+    public $delete;
     public $get;
     public $has;
-    public $put;
+    public $set;
 
-    public function store()
+    public function delete($key)
     {
-        return $this->store;
-    }
-
-    public function forget($key)
-    {
-        return $this->forget;
+        return $this->delete;
     }
 
     public function get($key)
@@ -32,8 +26,8 @@ class CacheStoreFixture implements CacheStoreInterface {
         return $this->has;
     }
 
-    public function put($key, $value, $expiration)
+    public function set($key, $value)
     {
-        return $this->put;
+        return $this->set;
     }
 }

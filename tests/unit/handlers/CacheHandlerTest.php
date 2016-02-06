@@ -61,7 +61,7 @@ class CacheHandlerTest extends TestCase
     public function testDel_NoUniqueId()
     {
         $typeConstant = 'test';
-        $this->cacheStore->forget = 'test';
+        $this->cacheStore->delete = 'test';
         $this->assertEquals('test', $this->cacheHandler->del($typeConstant));
     }
 
@@ -72,7 +72,7 @@ class CacheHandlerTest extends TestCase
     {
         $typeConstant = 'test';
         $uniqueId = '42';
-        $this->cacheStore->forget = 'test';
+        $this->cacheStore->delete = 'test';
         $this->assertEquals('test', $this->cacheHandler->del($typeConstant, $uniqueId));
     }
 
@@ -82,7 +82,7 @@ class CacheHandlerTest extends TestCase
     public function testGet_NoUniqueId()
     {
         $typeConstant = 'test';
-        $this->cacheStore->get = 'test';
+        $this->cacheStore->get = serialize('test');
         $this->assertEquals('test', $this->cacheHandler->get($typeConstant));
     }
 
@@ -93,7 +93,7 @@ class CacheHandlerTest extends TestCase
     {
         $typeConstant = 'test';
         $uniqueId = '42';
-        $this->cacheStore->get = 'test';
+        $this->cacheStore->get = serialize('test');
         $this->assertEquals('test', $this->cacheHandler->get($typeConstant, $uniqueId));
     }
 
@@ -125,7 +125,7 @@ class CacheHandlerTest extends TestCase
     {
         $typeConstant = 'test';
         $value = 'palpatine';
-        $this->cacheStore->put = true;
+        $this->cacheStore->set = true;
         $this->assertEquals(true, $this->cacheHandler->set($typeConstant, $value));
     }
 
@@ -137,7 +137,7 @@ class CacheHandlerTest extends TestCase
         $typeConstant = 'test';
         $value = 'palpatine';
         $uniqueId = '42';
-        $this->cacheStore->put = true;
+        $this->cacheStore->set = true;
         $this->assertEquals(true, $this->cacheHandler->set($typeConstant, $value, $uniqueId));
     }
 }
