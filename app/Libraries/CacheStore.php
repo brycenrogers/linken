@@ -2,7 +2,7 @@
 
 namespace App\Libraries;
 
-use Cache;
+use Redis;
 use App\Interfaces\CacheStoreInterface;
 
 /**
@@ -14,28 +14,23 @@ use App\Interfaces\CacheStoreInterface;
  */
 class CacheStore implements CacheStoreInterface {
 
-    public function store()
+    public function delete($key)
     {
-        return Cache::store('memcached');
-    }
-
-    public function forget($key)
-    {
-        return $this->store()->forget($key);
+        return Redis::del($key);
     }
 
     public function get($key)
     {
-        return $this->store()->get($key);
+        return Redis::get($key);
     }
 
     public function has($key)
     {
-        return $this->store()->has($key);
+        return Redis::exists($key);
     }
 
-    public function put($key, $value, $expiration)
+    public function set($key, $value)
     {
-        return $this->store()->put($key, $value, $expiration);
+        return Redis::set($key, $value);
     }
 }

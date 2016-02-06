@@ -45,7 +45,7 @@ class MainController extends Controller
             }
         } else {
             // Page other than front page was requested, pull from db
-            $items = $itemRepo->getItemsPaginated(20, Auth::user());
+            $items = $itemRepo->getItemsPaginated(20, Auth::user())->toArray();
         }
 
         $title = "List";

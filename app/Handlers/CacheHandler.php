@@ -46,7 +46,7 @@ class CacheHandler implements CacheHandlerInterface {
      */
     function del($typeConstant, $uniqueId = null)
     {
-        return $this->cacheStore->forget($this->getCacheKey($typeConstant, $uniqueId));
+        return $this->cacheStore->delete($this->getCacheKey($typeConstant, $uniqueId));
     }
 
     /**
@@ -58,7 +58,7 @@ class CacheHandler implements CacheHandlerInterface {
      */
     function get($typeConstant, $uniqueId = null)
     {
-        return $this->cacheStore->get($this->getCacheKey($typeConstant, $uniqueId));
+        return unserialize($this->cacheStore->get($this->getCacheKey($typeConstant, $uniqueId)));
     }
 
     /**
@@ -82,6 +82,8 @@ class CacheHandler implements CacheHandlerInterface {
      */
     function set($typeConstant, $value, $uniqueId = null)
     {
-        return $this->cacheStore->put($this->getCacheKey($typeConstant, $uniqueId), $value, CacheHandlerInterface::EXPIRATION);
+        return $this
+            ->cacheStore
+            ->set($this->getCacheKey($typeConstant, $uniqueId), serialize($value));
     }
 }
