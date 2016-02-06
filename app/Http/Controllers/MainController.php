@@ -38,14 +38,14 @@ class MainController extends Controller
                 $items = $cacheHandler->get(CacheHandlerInterface::MAINPAGE);
             } else {
                 // Cache not available, get all items for user
-                $items = $itemRepo->getItemsPaginated(20, Auth::user());
+                $items = $itemRepo->getItemsPaginated(5, Auth::user());
 
                 // Save in cache for next request
                 $cacheHandler->set(CacheHandlerInterface::MAINPAGE, $items);
             }
         } else {
             // Page other than front page was requested, pull from db
-            $items = $itemRepo->getItemsPaginated(20, Auth::user())->toArray();
+            $items = $itemRepo->getItemsPaginated(5, Auth::user());
         }
 
         $title = "List";
