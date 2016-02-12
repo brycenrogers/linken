@@ -97,7 +97,7 @@
                     <!-- Search Form -->
                     <form action="/search" method="get" class="navbar-form navbar-right" role="search">
                         <div class="input-group">
-                            <input type="text" class="form-control" id="searchField" placeholder="Search" name="q" value="{{ (isset($q)) ? $q : null }}">
+                            <input type="text" class="form-control" id="searchField" placeholder="Search your stuff" name="q" value="{{ (isset($q)) ? $q : null }}">
                             <span class="input-group-btn">
                                 <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
                             </span>

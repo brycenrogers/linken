@@ -21,59 +21,59 @@
     <link rel="stylesheet" href="{{ asset('assets/css/base.css') }}">
     <!-- /build -->
 
+    <!-- build:js /assets/dist/js/linken.min.js -->
+    <script src="{{ asset('assets/js/libs/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/js/libs/velocity.min.js') }}"></script>
+    <script src="{{ asset('assets/js/libs/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/js/libs/select2.min.js') }}"></script>
+    <script src="{{ asset('assets/js/libs/autosize.min.js') }}"></script>
+    <script src="{{ asset('assets/js/libs/spin.min.js') }}"></script>
+    <script src="{{ asset('assets/js/libs/jquery.cropit.js') }}"></script>
+    <script src="{{ asset('assets/js/libs/add-to-any.min.js') }}"></script>
+    <script src="{{ asset('assets/js/common.js') }}"></script>
+    <script src="{{ asset('assets/js/add-pane.js') }}"></script>
+    <script src="{{ asset('assets/js/control-pane.js') }}"></script>
+    <script src="{{ asset('assets/js/item-pane.js') }}"></script>
+    <script src="{{ asset('assets/js/discover.js') }}"></script>
+    <!-- /build -->
+
     <title>Linken</title>
 </head>
 <body>
-<div id="add-fader"></div>
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="container-main">
-                <div class="container-header">
-                    <!-- Header -->
-                    <a href="/" class="linken-logo"></a>
-                </div>
-                <div class="container-content">
-                    <!-- Content -->
-                    <div class="row">
-                        <div class="col-md-12">
-                            <!-- Add Pane -->
-                            @yield('addPane')
+    <div id="add-fader"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="container-main">
+                    <div class="container-header">
+                        <!-- Header -->
+                        <a href="/" class="linken-logo"></a>
+                    </div>
+                    <div class="container-content">
+                        <!-- Content -->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <!-- Add Pane -->
+                                @yield('addPane')
 
-                            <!-- Control Pane -->
-                            @yield('controlPane')
+                                <!-- Control Pane -->
+                                @yield('controlPane')
 
-                            <!-- Content -->
-                            @yield('pageContent')
+                                <!-- Content -->
+                                @yield('pageContent')
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="container-footer">
-                    <!-- Footer -->
-                    <div class="footer">
-                        &copy; Linken {{ date("Y") }}
+                    <div class="container-footer">
+                        <!-- Footer -->
+                        <div class="footer">
+                            &copy; Linken {{ date("Y") }}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-
-<!-- build:js /assets/dist/js/linken.min.js -->
-<script src="{{ asset('assets/js/libs/jquery.min.js') }}"></script>
-<script src="{{ asset('assets/js/libs/velocity.min.js') }}"></script>
-<script src="{{ asset('assets/js/libs/bootstrap.min.js') }}"></script>
-<script src="{{ asset('assets/js/libs/select2.min.js') }}"></script>
-<script src="{{ asset('assets/js/libs/autosize.min.js') }}"></script>
-<script src="{{ asset('assets/js/libs/spin.min.js') }}"></script>
-<script src="{{ asset('assets/js/libs/jquery.cropit.js') }}"></script>
-<script src="{{ asset('assets/js/libs/add-to-any.min.js') }}"></script>
-<script src="{{ asset('assets/js/common.js') }}"></script>
-<script src="{{ asset('assets/js/add-pane.js') }}"></script>
-<script src="{{ asset('assets/js/control-pane.js') }}"></script>
-<script src="{{ asset('assets/js/item-pane.js') }}"></script>
-<script src="{{ asset('assets/js/discover.js') }}"></script>
-<!-- /build -->
 </body>
 
 </html>

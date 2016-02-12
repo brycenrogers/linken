@@ -13,6 +13,13 @@
 @section('pageContent')
 
     <div class="row">
+        <div class="col-md-8">
+            <div class="blurb">
+                <span class="pull-left">
+                    Discover links added by other users based on your tagging interests
+                </span>
+            </div>
+        </div>
         <div class="col-md-4">
             <div class="discover-tag-container">
                 <select multiple
@@ -28,13 +35,6 @@
                    role="button"
                    type="submit"
                    class="btn btn-default">Go</a>
-            </div>
-        </div>
-        <div class="col-md-8">
-            <div class="blurb">
-                <span class="pull-right">
-                    Discover links added by other users based on your tagging interests
-                </span>
             </div>
         </div>
     </div>

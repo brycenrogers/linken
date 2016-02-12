@@ -32,20 +32,24 @@ class MainController extends Controller
      */
     public function getAll(Request $request, CacheHandlerInterface $cacheHandler, ItemRepositoryInterface $itemRepo)
     {
-        if ((!$request->has('page') || ($request->has('page') && $request->input('page') == 1))) {
-            // Requesting the main page, load from cache if available
-            if ($cacheHandler->has(CacheHandlerInterface::MAINPAGE)) {
-                $items = $cacheHandler->get(CacheHandlerInterface::MAINPAGE);
-            } else {
-                // Cache not available, get all items for user
-                $items = $itemRepo->getItemsPaginated(20, Auth::user());
+        $pageRequested = $request->input('page');
+        $isMainPage = (is_null($pageRequested) or $pageRequested === 1);
 
-                // Save in cache for next request
-                $cacheHandler->set(CacheHandlerInterface::MAINPAGE, $items);
-            }
+        if ($isMainPage) {
+            // Load from cache if available
+            $items = $cacheHandler->get(CacheHandlerInterface::MAINPAGE);
         } else {
-            // Page other than front page was requested, pull from db
             $items = $itemRepo->getItemsPaginated(20, Auth::user());
+        }
+
+        // Main page data not available in cache
+        if ( ! $items) {
+
+            // Get paginated items for user
+            $items = $itemRepo->getItemsPaginated(20, Auth::user());
+
+            // Save in cache for next request
+            $cacheHandler->set(CacheHandlerInterface::MAINPAGE, $items);
         }
 
         $title = "List";
