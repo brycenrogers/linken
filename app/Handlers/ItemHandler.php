@@ -172,7 +172,7 @@ class ItemHandler implements ItemHandlerInterface {
 
         // Send emails
         foreach ($emails as $email) {
-            Mail::send('emails.share', ['item' => $item, 'user' => $user], function ($m) use ($item, $user, $email) {
+            Mail::queue('emails.share', ['item' => $item, 'user' => $user], function ($m) use ($item, $user, $email) {
                 $m->from($user->email, $user->name);
                 $m->to($email, $user->name)->subject($item->value);
             });

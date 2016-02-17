@@ -1,8 +1,9 @@
+[![Build Status](https://travis-ci.org/brycenrogers/linken.svg?branch=master)](https://travis-ci.org/brycenrogers/linken)
 ![Linken Logo](https://linken.me/assets/images/linken-logo.png "Linken")
 Linken
 ======
 
-Linken is a tool for remembering things. Work in progress.
+Linken is a tool for remembering things built from Laravel 5.2
 
 Requirements
 ------------

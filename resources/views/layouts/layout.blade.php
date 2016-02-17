@@ -67,7 +67,14 @@
                     <div class="container-footer">
                         <!-- Footer -->
                         <div class="footer">
-                            &copy; Linken {{ date("Y") }}
+                            Linken &copy; {{ date("Y") }}
+                            <br>
+                            <div class="links">
+                                <a href="/terms">Terms</a>
+                                <a href="/help">Help</a>
+                                <a href="/about">About</a>
+                                <a href="/contribute">Contribute</a>
+                            </div>
                         </div>
                     </div>
                 </div>

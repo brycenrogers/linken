@@ -11,7 +11,6 @@
 @endsection
 
 @section('pageContent')
-
     <div class="row">
         <div class="col-md-8">
             <div class="blurb">
@@ -56,5 +55,4 @@
             </div>
         </div>
     </div>
-
 @endsection

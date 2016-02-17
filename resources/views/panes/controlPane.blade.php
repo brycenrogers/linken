@@ -45,12 +45,6 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="<?php if($title == 'Help') echo " active"; ?>">
-                            <a href="/help" type="button" class="<?php if($title == 'Help') { echo " active"; } ?>" title="Help">
-                                <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
-                                <span class="">&nbsp;Help</span>
-                            </a>
-                        </li>
                     </ul>
 
                     <!-- Account Options -->
@@ -116,7 +110,11 @@
                     <h4 class="modal-title" id="userSettingsModalLabel">User Settings</h4>
                 </div>
                 <div class="modal-body">
-
+                    <h4>Discoverable Link Option <span class="glyphicon glyphicon-question-sign" style="font-size: 12px;"></span></h4>
+                    <input type="radio" name="discoverable" value="on_default"> <strong>On</strong> by Default<br>
+                    <input type="radio" name="discoverable" value="off_default"> <strong>Off</strong> by Default<br>
+                    <input type="radio" name="discoverable" value="off_entirely"> <strong>Off Entirely</strong>
+                    <hr>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
