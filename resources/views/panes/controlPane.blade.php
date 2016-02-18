@@ -107,14 +107,19 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="userSettingsModalLabel">User Settings</h4>
+                    <h4 class="modal-title" id="userSettingsModalLabel">Settings</h4>
                 </div>
                 <div class="modal-body">
-                    <h4>Discoverable Link Option <span class="glyphicon glyphicon-question-sign" style="font-size: 12px;"></span></h4>
-                    <input type="radio" name="discoverable" value="on_default"> <strong>On</strong> by Default<br>
-                    <input type="radio" name="discoverable" value="off_default"> <strong>Off</strong> by Default<br>
-                    <input type="radio" name="discoverable" value="off_entirely"> <strong>Off Entirely</strong>
-                    <hr>
+                    <strong>Default Link Discovery Selection</strong>
+                    <div class="radio">
+                        <select class="form-control">
+                            <option value="attributed">Allow others to discover my new links, and show my name and photo</option>
+                            <option value="">Anonymously allow others to discover my new links</option>
+                            <option value="">Do not allow others to discover my new links</option>
+                        </select>
+                    </div>
+                    This option controls the default selection for the '<i>Allow others to discover</i>' option when adding a new link.
+                    <i>This can be overriden during link submission.</i>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

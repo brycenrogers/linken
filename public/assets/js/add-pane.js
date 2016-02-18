@@ -118,7 +118,6 @@ $( document ).ready(function() {
         var container = $(this);
         var url = $('textarea#add').val();
         var csrf = $('input#csrf_token').val();
-
         var originalUrl = $(this).css("background-image");
         $(this).css("background-image", "url('')");
         infoPaneSpinner = addSpinnerToElement($('#info-pane').get(0), '30px', '#448dff');
@@ -140,6 +139,18 @@ $( document ).ready(function() {
                 $('#info-pane .image-container').attr('data-image-number', response.image_number);
             }
         });
+    });
+    $(".discoverable-option").click(function() {
+        $('.scope').html($(this).data('display'));
+    });
+    $('#show-settings-modal-link').click(function(e){
+        e.preventDefault();
+        $('#discoverable-options-modal')
+            .modal('hide')
+            .on('hidden.bs.modal', function (e) {
+                $('#userSettingsModal').modal('show');
+                $(this).off('hidden.bs.modal');
+            });
     });
     function clearAddPane()
     {

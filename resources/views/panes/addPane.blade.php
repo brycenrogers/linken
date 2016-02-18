@@ -55,13 +55,9 @@
         <div class="col-md-12">
             <div class="link-options">
                 <label id="discoverable-label" title="Allows others to see this item on their Discover page">
-                    <input type="checkbox" tabindex="4" checked> Discoverable
+                    <input type="checkbox" tabindex="4" checked> Allow others to discover -
                 </label>
-                <span class="scope" data-toggle="modal" data-target="#discoverable-options-modal">attributed</span>
-                <label id="reminder-label" title="Sends an email reminder about this item">
-                    <input type="checkbox" tabindex="5"> Send email reminder
-                </label>
-                <span class="scope" data-toggle="modal" data-target="#reminder-options-modal">today</span>
+                <span class="scope" data-toggle="modal" data-target="#discoverable-options-modal">show my name and photo</span>
             </div>
         </div>
     </div>
@@ -74,28 +70,37 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="updatePhotoModalLabel">Discoverable Options</h4>
+                <h4 class="modal-title" id="updatePhotoModalLabel">Discovery Options</h4>
             </div>
             <div class="modal-body" style="position: relative;">
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Reminder Options Modal -->
-<div class="modal fade" id="reminder-options-modal" tabindex="-1" role="dialog" aria-labelledby="reminder-options-modal-label">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="updatePhotoModalLabel">Reminder Options</h4>
-            </div>
-            <div class="modal-body" style="position: relative;">
-
+                <div class="radio">
+                    <label>
+                        <input type="radio"
+                               name="discoverable-setting"
+                               id="discoverable-attributed"
+                               class="discoverable-option"
+                               data-display="show my name and photo"
+                               value="attributed" checked>
+                        <strong>Show my Name and Photo</strong>
+                        <br>
+                        <span>Link may be shown on the Discover page with your name and photo</span>
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio"
+                               name="discoverable-setting"
+                               id="discoverable-anonymous"
+                               class="discoverable-option"
+                               data-display="anonymously"
+                               value="anonymous">
+                        <strong>Anonymous</strong>
+                        <br>
+                        <span>Link may be shown on the Discover page, but without your name or photo</span>
+                    </label>
+                </div>
+                <hr>
+                You can change your default Discovery selection in the <a href="#" id="show-settings-modal-link">Settings</a> area
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
