@@ -1,10 +1,11 @@
-[![Build Status](https://travis-ci.org/brycenrogers/linken.svg?branch=master)](https://travis-ci.org/brycenrogers/linken)
-
 ![Linken Logo](https://linken.me/assets/images/linken-logo.png "Linken")
 Linken
 ======
+[![Build Status](https://travis-ci.org/brycenrogers/linken.svg?branch=master)](https://travis-ci.org/brycenrogers/linken)
+[![Maintenance](https://img.shields.io/maintenance/yes/2016.svg)]()
+[![License](https://img.shields.io/badge/license-Apache-blue.svg)]()
 
-Linken is a tool for remembering things built from Laravel 5.2
+Linken is a tool for remembering things. Based on Laravel 5.2.
 
 Requirements
 ------------
