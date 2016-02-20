@@ -3,7 +3,7 @@ Linken
 ======
 [![Build Status](https://travis-ci.org/brycenrogers/linken.svg?branch=master)](https://travis-ci.org/brycenrogers/linken)
 [![Maintenance](https://img.shields.io/maintenance/yes/2016.svg)]()
-[![License](https://img.shields.io/badge/license-Apache-blue.svg)]()
+[![License](https://img.shields.io/badge/license-Apache-blue.svg)](https://github.com/brycenrogers/linken/blob/master/LICENSE.txt)
 
 Linken is a tool for remembering things. Based on Laravel 5.2.
 

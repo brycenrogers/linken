@@ -49,7 +49,7 @@ $( document ).ready(function() {
         }
     });
 
-    $('#changePasswordSubmit').click(function() {
+    $('#change-password-submit').click(function() {
         var errorDiv = $('#changePasswordError');
         var csrf = $('input#csrf_token').val();
         var old = $('input#oldPassword').val();
@@ -87,6 +87,36 @@ $( document ).ready(function() {
             $('input#oldPassword').val("");
             $('input#newPassword').val("");
             $('input#newPasswordConfirmation').val("");
+        });
+    });
+
+    $('#user-settings-submit').click(function() {
+        var csrf = $('#csrf_token').val();
+        var discoverySetting = $('#discovery-settings-select').val();
+
+        $.ajax({
+            url: "/settings/userSettings",
+            cache: false,
+            method: 'post',
+            data: {
+                _token: csrf,
+                discoverySetting: discoverySetting
+            }
+        })
+        .fail(function (response) {
+            var errors = "";
+            var responseText = JSON.parse(response.responseText);
+            $.each(responseText, function (fieldName, errorText) {
+                errors += errorText[0] + '<br>';
+            });
+            errors.slice(0,-4);
+            errorDiv.html(errors).fadeIn("fast");
+        })
+        .done(function (response) {
+            var userSettingsModal = $('#user-settings-modal');
+            // Close modal and show success message
+            userSettingsModal.modal('hide');
+            showHitboxAlert('success', 'User settings saved');
         });
     });
 });

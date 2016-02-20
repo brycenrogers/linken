@@ -148,7 +148,7 @@ $( document ).ready(function() {
         $('#discoverable-options-modal')
             .modal('hide')
             .on('hidden.bs.modal', function (e) {
-                $('#userSettingsModal').modal('show');
+                $('#user-settings-modal').modal('show');
                 $(this).off('hidden.bs.modal');
             });
     });

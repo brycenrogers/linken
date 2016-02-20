@@ -63,12 +63,12 @@
                                 </li>
                                 <li class="divider" role="separator"></li>
                                 <li>
-                                    <a href="#userSettingsModal" data-toggle="modal" aria-hidden="true">
+                                    <a href="#user-settings-modal" data-toggle="modal" aria-hidden="true">
                                         <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Settings
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#changePasswordModal" data-toggle="modal" aria-hidden="true">
+                                    <a href="#change-password-modal" data-toggle="modal" aria-hidden="true">
                                         <span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Change Password
                                     </a>
                                 </li>
@@ -102,20 +102,20 @@
             </div>
         </nav>
     <!-- User Settings Modal -->
-    <div class="modal fade" id="userSettingsModal" tabindex="-1" role="dialog" aria-labelledby="userSettingsModalLabel">
+    <div class="modal fade" id="user-settings-modal" tabindex="-1" role="dialog" aria-labelledby="user-settings-modal-label">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="userSettingsModalLabel">Settings</h4>
+                    <h4 class="modal-title" id="user-settings-modal-label">Settings</h4>
                 </div>
                 <div class="modal-body">
                     <strong>Default Link Discovery Selection</strong>
                     <div class="radio">
-                        <select class="form-control">
-                            <option value="attributed">Allow others to discover my new links, and show my name and photo</option>
-                            <option value="">Anonymously allow others to discover my new links</option>
-                            <option value="">Do not allow others to discover my new links</option>
+                        <select id="discovery-settings-select" class="form-control">
+                            <option value="attributed"@if ($discovery_setting == 'attributed') {{ " selected" }} @endif>Allow others to discover my new links, and show my name and photo</option>
+                            <option value="anonymous"@if ($discovery_setting == 'anonymous') {{ " selected" }} @endif>Anonymously allow others to discover my new links</option>
+                            <option value="off"@if ($discovery_setting == 'off') {{ " selected" }} @endif>Do not allow others to discover my new links</option>
                         </select>
                     </div>
                     This option controls the default selection for the '<i>Allow others to discover</i>' option when adding a new link.
@@ -123,20 +123,20 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-primary" id="user-settings-submit">Save changes</button>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Change Password Modal -->
-    <div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="changePasswordModalLabel">
+    <div class="modal fade" id="change-password-modal" tabindex="-1" role="dialog" aria-labelledby="change-password-modal-label">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="form-horizontal">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="changePasswordModalLabel">Change Password</h4>
+                        <h4 class="modal-title" id="change-password-modal-label">Change Password</h4>
                     </div>
                     <div class="modal-body">
                             <div id="changePasswordError" class="alert alert-danger"></div>
@@ -162,7 +162,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" id="changePasswordSubmit">Save New Password</button>
+                        <button type="button" class="btn btn-primary" id="change-password-submit">Save New Password</button>
                     </div>
                 </div>
             </div>

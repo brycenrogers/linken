@@ -55,9 +55,17 @@
         <div class="col-md-12">
             <div class="link-options">
                 <label id="discoverable-label" title="Allows others to see this item on their Discover page">
-                    <input type="checkbox" tabindex="4" checked> Allow others to discover -
+                    <input type="checkbox" tabindex="4"@if ($discovery_setting != 'off') {{ " checked" }} @endif> Allow others to discover -
                 </label>
-                <span class="scope" data-toggle="modal" data-target="#discoverable-options-modal">show my name and photo</span>
+                <span class="scope" data-toggle="modal" data-target="#discoverable-options-modal">
+                    @if ($discovery_setting == 'attributed')
+                        show my name and photo
+                    @elseif ($discovery_setting == 'anonymous')
+                        anonymously
+                    @else
+                        off
+                    @endif
+                </span>
             </div>
         </div>
     </div>

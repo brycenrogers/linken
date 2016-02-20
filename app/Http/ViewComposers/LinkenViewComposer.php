@@ -36,7 +36,9 @@ class LinkenViewComposer
     public function compose(View $view)
     {
         $request = Route::getCurrentRequest();
-
-        $view->with('user', $this->user)->with('requestPath', $request->path());
+        $discoverySetting = $request->session()->get('discovery_setting');
+        $view->with('user', $this->user)
+            ->with('requestPath', $request->path())
+            ->with('discovery_setting', $discoverySetting);
     }
 }
