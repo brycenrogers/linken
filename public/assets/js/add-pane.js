@@ -68,6 +68,7 @@ $( document ).ready(function() {
         var url = null;
         var photo_url = null;
         var title = null;
+        var discovery_setting = $('#discovery-setting').val();
 
         if ($('#info-pane').attr('data-url') != "") {
             type = "Link";
@@ -89,6 +90,7 @@ $( document ).ready(function() {
                 description: description,
                 url: encodeURIComponent(url),
                 photo_url: encodeURIComponent(photo_url),
+                discovery_setting: discovery_setting,
                 type: type,
                 tags: tags,
                 _token: csrf
@@ -141,7 +143,23 @@ $( document ).ready(function() {
         });
     });
     $(".discoverable-option").click(function() {
-        $('.scope').html($(this).data('display'));
+        var discovery_setting = $(this).val();
+        changeDiscoveryOptionDisplay(discovery_setting);
+    });
+    $("#discoverable-checkbox").click(function() {
+        var checked = $(this).prop('checked');
+        if (checked) {
+            var discovery_setting = $('#discovery-setting-default').val();
+            if (discovery_setting != 'off') {
+                $("input[name=discoverable-setting][value=" + discovery_setting + "]").prop('checked', true);
+                changeDiscoveryOptionDisplay(discovery_setting);
+            } else {
+                $("input[name=discoverable-setting][value=attributed]").prop('checked', true);
+                changeDiscoveryOptionDisplay('attributed');
+            }
+        } else {
+            changeDiscoveryOptionDisplay('off');
+        }
     });
     $('#show-settings-modal-link').click(function(e){
         e.preventDefault();
@@ -228,13 +246,12 @@ $( document ).ready(function() {
                         $('div#add-pane button').velocity({
                             opacity: 1
                         }, 200, function() {
-                            $('div#add-pane .link-options').velocity({
-                                opacity: 1
-                            }, 200, function() {
-                                $('div#add-fader').on("click", function() {
-                                    closeAddPane();
-                                });
+                            $('div#add-fader').on("click", function() {
+                                closeAddPane();
                             });
+                            if ($('#info-pane').data('open')) {
+                                $('#discovery-options-container').fadeIn('fast');
+                            }
                         });
                     });
                 });
@@ -255,8 +272,11 @@ $( document ).ready(function() {
         var height = heightPx.split('px');
         $('input#add-pane-height').val(height[0]);
 
+        // Hide discovery options
+        $('#discovery-options-container').fadeOut('fast');
+
         // Fade out fields and slide up
-        $('div#add-pane textarea, div#add-pane .select2, div#add-pane button, div#add-pane .link-options').velocity({
+        $('div#add-pane textarea, div#add-pane .select2, div#add-pane button').velocity({
             opacity: 0
         }, 100, function() {
             $('div#add-pane').velocity({
@@ -342,6 +362,7 @@ $( document ).ready(function() {
                     if (image != null || title != null) {
                         updateInfoPane(image, title);
                     }
+                    $('#discovery-options-container').fadeIn('fast');
                 });
             });
         }
@@ -349,6 +370,7 @@ $( document ).ready(function() {
 
     function closeInfoPane()
     {
+        $('#discovery-options-container').fadeOut('fast');
         var infoPane = $('#info-pane');
         if (infoPane.attr('data-open') == 'true') {
             $('#info-pane').velocity({
@@ -362,6 +384,19 @@ $( document ).ready(function() {
                 });
             });
         }
+    }
+
+    function changeDiscoveryOptionDisplay(discovery_setting) {
+        $('.scope span').each(function() {
+            $(this).attr('class', 'hide');
+        });
+        $('#discoverable-' + discovery_setting + '-display').attr('class', 'show');
+        if (discovery_setting == 'off') {
+            $('.scope').attr('data-toggle', 'false');
+        } else {
+            $('.scope').attr('data-toggle', 'modal');
+        }
+        $('#discovery-setting').val(discovery_setting);
     }
 
 });
