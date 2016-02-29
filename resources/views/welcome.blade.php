@@ -3,9 +3,6 @@
 @section('title', ' - Save and share links')
 
 @section('addPane')
-    <div class="external-header">
-        Well hey there
-    </div>
 @endsection
 
 @section('pageContent')

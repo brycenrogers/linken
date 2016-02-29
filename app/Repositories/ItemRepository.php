@@ -35,6 +35,7 @@ class ItemRepository extends BaseRepository implements ItemRepositoryInterface {
         $item = new Item();
         $item->value = $inputs['value'];
         $item->description = $inputs['description'];
+        $item->discovery_setting = $inputs['discovery_setting'];
         $item->user_id = $user->id;
         $item->save();
 

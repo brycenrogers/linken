@@ -35,4 +35,34 @@ class UserSettingsController extends Controller
 
         return response()->json(['message' => 'success']);
     }
+
+    /**
+     * Update user settings
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function userSettings()
+    {
+        $settings = request()->only('discoverySetting');
+
+        if ($settings['discoverySetting']) {
+            $this->updateDiscoverySetting($settings['discoverySetting']);
+        }
+
+        return response()->json(['message' => 'success']);
+    }
+
+    /**
+     * Update the default Discovery option setting in the database and session
+     *
+     * @param $value
+     */
+    public function updateDiscoverySetting($value)
+    {
+        $user = Auth::user();
+        $user->discovery_setting = $value;
+        $user->save();
+
+        request()->session()->put('discovery_setting', $user->discovery_setting);
+    }
 }

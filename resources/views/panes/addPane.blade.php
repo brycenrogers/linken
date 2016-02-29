@@ -1,30 +1,16 @@
 <div id="info-pane" class="row" data-loaded="false" data-url="" data-open="false">
     <div id="" class="image-container col-md-1"></div>
     <div id="" class="title-container col-md-11">
-        <input class="title" type="text" value="">
+        <input title="Add Title" class="title" type="text" value="">
         <textarea class="title-decode" style="display: none;"></textarea>
     </div>
 </div>
-<div id="blue-hitbox-add-pane" class="<?php
-            if (Session::has('success')) {
-                echo "flash flash-success";
-            } else if (Session::has('error')) {
-                echo "flash flash-error";
-            } ?>">
+<div id="blue-hitbox-add-pane"
+     class="@if (Session::has('success')) {{ "flash flash-success" }} @elseif (Session::has('error')) {{ "flash flash-error" }} @endif">
     <div class="container-input-add col-md-12">
-        <div id="flash" class="flash-message<?php
-            if (Session::has('success')) {
-                echo " success";
-            } else if (Session::has('error')) {
-                echo " error";
-            } ?>">
-            <?php
-            if (Session::has('success')) {
-                echo Session::get('success');
-            } else if (Session::has('error')) {
-                echo Session::get('error');
-            }
-            ?>
+        <div id="flash"
+             class="flash-message @if (Session::has('success')) {{ "success" }} @elseif (Session::has('error')) {{ "error" }} @endif">
+            @if (Session::has('success')) {{ Session::get('success') }} @elseif (Session::has('error')) {{ Session::get('error') }} @endif
         </div>
         <textarea id="add" tabindex="1" class="" placeholder="Add URL or Note" rows="1"></textarea>
     </div>
@@ -45,7 +31,7 @@
             <br>
         </div>
         <div class="col-md-10">
-            <select multiple class="form-control input-lg select2" id="add-tags" style="width: 100%; padding: 10px;" aria-hidden="true"></select>
+            <select multiple title="Add Tags" class="form-control input-lg select2" id="add-tags" style="width: 100%; padding: 10px;" aria-hidden="true"></select>
         </div>
         <div class="col-md-2">
             <button tabindex="6" class="btn btn-success btn-lg btn-block" id="add-button">
@@ -54,10 +40,21 @@
         </div>
         <div class="col-md-12">
             <div class="link-options">
-                <label id="discoverable-label" title="Allows others to see this item on their Discover page">
-                    <input type="checkbox" tabindex="4" checked> Allow others to discover -
-                </label>
-                <span class="scope" data-toggle="modal" data-target="#discoverable-options-modal">show my name and photo</span>
+                <div id="discovery-options-container">
+                    <label id="discoverable-label" title="Allows others to see this item on their Discover page">
+                        <input id="discoverable-checkbox" type="checkbox" tabindex="4"@if ($discovery_setting != 'off') {{ " checked" }} @endif> Allow others to discover link
+                    </label>
+                    <span class="scope" data-toggle="modal" data-target="#discoverable-options-modal">
+                        <input type="hidden" id="discovery-setting-default" value="{{ $discovery_setting }}">
+                        <input type="hidden" id="discovery-setting" value="{{ $discovery_setting }}">
+                        <span id="discoverable-attributed-display"
+                              class="@if ($discovery_setting == 'attributed') {{ "show" }} @else {{ "hide" }} @endif">with my name and photo &nbsp;<div class="glyphicon glyphicon-eye-open"></div></span>
+                        <span id="discoverable-anonymous-display"
+                              class="@if ($discovery_setting == 'anonymous') {{ "show" }} @else {{ "hide" }} @endif">anonymously &nbsp;<div class="glyphicon glyphicon-eye-close"></div></span>
+                        <span id="discoverable-off-display"
+                              class="@if ($discovery_setting == 'off') {{ "show" }} @else {{ "hide" }} @endif">This link will be private</span>
+                    </span>
+                </div>
             </div>
         </div>
     </div>
@@ -79,8 +76,7 @@
                                name="discoverable-setting"
                                id="discoverable-attributed"
                                class="discoverable-option"
-                               data-display="show my name and photo"
-                               value="attributed" checked>
+                               value="attributed" @if ($discovery_setting == 'attributed') {{ "checked" }} @endif>
                         <strong>Show my Name and Photo</strong>
                         <br>
                         <span>Link may be shown on the Discover page with your name and photo</span>
@@ -92,8 +88,7 @@
                                name="discoverable-setting"
                                id="discoverable-anonymous"
                                class="discoverable-option"
-                               data-display="anonymously"
-                               value="anonymous">
+                               value="anonymous" @if ($discovery_setting == 'anonymous') {{ "checked" }} @endif>
                         <strong>Anonymous</strong>
                         <br>
                         <span>Link may be shown on the Discover page, but without your name or photo</span>

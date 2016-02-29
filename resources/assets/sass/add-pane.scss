@@ -117,10 +117,13 @@
         border-radius: 6px;
     }
     .link-options {
-        opacity: 0;
         padding-top: 15px;
-        text-align: center;
+        text-align: left;
         height: 40px;
+
+        #discovery-options-container {
+            display: none;
+        }
 
         label {
             font-size: 10pt;
@@ -134,9 +137,28 @@
         }
 
         .scope {
-            font-size: 10pt;
-            text-decoration: underline;
-            cursor: pointer;
+            span {
+                font-size: 10pt;
+                cursor: pointer;
+                color: $blue;
+
+                .glyphicon {
+                    color: black;
+                }
+            }
+
+            #discoverable-off-display {
+                font-style: italic;
+                color: #b22222;
+            }
+
+            span.hide {
+                display: none;
+            }
+
+            span.show {
+                display: inline-block !important;
+            }
         }
     }
 }

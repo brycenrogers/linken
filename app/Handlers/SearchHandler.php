@@ -94,23 +94,24 @@ class SearchHandler implements SearchHandlerInterface {
     /**
      * Perform a search based on the specified filter
      *
-     * @param $type
-     * @param $term
+     * @param $typeTerms array
      * @param null $user
      * @param null $sortColumn
      * @param string $sortDirection
      * @param int $limit
      * @return array
      */
-    public function filteredSearch($type, $term, $user = null, $sortColumn = null, $sortDirection = 'desc', $limit = 50)
+    public function filteredSearch($typeTerms, $user = null, $sortColumn = null, $sortDirection = 'desc', $limit = 50)
     {
         $query = new Query();
         $query->setFrom(0);
         $query->setSize($limit);
 
         $boolQuery = new BoolQuery();
-        $termQueryType = new TermQuery([$type => $term]);
-        $boolQuery->addMust($termQueryType);
+        foreach($typeTerms as $type => $term) {
+            $termQueryType = new TermQuery([$type => $term]);
+            $boolQuery->addMust($termQueryType);
+        }
         $query->setQuery($boolQuery);
 
         if ($user) {
