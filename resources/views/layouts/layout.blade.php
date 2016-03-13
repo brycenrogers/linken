@@ -45,10 +45,12 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="container-main">
+                    <div class="alert-pane"></div>
                     <div class="container-header">
                         <!-- Header -->
                         <a href="/" class="linken-logo"></a>
                     </div>
+                    @yield('featurePane')
                     <div class="container-content">
                         <!-- Content -->
                         <div class="row">

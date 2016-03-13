@@ -22,6 +22,7 @@ body {
 }
 .container-main {
     background-color: #fff;
+    position: relative;
 }
 .container-content {
     background-color: #fff;
@@ -62,4 +63,16 @@ body {
 }
 .row.no-margin {
     margin: 0;
+}
+.feature-container {
+    height: 200px;
+    background-color: $lightGreyBackground;
+    .blurb-container {
+        padding: 40px 0;
+        font-size: 22pt;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 300;
+        color: #bbb;
+        text-align: center;
+    }
 }

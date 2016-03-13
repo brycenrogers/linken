@@ -294,7 +294,7 @@ $( document ).ready(function() {
                     }
                     if (newItemData) {
                         showNewItem(newItemData);
-                        showHitboxAlert('success', 'Saved!');
+                        showAlert('success', 'Saved!');
                     }
                 });
             });

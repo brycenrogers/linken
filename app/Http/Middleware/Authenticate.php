@@ -38,7 +38,11 @@ class Authenticate
             if ($request->ajax()) {
                 return response('Unauthorized.', 401);
             } else {
-                return redirect()->guest('welcome');
+                $uri = $request->getPathInfo();
+                if ($uri != '/') {
+                    return redirect()->guest('/');
+                }
+                return view('welcome');
             }
         }
 

@@ -22,7 +22,8 @@
         text-shadow: 0 1px 1px #832e2e;
     }
 }
-#blue-hitbox-add-pane {
+#blue-hitbox-add-pane,
+.alert-pane {
     float: left;
     width: 100%;
     position: relative;
@@ -80,6 +81,18 @@
             text-shadow: 0 -1px 1px #405da3;
         }
     }
+}
+.alert-pane {
+    display: none;
+    float: none;
+    position: fixed;
+    top: 0;
+    font-size: 16pt;
+    color: white;
+    font-family: $fontFace;
+    text-shadow: 0 1px 1px #405da3;
+    text-align: center;
+    border-bottom: none;
 }
 #add-pane {
     float: left;

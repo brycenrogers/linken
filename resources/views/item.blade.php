@@ -41,13 +41,15 @@
                             <div class="user-photo" style="background-image: url('{{ asset('/assets/images/uploads/' . $item->user->user_photo) }}');"></div>
                         </div>
                     @endif
-                    <div class="media-tags">
-                        @foreach ($item->tags as $tag)
-                            <a href="/tags?q={{ $tag->name }}" class="tag-link">
-                                <span class="label label-tag">{{ $tag->name }}</span>
-                            </a>
-                        @endforeach
-                    </div>
+                    @if (count($item->tags))
+                        <div class="media-tags">
+                            @foreach ($item->tags as $tag)
+                                <a href="/tags?q={{ $tag->name }}" class="tag-link">
+                                    <span class="label label-tag">{{ $tag->name }}</span>
+                                </a>
+                            @endforeach
+                        </div>
+                    @endif
                     <div class="media-options">
                         @if ($item->user == Auth::user())
                         <a href="#item-settings-modal"
