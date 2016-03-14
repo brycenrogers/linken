@@ -35,6 +35,7 @@
     <script src="{{ asset('assets/js/control-pane.js') }}"></script>
     <script src="{{ asset('assets/js/item-pane.js') }}"></script>
     <script src="{{ asset('assets/js/discover.js') }}"></script>
+    <script src="{{ asset('assets/js/welcome.js') }}"></script>
     <!-- /build -->
 
     <title>Linken</title>
