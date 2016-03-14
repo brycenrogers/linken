@@ -40,8 +40,6 @@
         padding-top: 15px;
     }
     .media-footer {
-        padding-top: 15px;
-
         .user-photo {
             float: left;
             width: 25px;
@@ -56,6 +54,7 @@
         }
 
         .media-tags {
+            padding-top: 15px;
             min-height: 22px;
             float: left;
             a.tag-link {

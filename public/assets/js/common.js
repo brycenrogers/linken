@@ -4,21 +4,19 @@
  *
  */
 
+var successBackgroundColor = "#5cb85c";
+var successTextColor = "#ffffff";
+var errorBackgroundColor = "#dc4c4c";
+var errorTextColor = "#ffffff";
+var backgroundColor;
+var textColor;
+
 /**
- * Show Alert within the main Hitbox
+ * Sets the appropriate colors for an alert
  *
  * @param type
- * @param message
  */
-function showHitboxAlert(type, message) {
-    var successBackgroundColor = "#5cb85c";
-    var successTextColor = "#ffffff";
-    var errorBackgroundColor = "#dc4c4c";
-    var errorTextColor = "#ffffff";
-
-    var backgroundColor;
-    var textColor;
-
+function setAlertStyle(type) {
     if (type == 'success') {
         backgroundColor = successBackgroundColor;
         textColor = successTextColor;
@@ -26,10 +24,61 @@ function showHitboxAlert(type, message) {
         backgroundColor = errorBackgroundColor;
         textColor = errorTextColor;
     }
+}
 
+/**
+ * Shows an alert. May show alert in Hitbox or using a Fixed Alert depending on viewport.
+ *
+ * @param type
+ * @param message
+ * @param callback
+ */
+function showAlert(type, message, callback) {
+    // Set alert colors
+    setAlertStyle(type);
+    // Determine type of alert to show
+    var hitboxElement = $('#blue-hitbox-add-pane');
+    if (isElementInViewport(hitboxElement)) {
+        // Hitbox is in view, show alert there
+        return showHitboxAlert(message, callback);
+    } else {
+        // Hitbox is not in view, show a fixed alert
+        return showFixedAlert(message, callback);
+    }
+}
+
+/**
+ * Shows a Fixed alert
+ *
+ * @param message
+ * @param callback
+ */
+function showFixedAlert(message, callback) {
+    var alertPane = $('.alert-pane');
+    var viewportWidth = $(window).width();
+    var containerWidth = $('#blue-hitbox-add-pane').width();
+    var alertLeftMargin = (viewportWidth - containerWidth) / 2;
+    alertPane.css({
+        'background-color': backgroundColor,
+        'width': containerWidth + 'px'
+    });
+    alertPane.html(message);
+    alertPane.fadeIn('fast').delay(2000).fadeOut('fast', function () {
+        if (callback) {
+            return ( callback() );
+        }
+    });
+}
+
+/**
+ * Show Alert within the main Hitbox
+ *
+ * @param message
+ * @param callback
+ */
+function showHitboxAlert(message, callback) {
     $('textarea#add').fadeOut('fast');
-
-    $('div#blue-hitbox-add-pane').velocity({
+    $('#blue-hitbox-add-pane').velocity({
         backgroundColor: backgroundColor
     }, 500, function () {
 
@@ -37,7 +86,7 @@ function showHitboxAlert(type, message) {
 
         // Transition the background color back to normal
         setTimeout(function() {
-            revertHitboxStyle();
+            revertHitboxStyle(callback);
         }, 2000);
     });
 }
@@ -45,12 +94,15 @@ function showHitboxAlert(type, message) {
 /**
  * Revert the main Hitbox back to normal styling
  */
-function revertHitboxStyle() {
+function revertHitboxStyle(callback) {
     $('#flash').fadeOut('fast');
     $('div#blue-hitbox-add-pane').velocity({
         backgroundColor: "#448dff"
     }, 500, function () {
         $('textarea#add').fadeIn('fast');
+        if(callback) {
+            return(callback());
+        }
     });
 }
 
@@ -102,4 +154,28 @@ function addSpinnerToElement(element, left, color)
     var spinner = new Spinner(opts).spin(element);
 
     return spinner;
+}
+
+/**
+ * Determine if specific element is in viewport
+ *
+ * @reference http://stackoverflow.com/questions/123999/how-to-tell-if-a-dom-element-is-visible-in-the-current-viewport
+ * @param el
+ * @returns {boolean}
+ */
+function isElementInViewport (el) {
+
+    //special bonus for those using jQuery
+    if (typeof jQuery === "function" && el instanceof jQuery) {
+        el = el[0];
+    }
+
+    var rect = el.getBoundingClientRect();
+
+    return (
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) && /*or $(window).height() */
+        rect.right <= (window.innerWidth || document.documentElement.clientWidth) /*or $(window).width() */
+    );
 }

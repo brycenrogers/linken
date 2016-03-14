@@ -82,7 +82,7 @@ $( document ).ready(function() {
             var changePasswordModal = $('#changePasswordModal');
             // Close modal and show success message
             changePasswordModal.modal('hide');
-            showHitboxAlert('success', 'Password changed!');
+            showAlert('success', 'Password changed!');
             // Clear out fields
             $('input#oldPassword').val("");
             $('input#newPassword').val("");
@@ -116,7 +116,7 @@ $( document ).ready(function() {
             var userSettingsModal = $('#user-settings-modal');
             // Close modal and show success message
             userSettingsModal.modal('hide');
-            showHitboxAlert('success', 'User settings saved');
+            showAlert('success', 'User settings saved');
         });
     });
 });

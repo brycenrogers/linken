@@ -76,7 +76,7 @@ $( document ).ready(function() {
         })
         .fail(function (response) {
             if (response.status == 403) {
-                showHitboxAlert('error', response.responseText);
+                showAlert('error', response.responseText);
                 // Close modal and show success message
                 itemSettingsModal.modal('hide');
                 return;
@@ -92,7 +92,7 @@ $( document ).ready(function() {
         .done(function( response ) {
             // Close modal and show success message
             itemSettingsModal.modal('hide');
-            showHitboxAlert('success', 'Saved!');
+            showAlert('success', 'Saved!');
 
             // Update the UI
             var oldPane = $('#item-pane-' + itemId);
@@ -106,7 +106,6 @@ $( document ).ready(function() {
         var itemSettingsModal = $('#item-settings-modal');
         var errorDiv = $('#item-settings-errors');
         errorDiv.hide();
-        var csrf = $('input#csrf_token').val();
         var itemId = settingsItemIdInput.val();
 
         $.ajax({
@@ -116,7 +115,7 @@ $( document ).ready(function() {
         })
         .fail(function (response) {
             if (response.status == 403) {
-                showHitboxAlert('error', response.responseText);
+                showAlert('error', response.responseText);
                 // Close modal and show error message
                 itemSettingsModal.modal('hide');
                 return;
@@ -132,7 +131,13 @@ $( document ).ready(function() {
         .done(function( response ) {
             // Close modal and show success message
             itemSettingsModal.modal('hide');
-            showHitboxAlert('success', response.message);
+            var itemPane = $('#item-pane-' + itemId);
+            itemPane.css('opacity', 0.5);
+            showAlert('success', response.message, function() {
+                itemPane.slideUp('fast', function() {
+                    $(this).remove();
+                });
+            });
         });
     });
 
@@ -156,7 +161,7 @@ $( document ).ready(function() {
         })
         .fail(function (response) {
             if (response.status == 403) {
-                showHitboxAlert('error', response.responseText);
+                showAlert('error', response.responseText);
                 // Close modal and show error message
                 itemShareModal.modal('hide');
                 return;
@@ -172,7 +177,7 @@ $( document ).ready(function() {
         .done(function( response ) {
             // Close modal and show success message
             itemShareModal.modal('hide');
-            showHitboxAlert('success', response.message);
+            showAlert('success', response.message);
         });
     });
 });

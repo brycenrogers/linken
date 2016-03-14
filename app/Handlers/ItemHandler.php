@@ -104,8 +104,10 @@ class ItemHandler implements ItemHandlerInterface {
         // Save Tags
         $tags = $this->tagsRepo->store($inputs, $user);
 
-        // Attach Tags to the Item
-        $item->tags()->attach($tags);
+        if (count($tags)) {
+            // Attach Tags to the Item
+            $item->tags()->attach($tags);
+        }
 
         // Create the derived type
         switch($inputs['type']) {

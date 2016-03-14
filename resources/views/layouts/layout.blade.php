@@ -35,6 +35,7 @@
     <script src="{{ asset('assets/js/control-pane.js') }}"></script>
     <script src="{{ asset('assets/js/item-pane.js') }}"></script>
     <script src="{{ asset('assets/js/discover.js') }}"></script>
+    <script src="{{ asset('assets/js/welcome.js') }}"></script>
     <!-- /build -->
 
     <title>Linken</title>
@@ -45,10 +46,12 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="container-main">
+                    <div class="alert-pane"></div>
                     <div class="container-header">
                         <!-- Header -->
                         <a href="/" class="linken-logo"></a>
                     </div>
+                    @yield('featurePane')
                     <div class="container-content">
                         <!-- Content -->
                         <div class="row">

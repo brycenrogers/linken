@@ -33,21 +33,25 @@ class TagRepository extends BaseRepository implements TagRepositoryInterface {
     public function store($inputs, $user)
     {
         $tags = $inputs['tags'];
-        $tagIds = [];
-        foreach ($tags as $tag) {
-            if ($tag == "") {
-                continue;
-            }
-            $newTag = new Tag();
-            $newTag = $newTag->firstOrNew(['name' => $tag, 'user_id' => $user->id]);
-            if ( ! $newTag->id ) {
-                $newTag->user_id = $user->id;
-                $newTag->save();
-            }
-            $tagIds[] = $newTag->id;
-        }
 
-        return $tagIds;
+        if (is_array($tags)) {
+            $tagIds = [];
+            foreach ($tags as $tag) {
+                if ($tag == "") {
+                    continue;
+                }
+                $newTag = new Tag();
+                $newTag = $newTag->firstOrNew(['name' => $tag, 'user_id' => $user->id]);
+                if ( ! $newTag->id ) {
+                    $newTag->user_id = $user->id;
+                    $newTag->save();
+                }
+                $tagIds[] = $newTag->id;
+            }
+
+            return $tagIds;
+        }
+        return [];
     }
 
     /**

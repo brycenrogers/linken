@@ -29,11 +29,6 @@ Route::post('password/email', 'Auth\PasswordController@postEmail');
 Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
 Route::post('password/reset', 'Auth\PasswordController@postReset');
 
-// Homepage
-Route::get('/welcome', function () {
-    return view('welcome');
-});
-
 Route::post('settings/userSettings', 'UserSettingsController@userSettings');
 Route::post('settings/changePassword', 'UserSettingsController@changePassword');
 Route::post('user/photo/upload', 'UserPhotoController@upload');
