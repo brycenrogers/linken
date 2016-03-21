@@ -2,13 +2,10 @@
 
 @section('title', ' - Signup')
 
-@section('addPane')
-    <div class="external-header">
-        Signup for Linken
-    </div>
-@endsection
-
 @section('pageContent')
+    <div class="welcome-header">
+        <span class="blue-header">Signup for Linken</span>
+    </div>
     <div class="col-md-offset-3 col-md-6">
         <div class="panel panel-default">
             <div class="panel-body">
@@ -39,16 +36,21 @@
                     <div class="form-group">
                         <label for="inputPassword" class="col-sm-2 control-label">Password</label>
 
-                        <div class="col-sm-6">
+                        <div class="col-sm-8">
                             <input name="password" type="password" class="form-control" id="inputPassword" placeholder="Password">
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
-                            <button type="submit" class="btn btn-primary">Signup</button>
+                            <div class="g-recaptcha" data-sitekey="6LdhShsTAAAAACN7gFIUOzaR0rJPDrJdeBj_MOWB"></div>
                         </div>
                     </div>
-                    {!! csrf_field() !!}
+                    <div class="form-group">
+                        {!! csrf_field() !!}
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-success">Signup</button>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>

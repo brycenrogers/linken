@@ -38,6 +38,8 @@
     <script src="{{ asset('assets/js/welcome.js') }}"></script>
     <!-- /build -->
 
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+
     <title>Linken</title>
 </head>
 <body>

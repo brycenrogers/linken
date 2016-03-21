@@ -1,0 +1,208 @@
+.feature-container {
+    height: 180px;
+    background-color: $lightGreyBackground;
+    .blurb-container {
+        padding: 0 0 60px;
+        font-size: 22pt;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 300;
+        text-align: center;
+        color: rgba(187,187,187, 0.8);
+        line-height: 28pt;
+        text-shadow: 1px 4px 6px $lightGreyBackground, 0 0 0 #000, 1px 4px 6px $lightGreyBackground;
+        /* Don't show shadows when selecting text */
+        &::-moz-selection {
+            background: #5af;
+            color: #fff;
+            text-shadow: none;
+        }
+        &::selection {
+            background: #5af;
+            color: #fff;
+            text-shadow: none;
+        }
+    }
+    .alert {
+        position: absolute;
+        width: 96%;
+        top: -95px;
+    }
+    @media (max-width: 767px) {
+        .blurb-container {
+            padding: 0 0 30px;
+            font-weight: 300;
+        }
+        .login-pane {
+            input, .btn {
+                margin-bottom: 15px;
+            }
+        }
+    }
+}
+@media (max-width: 767px) {
+    .feature-container {
+        height: 260px;
+    }
+}
+.welcome-header {
+    float: left;
+    text-align: center;
+    width: 100%;
+    padding: 40px 40px 15px;
+    border-top: 1px solid $greyLineColor;
+    font-size: 18pt;
+    font-family: 'Montserrat', sans-serif;
+    @media (max-width: 767px) {
+        font-size: 15pt;
+    }
+    .blue-header {
+        color: $blue;
+    }
+    .orange-header {
+        color: $orange;
+    }
+    .green-header {
+        color: $green;
+    }
+    .purple-header {
+        color: $purple;
+    }
+    .red-header {
+        color: $red;
+    }
+}
+.click-me {
+    text-align: center;
+    padding-top: 15px;
+    .click-span {
+        background-color: $green;
+        color: #fff;
+        font-weight: 300;
+        font-family: 'Montserrat', sans-serif;
+        border-radius: 200px;
+        padding: 5px 10px;
+    }
+    .glyphicon {
+        color: $green;
+        font-size: 15pt;
+    }
+}
+.welcome-container {
+    color: #888;
+    float: left;
+    width: 100%;
+    padding: 10px 40px 40px;
+    font-size: 12pt;
+    line-height: 26pt;
+    font-family: $fontFace;
+    text-align: center;
+    .small {
+        font-style: italic;
+        font-size: 10pt;
+        margin: 5px 0;
+    }
+}
+.welcome-add-pane-container {
+    position: relative;
+    margin: 5px 0 0;
+
+    #info-pane {
+        left: 0;
+        margin: 0;
+        width: 100%;
+    }
+
+    #welcome-blue-hitbox {
+        float: left;
+        width: 100%;
+        position: relative;
+        z-index: 120;
+        background-color: $blue;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        min-height: 66px;
+
+        .flash-message {
+            display: none;
+            font-family: $fontFace;
+            font-weight: 700;
+            font-size: 16pt;
+            margin: 2px 0;
+            color: #ffffff;
+            text-align: center;
+            width: 100%;
+        }
+
+        textarea#add-welcome {
+            float: left;
+            width: 100%;
+            background-color: transparent;
+            border-top: 0;
+            border-left: 0;
+            border-right: 0;
+            border-bottom: 0;
+            font-size: 16pt;
+            color: white;
+            outline: none;
+            font-family: $fontFace;
+            text-shadow: 0 1px 1px #405da3;
+            resize: none;
+            z-index: 140;
+            overflow-y: hidden;
+
+            &::-webkit-input-placeholder {
+                color: #cddcff;
+                text-shadow: 0 -1px 1px #405da3;
+            }
+            &:-moz-placeholder {
+                /* Firefox 18- */
+                color: #cddcff;
+                text-shadow: 0 -1px 1px #405da3;
+            }
+            &::-moz-placeholder {
+                /* Firefox 19+ */
+                color: #cddcff;
+                text-shadow: 0 -1px 1px #405da3;
+            }
+            &:-ms-input-placeholder {
+                color: #cddcff;
+                text-shadow: 0 -1px 1px #405da3;
+            }
+        }
+    }
+
+    .control-pane-container-lg {
+        float: left;
+        width: 708px;
+        height: 55px;
+        background-image: url('/assets/images/welcome-control-pane.jpg');
+    }
+
+    .control-pane-container-sm {
+        display: none;
+        float: left;
+        width: 100%;
+        height: 55px;
+        .title {
+            float: left;
+            width: 67px;
+            height: 55px;
+            background-image: url('/assets/images/welcome-control-title.jpg');
+        }
+        .menu {
+            float: right;
+            width: 67px;
+            height: 55px;
+            background-image: url('/assets/images/welcome-control-menu.jpg');
+        }
+    }
+
+    @media (max-width: 1200px) {
+        .control-pane-container-lg {
+            display: none;
+        }
+        .control-pane-container-sm {
+            display: block;
+        }
+    }
+}
