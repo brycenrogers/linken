@@ -37,9 +37,6 @@
                         <div class="col-md-2">
                             <button type="submit" class="btn btn-primary btn-block">Login</button>
                         </div>
-                        {{--<a href="/auth/register" type="button" class="btn btn-default">--}}
-                            {{--Signup--}}
-                        {{--</a>--}}
                         {!! csrf_field() !!}
                     </form>
                 </div>
@@ -50,14 +47,13 @@
 
 @section('pageContent')
     <div class="welcome-header">
-        <span class="blue-header">All your stuff in one place</span>
+        <span class="blue-header">All your links in one place, notes too</span>
     </div>
     <div class="col-md-12">
+        @include('panes.welcomeAddPane')
         <div class="welcome-container">
-            Linken makes it easy to quickly save and share links and notes. After you enter a link, Linken checks the
-            site for a title and image to represent the link automatically. Click the suggested image to cycle through
-            them, or change the title to something that suits you better. Quick tagging also makes it easy to categorize
-            your content. Tagging also allows Linken to find you other links that may interest you.
+            Linken makes it easy to quickly save and share links and notes from any page.<br>
+            Click the blue bar above to try out the Linken interface.
         </div>
     </div>
     <div class="welcome-header">
@@ -89,6 +85,20 @@
             Linken is designed, built and maintained by Brycen Rogers, a software engineer in Denver, CO. The source
             code is available on Github, supported by an Apache 2.0 license, and running on Laravel 5.2 and Laravel
             Forge. Please consider contributing to help keep Linken up and running, or contact Brycen to say hi.
+        </div>
+    </div>
+    <div class="welcome-header">
+        Want to try it out?
+    </div>
+    <div class="col-md-12">
+        <div class="welcome-container text-center">
+            <a href="/auth/register" type="button" class="btn btn-success">
+                Signup for Linken &nbsp;<span class="glyphicon glyphicon-arrow-right"></span>
+            </a>
+            <br>
+            <div class="small">
+                It's quick, we promise
+            </div>
         </div>
     </div>
 @endsection

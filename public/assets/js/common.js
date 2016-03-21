@@ -37,26 +37,33 @@ function showAlert(type, message, callback) {
     // Set alert colors
     setAlertStyle(type);
     // Determine type of alert to show
-    var hitboxElement = $('#blue-hitbox-add-pane');
+    var hitboxElement;
+    if ($('#welcome-blue-hitbox').length) {
+        // Check to see if we are on the welcome page
+        hitboxElement = $('#welcome-blue-hitbox');
+    } else {
+        hitboxElement = $('#blue-hitbox-add-pane');
+    }
     if (isElementInViewport(hitboxElement)) {
         // Hitbox is in view, show alert there
-        return showHitboxAlert(message, callback);
+        return showHitboxAlert(hitboxElement, message, callback);
     } else {
         // Hitbox is not in view, show a fixed alert
-        return showFixedAlert(message, callback);
+        return showFixedAlert(hitboxElement, message, callback);
     }
 }
 
 /**
  * Shows a Fixed alert
  *
+ * @param element
  * @param message
  * @param callback
  */
-function showFixedAlert(message, callback) {
+function showFixedAlert(element, message, callback) {
     var alertPane = $('.alert-pane');
     var viewportWidth = $(window).width();
-    var containerWidth = $('#blue-hitbox-add-pane').width();
+    var containerWidth = element.width();
     var alertLeftMargin = (viewportWidth - containerWidth) / 2;
     alertPane.css({
         'background-color': backgroundColor,
@@ -73,12 +80,14 @@ function showFixedAlert(message, callback) {
 /**
  * Show Alert within the main Hitbox
  *
+ * @param element
  * @param message
  * @param callback
  */
-function showHitboxAlert(message, callback) {
+function showHitboxAlert(element, message, callback) {
     $('textarea#add').fadeOut('fast');
-    $('#blue-hitbox-add-pane').velocity({
+    $('textarea#add-welcome').fadeOut('fast');
+    element.velocity({
         backgroundColor: backgroundColor
     }, 500, function () {
 
@@ -86,7 +95,7 @@ function showHitboxAlert(message, callback) {
 
         // Transition the background color back to normal
         setTimeout(function() {
-            revertHitboxStyle(callback);
+            revertHitboxStyle(element, callback);
         }, 2000);
     });
 }
@@ -94,11 +103,12 @@ function showHitboxAlert(message, callback) {
 /**
  * Revert the main Hitbox back to normal styling
  */
-function revertHitboxStyle(callback) {
+function revertHitboxStyle(element, callback) {
     $('#flash').fadeOut('fast');
-    $('div#blue-hitbox-add-pane').velocity({
+    element.velocity({
         backgroundColor: "#448dff"
     }, 500, function () {
+        $('textarea#add-welcome').fadeIn('fast');
         $('textarea#add').fadeIn('fast');
         if(callback) {
             return(callback());

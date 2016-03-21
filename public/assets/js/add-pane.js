@@ -52,6 +52,30 @@ $( document ).ready(function() {
             }
         }
     });
+
+    $('select#add-tags-welcome').select2({
+        tags: true,
+        tokenSeparators: [','],
+        placeholder: "Tags"
+    });
+
+    // Welcome Page listeners
+
+    $('div#welcome-blue-hitbox').click(function() {
+        $('textarea#add-welcome').focus();
+    });
+
+    $('textarea#add-welcome').focus(function() {
+        $(this).attr('placeholder', '').val("wikipedia.org/wiki/Abraham_Lincoln");
+        autosize($('textarea#add'));
+        autosize($('textarea#add-description'));
+        openAddPane();
+        welcomeOpenInfoPane(
+            '/assets/images/abraham-wiki-portrait.jpg',
+            'Abraham Lincoln - Wikipedia, the free encyclopedia'
+        );
+    });
+
     $('button#add-button').click(function() {
         var button = $(this);
         button.prop("disabled", true);
@@ -105,6 +129,25 @@ $( document ).ready(function() {
             clearAddPane();
         });
     });
+
+    $('button#welcome-add-button').click(function() {
+        var button = $(this);
+        button.prop("disabled", true);
+        button.html('&nbsp;');
+
+        // Show the spinner
+        addButtonSpinner = addSpinnerToElement(button.get(0));
+
+        // Close the pane and show alert
+        window.setTimeout(function() {
+            closeAddPane(true);
+            addButtonSpinner.stop();
+            addButtonSpinner = null;
+            button.html('Add');
+            button.prop("disabled", false);
+        }, 500);
+    });
+
     $('textarea#add-description').on('autosize:resized', function() {
         adjustPaneHeight();
     });
@@ -225,8 +268,13 @@ $( document ).ready(function() {
             return;
         }
         $('div#add-pane').attr('data-toggle', 'open');
+
         var windowWidth = $(window).width();
         var height = 180;
+
+        if (windowWidth <= 767) {
+            height = 210;
+        }
 
         if($('input#add-pane-height').val() != '') {
             height = $('input#add-pane-height').val();
@@ -249,7 +297,7 @@ $( document ).ready(function() {
                             $('div#add-fader').on("click", function() {
                                 closeAddPane();
                             });
-                            if ($('#info-pane').data('open')) {
+                            if ($('#info-pane').data('open') && $('#add').length) {
                                 $('#discovery-options-container').fadeIn('fast');
                             }
                         });
@@ -261,6 +309,11 @@ $( document ).ready(function() {
 
     function closeAddPane(newItemData)
     {
+        // If we are in the welcome pane, stop the typing timeout
+        if ($('#add-welcome').length) {
+            $('#add-welcome').val('').attr('placeholder', 'Add URL or Note');
+        }
+
         $('div#add-fader').off("click");
         if ($('div#add-pane').attr('data-toggle') == 'closed') {
             return;
@@ -397,6 +450,28 @@ $( document ).ready(function() {
             $('.scope').attr('data-toggle', 'modal');
         }
         $('#discovery-setting').val(discovery_setting);
+    }
+
+    // Welcome Hitbox functions
+
+    function welcomeOpenInfoPane(image, title)
+    {
+        var infoPane = $('#info-pane');
+        if (infoPane.attr('data-open') == 'false') {
+            infoPane.delay(10).show().velocity({
+                top: [ -60, "easeOutCubic" ]
+            }, 200, function() {
+                infoPane.attr('data-open', 'true');
+                var imageContainer = $("#info-pane .image-container");
+                var titleContainer = $("#info-pane .title");
+                imageContainer.css("background-image", "url('" + image + "')");
+                imageContainer.attr('data-image-url', image);
+                var decoded = $('#info-pane .title-decode').html($.trim(title)).text();
+                titleContainer.val(decoded);
+                imageContainer.fadeIn('fast');
+                titleContainer.fadeIn('fast');
+            });
+        }
     }
 
 });
