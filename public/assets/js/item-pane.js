@@ -2,15 +2,11 @@ $( document ).ready(function() {
 
     var settingsValueTextarea = $('#settings-value');
     var settingsDescriptionTextarea = $('#settings-description');
-    var tagsSelect = $('#edit-tags');
+    var tagsTextarea = $('#settings-tags');
     var destroyItem = $('#destroy-item');
     var settingsItemIdInput = $('#settings-item-id');
 
-    $('.share-emails').select2({
-        tags: true,
-        tokenSeparators: [','],
-        placeholder: "Enter emails"
-    });
+    autosize($('.share-emails'));
 
     $('#item-settings-modal').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
@@ -20,6 +16,11 @@ $( document ).ready(function() {
         var itemId = button.data('itemid');
         var tagsStr = button.data('tags');
         var tags = tagsStr.split(',');
+        var lastTagElement = tags[tags.length - 1];
+
+        if (lastTagElement == "") {
+            tags.splice(tags.length - 1, 1);
+        }
 
         var modal = $(this);
         modal.find('.modal-title').text(type + ' Settings');
@@ -30,29 +31,14 @@ $( document ).ready(function() {
 
         autosize(settingsValueTextarea);
         autosize(settingsDescriptionTextarea);
+        autosize(tagsTextarea);
 
         // Tags
-        var tagsInput = $('#edit-tags');
-        tagsInput.html("");
-        $.each(tags, function(key, tag) {
-            if (tag != '') {
-                var child = "<option value='" + tag + "' selected>" + tag + "</option>";
-                tagsInput.append(child);
-            }
-        });
-
-        tagsInput.select2({
-            tags: true,
-            tokenSeparators: [','],
-            placeholder: "Tags",
-            ajax: {
-                url: '/tags/search',
-                delay: 100,
-                processResults: function (data) {
-                    return { results: data.items }
-                }
-            }
-        });
+        if (tags.length > 1) {
+            tagsTextarea.html(tags.join(', '));
+        } else {
+            tagsTextarea.html(tags[0]);
+        }
     });
 
     $('#update-link-settings-submit').on("click", function() {

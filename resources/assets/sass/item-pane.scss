@@ -19,7 +19,7 @@
         width: 100px;
         height: 100px;
         margin: 5px 5px 0;
-        background-size: contain;
+        background-size: cover;
         background-repeat: no-repeat;
         background-position: center;
     }
@@ -44,7 +44,7 @@
             float: left;
             width: 25px;
             height: 25px;
-            background-size: contain;
+            background-size: cover;
             background-repeat: no-repeat;
             background-position: center;
             border-radius: 50%;
@@ -70,11 +70,10 @@
             }
         }
         .media-options {
-            float: left;
-            padding-top: 10px;
-            clear: both;
+            float: right;
+            padding-top: 15px;
             a {
-                margin: 3px 10px 0 3px;
+                margin: 3px 20px 0 3px;
                 float: left;
                 color: #bbb;
                 outline: none;

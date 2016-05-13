@@ -23,7 +23,11 @@
                         </a>
                     </h4>
                     <div class="media-url">
-                        <a href="{{ $item->itemable->url }}">{{ $item->itemable->url }}</a>
+                        <a href="{{ $item->itemable->url }}">
+                            @if (array_key_exists('host', parse_url($item->itemable->url)))
+                                {{ parse_url($item->itemable->url)['host'] }}
+                            @endif
+                        </a>
                     </div>
                 @else
                     <h4 class="media-heading">

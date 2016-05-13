@@ -41,7 +41,7 @@
                         </div>
                         <div class="form-group">
                             <label for="edit-tags">Tags</label>
-                            <select name="tags" multiple class="form-control input-lg select2" id="edit-tags" style="width: 100%; padding: 10px;" aria-hidden="true"></select>
+                            <textarea name="tags" id="settings-tags" class="form-control input-lg" rows="1"></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">

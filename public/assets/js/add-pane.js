@@ -30,6 +30,7 @@ $( document ).ready(function() {
         $(this).attr('placeholder', '');
         autosize($('textarea#add'));
         autosize($('textarea#add-description'));
+        autosize($('textarea#add-tags'));
         openAddPane();
         triggerInfoPane();
         $('input.select2-search__field').prop('tabindex', "3");
@@ -37,26 +38,6 @@ $( document ).ready(function() {
     $('textarea#add').change(function() {
         // Load the info pane if necessary
         triggerInfoPane();
-    });
-    $('select#add-tags').select2({
-        tags: true,
-        tokenSeparators: [','],
-        placeholder: "Tags",
-        ajax: {
-            url: '/tags/search?scope=user',
-            delay: 100,
-            processResults: function (data) {
-                return {
-                    results: data.items
-                    };
-            }
-        }
-    });
-
-    $('select#add-tags-welcome').select2({
-        tags: true,
-        tokenSeparators: [','],
-        placeholder: "Tags"
     });
 
     // Welcome Page listeners
@@ -69,6 +50,7 @@ $( document ).ready(function() {
         $(this).attr('placeholder', '').val("wikipedia.org/wiki/Abraham_Lincoln");
         autosize($('textarea#add'));
         autosize($('textarea#add-description'));
+        autosize($('textarea#add-tags'));
         openAddPane();
         welcomeOpenInfoPane(
             '/assets/images/abraham-wiki-portrait.jpg',
@@ -102,7 +84,7 @@ $( document ).ready(function() {
             title = $('#info-pane .title').val();
         }
 
-        var tags = $("select#add-tags").val();
+        var tags = $("#add-tags").val();
 
         $.ajax({
             url: "/item/add",
@@ -151,7 +133,7 @@ $( document ).ready(function() {
     $('textarea#add-description').on('autosize:resized', function() {
         adjustPaneHeight();
     });
-    $('select#add-tags').on("change", function (e) {
+    $('select#add-tags').on('autosize:resized', function() {
         adjustPaneHeight();
     });
     $("#info-pane .image-container").click(function () {
@@ -217,7 +199,7 @@ $( document ).ready(function() {
     {
         $('textarea#add').html("");
         $('textarea#add-description').html("");
-        $("select#add-tags").select2("val", "");
+        $("textarea#add-tags").html("");
         $("#info-pane input.title").val("");
         $("#info-pane .image-container").attr('style', '');
     }
@@ -279,28 +261,24 @@ $( document ).ready(function() {
         if($('input#add-pane-height').val() != '') {
             height = $('input#add-pane-height').val();
         }
-        $('div#add-fader').show().velocity({
-            opacity: 0.25
-        }, 300, function() {
-            $('div#add-pane').show().velocity({
-                minHeight: [ height, "easeOutCubic" ]
-            }, 200, function() {
+        $('div#add-pane').show().velocity({
+            minHeight: [ height, "easeOutCubic" ]
+        }, 200, function() {
+            $('div#add-fader').show().velocity({
+                opacity: 0.25
+            }, 300, function() {
                 $('div#add-pane textarea').velocity({
                     opacity: 1
                 }, 200, function() {
-                    $('div#add-pane .select2').velocity({
+                    $('div#add-pane button').velocity({
                         opacity: 1
                     }, 200, function() {
-                        $('div#add-pane button').velocity({
-                            opacity: 1
-                        }, 200, function() {
-                            $('div#add-fader').on("click", function() {
-                                closeAddPane();
-                            });
-                            if ($('#info-pane').data('open') && $('#add').length) {
-                                $('#discovery-options-container').fadeIn('fast');
-                            }
+                        $('div#add-fader').on("click", function() {
+                            closeAddPane();
                         });
+                        if ($('#info-pane').data('open') && $('#add').length) {
+                            $('#discovery-options-container').fadeIn('fast');
+                        }
                     });
                 });
             });

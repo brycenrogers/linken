@@ -9,10 +9,6 @@
 
 $( document ).ready(function() {
 
-    $('select#search-tags').select2({
-        placeholder: "Tags"
-    });
-
     $('#image-cropper').cropit({
         width: 150,
         height: 150

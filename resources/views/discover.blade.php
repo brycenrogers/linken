@@ -21,19 +21,6 @@
         </div>
         <div class="col-md-4">
             <div class="discover-tag-container">
-                <select multiple
-                        class="form-control input-lg select2"
-                        id="discover-tags"
-                        style="width: 80%; padding: 10px;"
-                        aria-hidden="true"><?php if (isset($tags)) {
-                            foreach($tags as $tag) { ?>
-                                <option value="{{ $tag }}" selected>{{ $tag }}</option>
-                      <?php } } ?></select>
-                <a href="/discover?tags="
-                   id="discover-tags-submit"
-                   role="button"
-                   type="submit"
-                   class="btn btn-default">Go</a>
             </div>
         </div>
     </div>
