@@ -34,9 +34,13 @@ class TagRepository extends BaseRepository implements TagRepositoryInterface {
     {
         $tags = $inputs['tags'];
 
+        // break into array
+        $tags = explode(",", $tags);
+
         if (is_array($tags)) {
             $tagIds = [];
             foreach ($tags as $tag) {
+                $tag = trim($tag);
                 if ($tag == "") {
                     continue;
                 }

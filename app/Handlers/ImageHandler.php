@@ -13,7 +13,7 @@ class ImageHandler implements ImageHandlerInterface
 
     public function generateThumbnail($url)
     {
-        if (!$url) {
+        if ( ! $url) {
             throw new \Exception("No url specified");
         }
 
@@ -24,7 +24,7 @@ class ImageHandler implements ImageHandlerInterface
 
         // Create Box from image
         $originalBox = $image->getSize();
-        $thumbBox = $originalBox->widen(100);
+        $thumbBox = $originalBox->heighten(200);
 
         // Generate unique name
         $filename = uniqid() . '.png';

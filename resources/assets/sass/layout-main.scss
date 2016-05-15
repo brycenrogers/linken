@@ -64,3 +64,11 @@ body {
 .row.no-margin {
     margin: 0;
 }
+
+/// Bootstrap overrides
+
+.modal-content,
+.btn,
+.form-control {
+    border-radius: 0;
+}

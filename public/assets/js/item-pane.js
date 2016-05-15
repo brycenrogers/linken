@@ -57,7 +57,7 @@ $( document ).ready(function() {
                 itemId: itemId,
                 value: settingsValueTextarea.val(),
                 description: settingsDescriptionTextarea.val(),
-                tags: tagsSelect.val()
+                tags: tagsTextarea.val()
             }
         })
         .fail(function (response) {
