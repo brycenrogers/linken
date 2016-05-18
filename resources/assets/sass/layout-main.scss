@@ -72,3 +72,14 @@ body {
 .form-control {
     border-radius: 0;
 }
+.label-tag {
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    border: 0;
+    background-color: #fff;
+    color: #aaaaaa;
+    padding: 5px;
+    font-size: 80%;
+    font-weight: normal;
+}

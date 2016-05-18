@@ -31,8 +31,9 @@ $( document ).ready(function() {
         autosize($('textarea#add'));
         autosize($('textarea#add-description'));
         autosize($('textarea#add-tags'));
-        openAddPane();
-        triggerInfoPane();
+        openAddPane(function () {
+            triggerInfoPane();
+        });
         $('input.select2-search__field').prop('tabindex', "3");
     });
     $('textarea#add').change(function() {
@@ -133,7 +134,7 @@ $( document ).ready(function() {
     $('textarea#add-description').on('autosize:resized', function() {
         adjustPaneHeight();
     });
-    $('select#add-tags').on('autosize:resized', function() {
+    $('textarea#add-tags').on('autosize:resized', function() {
         adjustPaneHeight();
     });
     $("#info-pane .image-container").click(function () {
@@ -237,11 +238,11 @@ $( document ).ready(function() {
         var containerHeightPx = $('div#add-pane-container').css('height');
         var containerHeightAr = containerHeightPx.split('px');
         var containerHeight = containerHeightAr[0];
-        var addPaneNewHeight = parseInt(containerHeight) + 27;
+        var addPaneNewHeight = parseInt(containerHeight) + 26;
         $('div#add-pane').css('min-height', addPaneNewHeight + 'px');
     }
 
-    function openAddPane()
+    function openAddPane(callback)
     {
         if ($('div#blue-hitbox-add-pane').hasClass('flash')) {
             revertHitboxStyle();
@@ -278,6 +279,9 @@ $( document ).ready(function() {
                         });
                         if ($('#info-pane').data('open') && $('#add').length) {
                             $('#discovery-options-container').fadeIn('fast');
+                        }
+                        if (callback) {
+                            callback();
                         }
                     });
                 });
@@ -380,6 +384,12 @@ $( document ).ready(function() {
 
     function openInfoPane(image, title)
     {
+        if ($(window).width() <= 767 && $('input#add-pane-height').val() == '') {
+            height = 260;
+            $('div#add-pane').show().velocity({
+                minHeight: [ height, "easeOutCubic" ]
+            }, 200);
+        }
         var infoPane = $('#info-pane');
         if (infoPane.attr('data-open') == 'false') {
             infoPane.delay(10).show().velocity({
@@ -404,6 +414,12 @@ $( document ).ready(function() {
         $('#discovery-options-container').fadeOut('fast');
         var infoPane = $('#info-pane');
         if (infoPane.attr('data-open') == 'true') {
+            if ($(window).width() <= 767 && $('div#add-pane').css('height') == '260px') {
+                height = 210;
+                $('div#add-pane').show().velocity({
+                    minHeight: [ height, "easeOutCubic" ]
+                }, 200);
+            }
             $('#info-pane').velocity({
                 top: [0, "easeInCubic"]
             }, 100, function () {

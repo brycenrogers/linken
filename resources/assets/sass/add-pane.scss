@@ -132,7 +132,6 @@
     .link-options {
         padding-top: 15px;
         text-align: left;
-        height: 40px;
 
         #discovery-options-container {
             display: none;
@@ -224,6 +223,11 @@
             -o-text-overflow: ellipsis;
             -ms-text-overflow: ellipsis;
             text-overflow: ellipsis;
+        }
+        @media (max-width: 767px) {
+            input.title {
+                width: auto;
+            }
         }
     }
 }

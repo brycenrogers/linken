@@ -32,6 +32,9 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
+                            <div id="settings-image" class="media-link-image" style=""></div>
+                        </div>
+                        <div class="form-group">
                             <label for="settings-value">Title</label>
                             <textarea name="value" id="settings-value" class="form-control input-lg" rows="4"></textarea>
                         </div>
@@ -40,8 +43,8 @@
                             <textarea name="description" id="settings-description" class="form-control input-lg" rows="4"></textarea>
                         </div>
                         <div class="form-group">
-                            <label for="edit-tags">Tags</label>
-                            <textarea name="tags" id="settings-tags" class="form-control input-lg" rows="1"></textarea>
+                            <label for="settings-tags">Tags</label>
+                            <textarea name="tags" id="settings-tags" class="form-control input-lg" rows="4"></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">

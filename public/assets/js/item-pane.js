@@ -1,5 +1,6 @@
 $( document ).ready(function() {
 
+    var imageElement = $('#settings-image');
     var settingsValueTextarea = $('#settings-value');
     var settingsDescriptionTextarea = $('#settings-description');
     var tagsTextarea = $('#settings-tags');
@@ -8,9 +9,16 @@ $( document ).ready(function() {
 
     autosize($('.share-emails'));
 
+    function initializePopovers() {
+        $("[data-toggle=popover]").popover();
+    }
+
+    initializePopovers();
+
     $('#item-settings-modal').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
         var type = button.data('type');
+        var image = button.data('image');
         var value = button.data('value');
         var description = button.data('description');
         var itemId = button.data('itemid');
@@ -24,6 +32,8 @@ $( document ).ready(function() {
 
         var modal = $(this);
         modal.find('.modal-title').text(type + ' Settings');
+
+        imageElement.css('background-image', "url('/assets/images/thumbs/" + image + "')");
         settingsValueTextarea.val(value);
         settingsDescriptionTextarea.val(description);
         settingsItemIdInput.val(itemId);
@@ -85,6 +95,7 @@ $( document ).ready(function() {
             oldPane.hide();
             $(response).insertAfter('#item-pane-' + itemId);
             oldPane.remove();
+            initializePopovers();
         });
     });
 

@@ -18,27 +18,35 @@
         border-radius: 0;
         margin-bottom: 0;
 
+        #nav-list-container {
+            margin-left: -30px;
+        }
+
         .navbar-brand {
+            display: none;
             font-family: $fontFace;
             font-weight: 300;
             font-size: 16pt;
-            width: 440px;
             color: #aaa;
         }
 
         @media (max-width: 767px) {
+            #nav-list-container {
+                margin-left: -15px;
+            }
             .navbar-brand {
-                width: 265px;
+                display: block;
             }
         }
 
         li.active,
         li.dropdown.open {
             a {
-                background-color: #fafafa;
-                border-right: 1px solid #e3e3e3;
-                border-left: 1px solid #e3e3e3;
-                margin-left: -1px;
+                color: $blue;
+                background-color: #ffffff;
+                &:hover {
+                    background-color: #ffffff;
+                }
             }
             ul a {
                 background-color: transparent;

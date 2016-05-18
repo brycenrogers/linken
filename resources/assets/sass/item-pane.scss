@@ -9,20 +9,20 @@
 #item-settings-errors {
     display: none;
 }
+.media-link-image {
+    width: 100px;
+    height: 100px;
+    margin: 5px 5px 0;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
 .container-item-pane {
     border-bottom: 1px solid $greyLineColor;
     width: 100%;
     float: left;
     padding: 30px 0;
 
-    .media-link-image {
-        width: 100px;
-        height: 100px;
-        margin: 5px 5px 0;
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center;
-    }
     @media (max-width: 767px) {
         .media-link-image {
             width: 40px;
@@ -53,32 +53,44 @@
             margin-right: 15px;
         }
 
+        a.tag-link {
+            text-decoration: none;
+        }
         .media-tags {
             padding-top: 15px;
             min-height: 22px;
-            float: left;
-            a.tag-link {
-                text-decoration: none;
+            display: none;
+            .glyphicon-tags {
                 float: left;
-                margin-right: 5px;
-            }
-            .label-tag {
-                background-color: #bbb;
+                margin-top: 5px;
+                margin-right: 10px;
+                color: #aaaaaa;
             }
             .label-tag:hover {
-                background-color: #777;
+                color: $blue;
             }
         }
         .media-options {
-            float: right;
+            float: left;
             padding-top: 15px;
-            a {
-                margin: 3px 20px 0 3px;
+            a.tags-link,
+            a.settings-link,
+            a.share-link {
+                margin: 3px 20px 0 0;
                 float: left;
                 color: #bbb;
                 outline: none;
-                :hover {
+                border-radius: 50%;
+                border: 1px solid #ddd;
+                padding: 3px 7px;
+                &:hover {
                     color: #777;
+                }
+                span.glyphicon {
+                    margin-top: 3px;
+                }
+                span.glyphicon-tags {
+                    margin-top: 4px;
                 }
             }
         }

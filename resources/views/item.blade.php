@@ -45,16 +45,26 @@
                             <div class="user-photo" style="background-image: url('{{ asset('/assets/images/uploads/' . $item->user->user_photo) }}');"></div>
                         </div>
                     @endif
-                    @if (count($item->tags))
-                        <div class="media-tags">
-                            @foreach ($item->tags as $tag)
-                                <a href="/tags?q={{ $tag->name }}" class="tag-link">
-                                    <span class="label label-tag">{{ $tag->name }}</span>
-                                </a>
-                            @endforeach
-                        </div>
-                    @endif
                     <div class="media-options">
+                        <a role="button"
+                           tabindex="0"
+                           data-html="true"
+                           class="tags-link"
+                           title="Tags"
+                           data-toggle="popover"
+                           data-trigger="focus"
+                           data-placement="top"
+                           data-content='@if (count($item->tags))
+                                @foreach ($item->tags as $tag)
+                                    <a href="/tags?q={{ $tag->name }}" class="tag-link">
+                                        <span class="label label-tag">{{ $tag->name }}</span>
+                                    </a>
+                                @endforeach
+                            @else
+                                No Tags
+                            @endif'>
+                            <span class="glyphicon glyphicon-tags" aria-hidden="true"></span>
+                        </a>
                         @if ($item->user == Auth::user())
                         <a href="#item-settings-modal"
                             class="settings-link"
@@ -64,6 +74,7 @@
                             data-type="{{ (get_class($item->itemable) == "App\Models\Link") ? "Link" : "Note" }}"
                             data-value="{{ $item->value }}"
                             data-description="{{ $item->description }}"
+                            data-image="{{ $item->itemable->photo ? $item->itemable->photo : "" }}"
                             data-tags="@foreach ($item->tags as $tag){{ $tag->name }},@endforeach">
                             <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
                         </a>
@@ -89,12 +100,14 @@
                 </div>
                 <div class="modal-body">
                     <div class="item-share-errors alert alert-danger" id="item-share-errors-{{ $item->id }}"></div>
-                    <label for="share-emails">Send to Email Addresses</label>
-                    <select name="emails"
+                    <label for="share-emails">Email</label>
+                    <textarea
+                            placeholder="Enter email addresses, separated by commas"
+                            name="emails"
                             id="share-emails-{{ $item->id }}"
-                            class="share-emails form-control input-lg select2"
+                            class="share-emails form-control input-lg"
                             style="width: 100%; padding: 10px;"
-                            aria-hidden="true" multiple></select>
+                            aria-hidden="true"></textarea>
                     <button class="btn btn-success share-send-email" data-itemid="{{ $item->id }}">Send</button>
                     <hr>
                     <label>Social</label>
