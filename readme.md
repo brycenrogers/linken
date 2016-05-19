@@ -5,32 +5,19 @@ Linken
 [![Maintenance](https://img.shields.io/maintenance/yes/2016.svg)]()
 [![License](https://img.shields.io/badge/license-Apache-blue.svg)](https://github.com/brycenrogers/linken/blob/master/LICENSE.txt)
 
-Linken is a tool for remembering things. Based on Laravel 5.2.
+[Linken](https://linken.me) is a tool for remembering things
 
-Requirements
+Technologies
 ------------
 
-- nginx
+- Laravel 5.2
 - PHP7
 - Elasticsearch + JDK
 - Composer
-
-Setup
------
-
-Running on Ubuntu 14.04
-
-Update Composer
-
-```composer install```
-
-Install imagick
-
-```sudo apt-get install -y pkg-config libmagickwand-dev imagemagick build-essential```
-
-```sudo pecl install imagick-3.4.0RC4```
-
-Add imagick.so to php.ini
+- Bootstrap 3
+- Grunt
+- SASS
+- jQuery
 
 
 

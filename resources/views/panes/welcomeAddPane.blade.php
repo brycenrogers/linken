@@ -35,7 +35,14 @@
                     <br>
                 </div>
                 <div class="col-md-10">
-                    <select multiple title="Add Tags" class="form-control input-lg select2" id="add-tags-welcome" style="width: 100%; padding: 10px;" aria-hidden="true"></select>
+                    <textarea autocorrect="off"
+                                autocapitalize="off"
+                                spellcheck="false"
+                                tabindex="2"
+                                class="form-control input-lg"
+                                id="add-tags"
+                                placeholder="Tags"
+                                rows="1"></textarea>
                 </div>
                 <div class="col-md-2">
                     <button tabindex="6" class="btn btn-success btn-lg btn-block" id="welcome-add-button">

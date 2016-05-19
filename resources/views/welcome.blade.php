@@ -47,7 +47,7 @@
 
 @section('pageContent')
     <div class="welcome-header">
-        <span class="blue-header">All your links in one place, notes too</span>
+        <span class="blue-header">All your links in one place. Notes too.</span>
     </div>
     <div class="col-md-12">
         @include('panes.welcomeAddPane')
@@ -57,13 +57,43 @@
         </div>
     </div>
     <div class="welcome-header">
-        <span class="orange-header">Organized stream of consciousness</span>
+        <span class="purple-header">Organized stream of consciousness</span>
     </div>
     <div class="col-md-12">
         <div class="welcome-container">
-            The main List page on Linken shows your most recent content for quick reference. Use Linken to save news
-            articles for a current event, for researching new topics, planning a vacation, or to save your favorite cat
-            videos. Tagging and a powerful search engine make it easy to find your stuff later.
+            Built with simplicity in mind, Linken makes bookmarking and idea organization a breeze.<br>
+            <div class="sub-feature-container-header">Here are some ways Linken can help</div>
+            <div class="sub-feature-container">
+                <div class="sub-feature purple">
+                    <div class="icon">
+                        <span class="glyphicon glyphicon-globe"></span>
+                    </div>
+                    <div class="header">Browsing</div>
+                    Save interesting articles for later
+                </div>
+                <div class="sub-feature green">
+                    <div class="icon">
+                        <span class="glyphicon glyphicon-road"></span>
+                    </div>
+                    <div class="header">Discovery</div>
+                    Find neat stuff shared by other users
+                </div>
+                <div class="sub-feature orange">
+                    <div class="icon">
+                        <span class="glyphicon glyphicon-plane"></span>
+                    </div>
+                    <div class="header">Vacation Planning</div>
+                    A place for all your points of interest
+                </div>
+                <div class="sub-feature blue">
+                    <div class="icon">
+                        <span class="glyphicon glyphicon-book"></span>
+                    </div>
+                    <div class="header">Research</div>
+                    Reference relevant search hits in the future
+                </div>
+            </div>
+            Tagging and a powerful search engine make it easy to find your stuff later.
         </div>
     </div>
     <div class="welcome-header">
@@ -71,20 +101,21 @@
     </div>
     <div class="col-md-12">
         <div class="welcome-container">
-            As you add links to your list, Linken will find new links for you based on your tags. The Discover page
-            shows a list of your top tags and links that other Linken users have added. You can also choose whether or
-            not your links are visible to other users, attributed or anonymously. Also share anything with family or
-            friends using the Share options.
+            As you add links, Linken will find new stuff for you to discover based on your tags.<br>
+            You can also choose whether your items are visible to other users, attributed or anonymously.<br>
+            Quickly share via email or social media.
         </div>
     </div>
     <div class="welcome-header">
-        <span class="purple-header">Free and Open Source</span>
+        <span class="orange-header">Free and Open Source</span>
     </div>
     <div class="col-md-12">
         <div class="welcome-container">
-            Linken is designed, built and maintained by Brycen Rogers, a software engineer in Denver, CO. The source
-            code is available on Github, supported by an Apache 2.0 license, and running on Laravel 5.2 and Laravel
-            Forge. Please consider contributing to help keep Linken up and running, or contact Brycen to say hi.
+            Linken is designed, built and maintained by <a href="http://github.com/brycenrogers" target="_blank">Brycen Rogers</a>, a software engineer in Denver, CO. The source
+            code is <a href="http://github.com/brycenrogers/linken" target="_blank">available on Github</a>, supported by an
+            <a href="https://github.com/brycenrogers/linken/blob/master/LICENSE.txt" target="_blank">Apache 2.0 license</a>, and running on
+            <a href="https://laravel.com/" target="_blank">Laravel 5.2</a> and <a href="https://forge.laravel.com/" target="_blank">Laravel Forge</a>.<br>
+            Want to help? Donating or <a href="https://github.com/brycenrogers/linken/pulls" target="_blank">Contributing</a> to Linken helps keep it running.
         </div>
     </div>
     <div class="welcome-header">
@@ -97,7 +128,7 @@
             </a>
             <br>
             <div class="small">
-                It's quick, we promise
+                It's quick!
             </div>
         </div>
     </div>

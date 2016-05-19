@@ -77,7 +77,7 @@
                                 <a href="/terms">Terms</a>
                                 <a href="/help">Help</a>
                                 <a href="/about">About</a>
-                                <a href="/contribute">Contribute</a>
+                                <a href="/donate">Donate</a>
                             </div>
                         </div>
                     </div>
