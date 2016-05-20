@@ -167,5 +167,4 @@ $( document ).ready(function() {
             $('#signup-form').submit();
         }
     });
-    
 });
