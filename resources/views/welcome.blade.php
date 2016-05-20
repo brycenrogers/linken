@@ -111,10 +111,10 @@
     </div>
     <div class="col-md-12">
         <div class="welcome-container">
-            Linken is designed, built and maintained by <a href="http://github.com/brycenrogers" target="_blank">Brycen Rogers</a>, a software engineer in Denver, CO. The source
-            code is <a href="http://github.com/brycenrogers/linken" target="_blank">available on Github</a>, supported by an
+            Linken is designed, built and maintained by <a href="http://github.com/brycenrogers" target="_blank">Brycen Rogers</a>,<br>
+            a software engineer in Denver, CO. The source code is <a href="http://github.com/brycenrogers/linken" target="_blank">available on Github</a>, supported by an
             <a href="https://github.com/brycenrogers/linken/blob/master/LICENSE.txt" target="_blank">Apache 2.0 license</a>, and running on
-            <a href="https://laravel.com/" target="_blank">Laravel 5.2</a> and <a href="https://forge.laravel.com/" target="_blank">Laravel Forge</a>.<br>
+            <a href="https://laravel.com/" target="_blank">Laravel 5.2</a>.<br>
             Want to help? Donating or <a href="https://github.com/brycenrogers/linken/pulls" target="_blank">Contributing</a> to Linken helps keep it running.
         </div>
     </div>
@@ -123,12 +123,72 @@
     </div>
     <div class="col-md-12">
         <div class="welcome-container text-center">
-            <a href="/auth/register" type="button" class="btn btn-success">
-                Signup for Linken &nbsp;<span class="glyphicon glyphicon-arrow-right"></span>
-            </a>
+            <button id="signup-button"
+                    type="button"
+                    aria-hidden="true"
+                    class="btn btn-lg btn-primary"
+                    data-toggle="modal"
+                    data-target="#signup-modal">
+                Signup for Linken
+            </button>
             <br>
             <div class="small">
                 It's quick!
+            </div>
+        </div>
+    </div>
+    <!-- Signup Modal -->
+    <div class="modal fade" id="signup-modal" tabindex="-1" role="dialog" aria-labelledby="signup-modal-label">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="item-settings-modal-label">Signup for Linken</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="signup-form" class="form-horizontal" method="post" name="registerForm" action="/auth/register">
+                        <div id="signup-name-group" class="form-group">
+                            <label for="signup-name" class="col-sm-2 control-label">Name</label>
+                            <div class="col-sm-10">
+                                <input name="name" type="text" class="form-control" id="signup-name" placeholder="Name">
+                            </div>
+                        </div>
+                        <div id="signup-email-group" class="form-group">
+                            <label for="signup-email" class="col-sm-2 control-label">Email</label>
+                            <div class="col-sm-10">
+                                <input name="email" type="email" class="form-control" id="signup-email" placeholder="Email">
+                            </div>
+                        </div>
+                        <div id="signup-password-group" class="form-group">
+                            <label for="signup-password" class="col-sm-2 control-label">Password</label>
+                            <div class="col-sm-8">
+                                <input name="password" type="password" class="form-control" id="signup-password" placeholder="Password">
+                            </div>
+                        </div>
+                        <div id="signup-password-confirm-group" class="form-group">
+                            <label for="signup-password-confirm" class="col-sm-2 control-label">Confirm</label>
+                            <div class="col-sm-8">
+                                <input name="passwordConfirm" type="password" class="form-control" id="signup-password-confirm" placeholder="Confirm Password">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <div class="g-recaptcha" data-sitekey="6LdhShsTAAAAACN7gFIUOzaR0rJPDrJdeBj_MOWB"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                By signing up you accept the <a href="#">Terms of Use</a>
+                            </div>
+                        </div>
+                        <div id="signup-errors" class="alert alert-danger"></div>
+                        {!! csrf_field() !!}
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button id="signup-submit-button" class="btn btn-success">Signup</button>
+                </div>
             </div>
         </div>
     </div>

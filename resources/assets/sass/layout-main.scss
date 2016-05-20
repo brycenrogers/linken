@@ -83,3 +83,8 @@ body {
     font-size: 80%;
     font-weight: normal;
 }
+
+.btn:focus,.btn:active:focus,.btn.active:focus,
+.btn.focus,.btn:active.focus,.btn.active.focus {
+    outline: none;
+}
