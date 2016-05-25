@@ -26,7 +26,8 @@ module.exports = function(grunt) {
                     'public/assets/js/add-pane.js',
                     'public/assets/js/control-pane.js',
                     'public/assets/js/item-pane.js',
-                    'public/assets/js/discover.js'
+                    'public/assets/js/discover.js',
+                    'public/assets/js/welcome.js'
                 ],
                 dest: 'public/assets/dist/js/linken.js'
             },
