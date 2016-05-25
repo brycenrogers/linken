@@ -14,7 +14,8 @@ $( document ).ready(function() {
     var nameError           = "Please enter a name";
     var emailError          = "Please enter an email address";
     var emailInvalidError   = "Invalid email address";
-    var passwordError       = "Please enter a password";
+    var passwordEmptyError  = "Please enter a password";
+    var passwordLengthError = "Password must be at least 6 characters";
     var confirmError        = "Please confirm your password";
     var matchError          = "Your passwords do not match";
 
@@ -61,7 +62,12 @@ $( document ).ready(function() {
         // Password field
         if (password == "") {
             confirmPasswords = false;
-            errors.push(passwordError);
+            errors.push(passwordEmptyError);
+            errorFields.push(passwordField);
+        }
+        if (password.length < 6) {
+            confirmPasswords = false;
+            errors.push(passwordLengthError);
             errorFields.push(passwordField);
         }
         // Password Confirmation field
@@ -164,7 +170,39 @@ $( document ).ready(function() {
         var errorDataArray = validateSignupForm(true);
         var errors = errorDataArray[0];
         if (errors.length == 0) {
-            $('#signup-form').submit();
+            // Submit the form if all error checks passed
+            var csrf = $('#csrf_token').val();
+            var name = $('#signup-name').val();
+            var email = $('#signup-email').val();
+            var password = $('#signup-password').val();
+            var recaptcha = grecaptcha.getResponse();
+            $.ajax({
+                url: "/auth/register",
+                cache: false,
+                method: 'post',
+                data: {
+                    name: name,
+                    email: email,
+                    password: password,
+                    recaptcha: recaptcha,
+                    _token: csrf
+                }
+            })
+            .success(function (response) {
+                window.location.replace("/");
+            })
+            .error(function (response) {
+                var responseText = $.parseJSON(response.responseText);
+                if (typeof responseText === 'object') {
+                    var errors = "";
+                    $.each(responseText, function (key, value) {
+                        errors += value + "<br>";
+                    });
+                    $('#signup-errors').html(errors).show();
+                } else {
+                    $('#signup-errors').html(response.status + " " + response.statusText).show();
+                }
+            });
         }
     });
 });

@@ -115,7 +115,7 @@
             a software engineer in Denver, CO. The source code is <a href="http://github.com/brycenrogers/linken" target="_blank">available on Github</a>, supported by an
             <a href="https://github.com/brycenrogers/linken/blob/master/LICENSE.txt" target="_blank">Apache 2.0 license</a>, and running on
             <a href="https://laravel.com/" target="_blank">Laravel 5.2</a>.<br>
-            Want to help? Donating or <a href="https://github.com/brycenrogers/linken/pulls" target="_blank">Contributing</a> to Linken helps keep it running.
+            Want to help? Donating or <a href="https://github.com/brycenrogers/linken/pulls" target="_blank">Contributing</a> helps keep Linken running.
         </div>
     </div>
     <div class="welcome-header">
@@ -173,7 +173,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
-                                <div class="g-recaptcha" data-sitekey="6LdhShsTAAAAACN7gFIUOzaR0rJPDrJdeBj_MOWB"></div>
+                                <div id="recaptcha" class="g-recaptcha" data-sitekey="6LdhShsTAAAAACN7gFIUOzaR0rJPDrJdeBj_MOWB"></div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -182,7 +182,7 @@
                             </div>
                         </div>
                         <div id="signup-errors" class="alert alert-danger"></div>
-                        {!! csrf_field() !!}
+                        <input id="csrf_token" type="hidden" value="{!! csrf_token() !!}">
                     </form>
                 </div>
                 <div class="modal-footer">
