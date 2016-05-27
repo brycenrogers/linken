@@ -18,6 +18,8 @@
     <link rel="stylesheet" href="{{ asset('assets/css/google-fonts-Montserrat.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/font-awesome.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap-social.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/base.css') }}">
     <!-- /build -->
 

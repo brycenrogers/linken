@@ -53,7 +53,14 @@
         @include('panes.welcomeAddPane')
         <div class="welcome-container">
             Linken makes it easy to quickly save and share links and notes from any page.<br>
-            Click the blue bar above to try out the Linken interface.
+            Click the blue bar above to try out the Linken interface.<br><br>
+            <button type="button"
+                    aria-hidden="true"
+                    class="btn btn-lg btn-success signup-button"
+                    data-toggle="modal"
+                    data-target="#signup-modal">
+                Signup for Linken
+            </button>
         </div>
     </div>
     <div class="welcome-header">
@@ -111,8 +118,8 @@
     </div>
     <div class="col-md-12">
         <div class="welcome-container">
-            Linken is designed, built and maintained by <a href="http://github.com/brycenrogers" target="_blank">Brycen Rogers</a>,<br>
-            a software engineer in Denver, CO. The source code is <a href="http://github.com/brycenrogers/linken" target="_blank">available on Github</a>, supported by an
+            Linken is designed, built and maintained by <a href="http://github.com/brycenrogers" target="_blank">Brycen Rogers</a>,
+            a software engineer in Denver, CO. <br>The source code is <a href="http://github.com/brycenrogers/linken" target="_blank">available on Github</a>, supported by an
             <a href="https://github.com/brycenrogers/linken/blob/master/LICENSE.txt" target="_blank">Apache 2.0 license</a>, and running on
             <a href="https://laravel.com/" target="_blank">Laravel 5.2</a>.<br>
             Want to help? Donating or <a href="https://github.com/brycenrogers/linken/pulls" target="_blank">Contributing</a> helps keep Linken running.
@@ -123,10 +130,9 @@
     </div>
     <div class="col-md-12">
         <div class="welcome-container text-center">
-            <button id="signup-button"
-                    type="button"
+            <button type="button"
                     aria-hidden="true"
-                    class="btn btn-lg btn-primary"
+                    class="btn btn-lg btn-success signup-button"
                     data-toggle="modal"
                     data-target="#signup-modal">
                 Signup for Linken
@@ -146,6 +152,12 @@
                     <h4 class="modal-title" id="item-settings-modal-label">Signup for Linken</h4>
                 </div>
                 <div class="modal-body">
+                    <div class="">
+                        <a class="btn btn-block btn-social btn-github" href="/auth/provider/github">
+                            <span class="fa fa-github"></span> Sign in with Github
+                        </a>
+                    </div>
+                    <hr>
                     <form id="signup-form" class="form-horizontal" method="post" name="registerForm" action="/auth/register">
                         <div id="signup-name-group" class="form-group">
                             <label for="signup-name" class="col-sm-2 control-label">Name</label>
@@ -181,7 +193,12 @@
                                 By signing up you accept the <a href="#">Terms of Use</a>
                             </div>
                         </div>
-                        <div id="signup-errors" class="alert alert-danger"></div>
+                        <div id="signup-errors" class="alert alert-danger">
+                            <button id="signup-errors-close" type="button" class="close" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <div id="signup-errors-body"></div>
+                        </div>
                         <input id="csrf_token" type="hidden" value="{!! csrf_token() !!}">
                     </form>
                 </div>

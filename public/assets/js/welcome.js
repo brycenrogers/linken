@@ -123,9 +123,11 @@ $( document ).ready(function() {
             var errorString = "";
             if (errors.length > 0) {
                 errorString = errors.join('<br>');
-                $('#signup-errors').html(errorString).show();
+                $('#signup-errors-body').html(errorString);
+                $('#signup-errors').show();
             } else {
-                $('#signup-errors').html("").hide();
+                $('#signup-errors-body').html("");
+                $('#signup-errors').hide();
             }
         }
 
@@ -189,6 +191,7 @@ $( document ).ready(function() {
                 }
             })
             .success(function (response) {
+                // Redirect to home page after successful registration
                 window.location.replace("/");
             })
             .error(function (response) {
@@ -198,11 +201,17 @@ $( document ).ready(function() {
                     $.each(responseText, function (key, value) {
                         errors += value + "<br>";
                     });
-                    $('#signup-errors').html(errors).show();
+                    $('#signup-errors-body').html(errors);
                 } else {
-                    $('#signup-errors').html(response.status + " " + response.statusText).show();
+                    $('#signup-errors-body').html(response.status + " " + response.statusText);
+
                 }
+                $('#signup-errors').show();
             });
         }
+    });
+
+    $("#signup-errors-close").click(function () {
+        $('#signup-errors').fadeOut();
     });
 });

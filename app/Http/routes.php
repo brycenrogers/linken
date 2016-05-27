@@ -16,6 +16,8 @@ Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
 Route::get('auth/logout', 'Auth\AuthController@getLogout');
 Route::get('auth/success', 'Auth\AuthController@success');
+Route::get('auth/provider/{provider}', 'Auth\AuthController@redirectToProvider');
+Route::get('auth/provider/handle/{provider}', 'Auth\AuthController@handleProviderCallback');
 
 // Registration routes...
 Route::get('auth/register', 'Auth\AuthController@getRegister');
