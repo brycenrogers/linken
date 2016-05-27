@@ -49,11 +49,17 @@ class AuthController extends Controller
      *
      * @return Response
      */
-    public function handleProviderCallback()
+    public function handleProviderCallback($provider)
     {
-        $user = Socialite::driver('github')->user();
+        $user = Socialite::driver($provider)->user();
 
-        // $user->token;
+        // Create user array to save user
+        $userData['name'] = $user->getName();
+        $userData['email'] = $user->getEmail();
+        $userData['user_photo'] = $user->getAvatar();
+        $userData['password'] = bcrypt(uniqid(time()));
+
+        return $this->create($userData);
     }
 
     /**
