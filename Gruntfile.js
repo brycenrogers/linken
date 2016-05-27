@@ -102,6 +102,8 @@ module.exports = function(grunt) {
                         'public/assets/css/google-fonts-Montserrat.css',
                         'public/assets/css/bootstrap.min.css',
                         'public/assets/css/select2.min.css',
+                        'public/assets/css/font-awesome.css',
+                        'public/assets/css/bootstrap-social.css',
                         'public/assets/css/base.css'
                     ]
                 }
