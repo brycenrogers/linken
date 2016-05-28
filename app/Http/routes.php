@@ -39,9 +39,10 @@ Route::get('github/login', function() {
                 $name = $details->full_name;
             } elseif ($details->nickname) {
                 $name = $details->nickname;
-            } else {
-                $name = $details->email;
+            } elseif (isset($details->given_name)) {
+                $name = $details->given_name;
             }
+            $user->name = $name;
             $user->save();
         });
     } catch (ApplicationRejectedException $e) {
