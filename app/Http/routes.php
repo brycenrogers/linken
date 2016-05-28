@@ -29,11 +29,18 @@ Route::get('github/login', function() {
     try {
         SocialAuth::login('github', function(User $user, $details) {
             // Update user details
-            $user->name = $details->full_name;
             $user->email = $details->email;
             $user->user_photo = $details->avatar;
             if ($user->discovery_setting == '') {
                 $user->discovery_setting = 'attributed';
+            }
+            // Determine name
+            if ($details->full_name) {
+                $name = $details->full_name;
+            } elseif ($details->nickname) {
+                $name = $details->nickname;
+            } else {
+                $name = $details->email;
             }
             $user->save();
         });
