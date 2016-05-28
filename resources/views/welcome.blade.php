@@ -153,7 +153,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="">
-                        <a class="btn btn-block btn-social btn-github" href="/auth/provider/github">
+                        <a class="btn btn-block btn-social btn-github" href="/github/auth">
                             <span class="fa fa-github"></span> Sign in with Github
                         </a>
                     </div>

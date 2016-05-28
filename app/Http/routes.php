@@ -12,12 +12,40 @@
 */
 
 // Authentication routes...
+use App\Models\User;
+use SocialNorm\Exceptions\ApplicationRejectedException;
+use SocialNorm\Exceptions\InvalidAuthorizationCodeException;
+
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
 Route::get('auth/logout', 'Auth\AuthController@getLogout');
 Route::get('auth/success', 'Auth\AuthController@success');
-Route::get('auth/provider/{provider}', 'Auth\AuthController@redirectToProvider');
-Route::get('auth/provider/handle/{provider}', 'Auth\AuthController@handleProviderCallback');
+
+// Social Login Providers
+Route::get('github/auth', function() {
+    return SocialAuth::authorize('github');
+});
+Route::get('github/login', function() {
+    try {
+        SocialAuth::login('github', function(User $user, $details) {
+            // Update user details
+            $user->name = $details->full_name;
+            $user->email = $details->email;
+            $user->user_photo = $details->avatar;
+            if ($user->discovery_setting == '') {
+                $user->discovery_setting = 'attributed';
+            }
+            $user->save();
+        });
+    } catch (ApplicationRejectedException $e) {
+        // User rejected application
+    } catch (InvalidAuthorizationCodeException $e) {
+        // Authorization was attempted with invalid
+        // code,likely forgery attempt
+    }
+
+    return Redirect::intended();
+});
 
 // Registration routes...
 Route::get('auth/register', 'Auth\AuthController@getRegister');

@@ -51,7 +51,7 @@
                     <ul id="account-list-container" class="nav navbar-nav navbar-right">
                         <li id="account-dropdown-container" class="dropdown">
                             <a href="#" type="button" title="Logged in as {{ $user->name }}" class="account-button dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="user-photo" style="background-image: url('{!! asset('/assets/images/uploads/' . Auth::user()->user_photo) !!}');"></span>
+                                <span class="user-photo" style="background-image: url('{!! Auth::user()->user_photo !!}');"></span>
                                 <span class="visible-xs username">
                                     Account
                                     &nbsp;<span class="caret"></span>

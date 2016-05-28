@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Laravel\Socialite\Facades\Socialite;
 use Validator;
 use App\Models\User;
 use App\Http\Controllers\Controller;
@@ -32,34 +31,6 @@ class AuthController extends Controller
     public function __construct()
     {
         $this->middleware('guest', ['except' => 'getLogout']);
-    }
-
-    /**
-     * Redirect the user to the GitHub authentication page.
-     *
-     * @return Response
-     */
-    public function redirectToProvider($provider)
-    {
-        return Socialite::driver($provider)->redirect();
-    }
-
-    /**
-     * Obtain the user information from GitHub.
-     *
-     * @return Response
-     */
-    public function handleProviderCallback($provider)
-    {
-        $user = Socialite::driver($provider)->user();
-
-        // Create user array to save user
-        $userData['name'] = $user->getName();
-        $userData['email'] = $user->getEmail();
-        $userData['user_photo'] = $user->getAvatar();
-        $userData['password'] = bcrypt(uniqid(time()));
-
-        return $this->create($userData);
     }
 
     /**
