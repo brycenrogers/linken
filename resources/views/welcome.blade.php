@@ -152,12 +152,6 @@
                     <h4 class="modal-title" id="item-settings-modal-label">Signup for Linken</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="">
-                        <a class="btn btn-block btn-social btn-github" href="/github/auth">
-                            <span class="fa fa-github"></span> Sign in with Github
-                        </a>
-                    </div>
-                    <hr>
                     <form id="signup-form" class="form-horizontal" method="post" name="registerForm" action="/auth/register">
                         <div id="signup-name-group" class="form-group">
                             <label for="signup-name" class="col-sm-2 control-label">Name</label>
@@ -201,6 +195,15 @@
                         </div>
                         <input id="csrf_token" type="hidden" value="{!! csrf_token() !!}">
                     </form>
+                    <hr>
+                    <div class="">
+                        <a class="btn btn-block btn-social btn-google" href="/oauth/google/auth">
+                            <span class="fa fa-google"></span>Sign In with Google
+                        </a>
+                        <a class="btn btn-block btn-social btn-github" href="/oauth/github/auth">
+                            <span class="fa fa-github"></span>Sign In with Github
+                        </a>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

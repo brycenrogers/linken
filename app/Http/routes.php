@@ -22,38 +22,8 @@ Route::get('auth/logout', 'Auth\AuthController@getLogout');
 Route::get('auth/success', 'Auth\AuthController@success');
 
 // Social Login Providers
-Route::get('github/auth', function() {
-    return SocialAuth::authorize('github');
-});
-Route::get('github/login', function() {
-    try {
-        SocialAuth::login('github', function(User $user, $details) {
-            // Update user details
-            $user->email = $details->email;
-            $user->user_photo = $details->avatar;
-            if ($user->discovery_setting == '') {
-                $user->discovery_setting = 'attributed';
-            }
-            // Determine name
-            if ($details->full_name) {
-                $name = $details->full_name;
-            } elseif ($details->nickname) {
-                $name = $details->nickname;
-            } elseif (isset($details->given_name)) {
-                $name = $details->given_name;
-            }
-            $user->name = $name;
-            $user->save();
-        });
-    } catch (ApplicationRejectedException $e) {
-        // User rejected application
-    } catch (InvalidAuthorizationCodeException $e) {
-        // Authorization was attempted with invalid
-        // code,likely forgery attempt
-    }
-
-    return Redirect::intended();
-});
+Route::get('oauth/{provider}/auth', 'Auth\OAuthController@auth');
+Route::get('oauth/{provider}/login', 'Auth\OAuthController@login');
 
 // Registration routes...
 Route::get('auth/register', 'Auth\AuthController@getRegister');
