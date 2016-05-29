@@ -103,7 +103,17 @@ $( document ).ready(function() {
                 _token: csrf
             }
         })
-        .done(function(response) {
+        .error(function (response) {
+            // Get response text
+            var responseArray = $.parseJSON(response.responseText);
+            var responseVal = responseArray.value;
+            addButtonSpinner.stop();
+            addButtonSpinner = null;
+            button.html('Add');
+            button.prop("disabled", false);
+            showAlert('error', responseVal);
+        })
+        .success(function(response) {
             closeAddPane(response);
             addButtonSpinner.stop();
             addButtonSpinner = null;
@@ -240,6 +250,7 @@ $( document ).ready(function() {
         var containerHeight = containerHeightAr[0];
         var addPaneNewHeight = parseInt(containerHeight) + 26;
         $('div#add-pane').css('min-height', addPaneNewHeight + 'px');
+        $('input#add-pane-height').val(addPaneNewHeight);
     }
 
     function openAddPane(callback)
@@ -253,7 +264,7 @@ $( document ).ready(function() {
         $('div#add-pane').attr('data-toggle', 'open');
 
         var windowWidth = $(window).width();
-        var height = 180;
+        var height = 153;
 
         if (windowWidth <= 767) {
             height = 210;
@@ -384,8 +395,23 @@ $( document ).ready(function() {
 
     function openInfoPane(image, title)
     {
-        if ($(window).width() <= 767 && $('input#add-pane-height').val() == '') {
-            height = 260;
+        var height = 0;
+        var addPaneHeight = $('input#add-pane-height').val();
+        if (addPaneHeight != '') {
+            height = parseInt(addPaneHeight) + 28;
+        }
+        if ($(window).width() <= 767) {
+            if (height == 0) {
+                height = 260;
+            }
+            $('div#add-pane').show().velocity({
+                minHeight: [ height, "easeOutCubic" ]
+            }, 200);
+        }
+        if ($(window).width() >= 768) {
+            if (height == 0) {
+                height = 176;
+            }
             $('div#add-pane').show().velocity({
                 minHeight: [ height, "easeOutCubic" ]
             }, 200);

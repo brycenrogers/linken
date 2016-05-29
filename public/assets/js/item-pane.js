@@ -156,7 +156,7 @@ $( document ).ready(function() {
                 emails: emails
             }
         })
-        .fail(function (response) {
+        .error(function (response) {
             if (response.status == 403) {
                 showAlert('error', response.responseText);
                 // Close modal and show error message
@@ -171,7 +171,7 @@ $( document ).ready(function() {
             errors.slice(0,-4);
             errorDiv.html(errors).fadeIn("fast");
         })
-        .done(function( response ) {
+        .success(function( response ) {
             // Close modal and show success message
             itemShareModal.modal('hide');
             showAlert('success', response.message);
