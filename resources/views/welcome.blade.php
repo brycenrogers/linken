@@ -19,6 +19,12 @@
                         @endforeach
                     </div>
                 @endif
+                @if (Session::get('error'))
+                    <div class="alert alert-danger" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        {{ Session::get('error') }}
+                    </div>
+                @endif
                 <div class="login-pane">
                     <form class="form-horizontal" method="post" action="/auth/login">
                         <div class="col-md-5">
@@ -59,7 +65,7 @@
                     class="btn btn-lg btn-success signup-button"
                     data-toggle="modal"
                     data-target="#signup-modal">
-                Signup for Linken
+                Sign Up for Linken
             </button>
         </div>
     </div>
@@ -135,7 +141,7 @@
                     class="btn btn-lg btn-success signup-button"
                     data-toggle="modal"
                     data-target="#signup-modal">
-                Signup for Linken
+                Sign Up for Linken
             </button>
             <br>
             <div class="small">
@@ -149,9 +155,24 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="item-settings-modal-label">Signup for Linken</h4>
+                    <h4 class="modal-title" id="item-settings-modal-label">Sign Up for Linken</h4>
                 </div>
                 <div class="modal-body">
+                    <div class="well">
+                        Sign in using an existing account
+                    </div>
+                    <div class="">
+                        <a class="btn btn-block btn-social btn-google" href="/oauth/google/auth">
+                            <span class="fa fa-google"></span>Sign In with Google
+                        </a>
+                        <a class="btn btn-block btn-social btn-github" href="/oauth/github/auth">
+                            <span class="fa fa-github"></span>Sign In with Github
+                        </a>
+                    </div>
+                    <hr>
+                    <div class="well">
+                        Sign up using Email
+                    </div>
                     <form id="signup-form" class="form-horizontal" method="post" name="registerForm" action="/auth/register">
                         <div id="signup-name-group" class="form-group">
                             <label for="signup-name" class="col-sm-2 control-label">Name</label>
@@ -195,15 +216,6 @@
                         </div>
                         <input id="csrf_token" type="hidden" value="{!! csrf_token() !!}">
                     </form>
-                    <hr>
-                    <div class="">
-                        <a class="btn btn-block btn-social btn-google" href="/oauth/google/auth">
-                            <span class="fa fa-google"></span>Sign In with Google
-                        </a>
-                        <a class="btn btn-block btn-social btn-github" href="/oauth/github/auth">
-                            <span class="fa fa-github"></span>Sign In with Github
-                        </a>
-                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

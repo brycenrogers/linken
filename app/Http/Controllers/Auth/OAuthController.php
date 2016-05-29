@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Database\QueryException;
 use Redirect;
+use Session;
 use SocialAuth;
 use App\Models\User;
 use SocialNorm\Exceptions\ApplicationRejectedException;
@@ -47,6 +49,8 @@ class OAuthController extends Controller
                     $name = $details->nickname;
                 } elseif (isset($details->given_name)) {
                     $name = $details->given_name;
+                } else {
+                    $name = $details->email;
                 }
                 // Set the name
                 $user->name = $name;
@@ -59,6 +63,10 @@ class OAuthController extends Controller
         } catch (InvalidAuthorizationCodeException $e) {
             // Authorization was attempted with invalid
             // code,likely forgery attempt
+        } catch (QueryException $e) {
+            // User info update/save failed, likely because the email address already existed for another provider
+            Session::flash('error', 'Could not authenticate. Your email may already be used by another account.');
+            return Redirect::to('/');
         }
 
         return Redirect::intended();
