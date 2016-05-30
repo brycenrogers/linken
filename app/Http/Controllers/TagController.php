@@ -25,12 +25,10 @@ class TagController extends Controller
      * @param TagRepositoryInterface $tagRepo
      * @return \Illuminate\Http\JsonResponse
      */
-    public function search
-    (
-        TagHandlerInterface $tagHandler,
-        CacheHandlerInterface $cacheHandler,
-        TagRepositoryInterface $tagRepo
-    ) {
+    public function search (TagHandlerInterface $tagHandler,
+                            CacheHandlerInterface $cacheHandler,
+                            TagRepositoryInterface $tagRepo)
+    {
         // Get the query term
         $query = request()->input('q');
         $scope = request()->input('scope');
@@ -70,12 +68,10 @@ class TagController extends Controller
         return response()->json(['items' => [$hits]]);
     }
 
-    public function getTagsPane
-    (
-        TagHandlerInterface $tagHandler,
-        CacheHandlerInterface $cacheHandler,
-        TagRepositoryInterface $tagRepo
-    ) {
+    public function getTagsPane (TagHandlerInterface $tagHandler,
+                                 CacheHandlerInterface $cacheHandler,
+                                 TagRepositoryInterface $tagRepo)
+    {
         $tags = $tagHandler->getTagsForUser($cacheHandler, $tagRepo);
         sort($tags, SORT_STRING);
 

@@ -52,7 +52,7 @@ class ImageHandler implements ImageHandlerInterface
             $destinationPath = public_path() .'/assets/images/uploads/' . $filename;
             if(file_put_contents($destinationPath, $data)) {
                 $user = Auth::user();
-                $user->user_photo = $filename;
+                $user->user_photo = $destinationPath;
                 $user->save();
                 return ['flash' => 'success', 'message' => 'Photo updated!'];
             }

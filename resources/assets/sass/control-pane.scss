@@ -214,6 +214,14 @@
             border-bottom: 1px solid #e3e3e3;
         }
     }
+
+    #account-list-container {
+        ul.dropdown-menu {
+            a {
+                color: #000000;
+            }
+        }
+    }
 }
 .letter-header {
     width: 100%;

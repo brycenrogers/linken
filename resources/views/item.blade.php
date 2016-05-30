@@ -42,7 +42,9 @@
                 <div class="media-footer">
                     @if (Auth::user()->id != $item->user->id)
                         <div class="media-userphoto">
-                            <div class="user-photo" style="background-image: url('{{ asset('/assets/images/uploads/' . $item->user->user_photo) }}');"></div>
+                            <div class="user-photo"
+                                 title="{{ $item->user->name }}"
+                                 style="background-image: url('{{ asset('/assets/images/uploads/' . $item->user->user_photo) }}');"></div>
                         </div>
                     @endif
                     <div class="media-options">
@@ -65,7 +67,7 @@
                             @endif'>
                             <span class="glyphicon glyphicon-tags" aria-hidden="true"></span>
                         </a>
-                        @if ($item->user == Auth::user())
+                        @if ($item->user->id == Auth::user()->id)
                         <a href="#item-settings-modal"
                             class="settings-link"
                             title="Settings"
