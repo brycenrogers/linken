@@ -25,26 +25,23 @@
                         {{ Session::get('error') }}
                     </div>
                 @endif
-                <div class="login-pane">
-                    <form class="form-horizontal" method="post" action="/auth/login">
-                        <div class="col-md-5">
-                            <input name="email" type="email" class="form-control" id="email" placeholder="Email" value="{{ old('email') }}">
-                        </div>
-                        <div class="col-md-5">
-                            <div class="input-group">
-                                <input name="password" type="password" class="form-control" id="password" placeholder="Password">
-                                <div class="input-group-btn">
-                                    <a href="/password/email" id="forgot-password-button" class="btn btn-default" type="button" title="Forgot Password?" data-toggle="tooltip" data-target="#password-reset-modal">
-                                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <button type="submit" class="btn btn-primary btn-block">Login</button>
-                        </div>
-                        {!! csrf_field() !!}
-                    </form>
+                <div class="action-pane">
+                    <button type="button"
+                            aria-hidden="true"
+                            class="btn btn-lg btn-default signup-button"
+                            data-toggle="modal"
+                            data-target="#signup-modal">
+                        <span class="fa fa-user-plus"></span>&nbsp;
+                        Sign Up
+                    </button>
+                    <button type="button"
+                            aria-hidden="true"
+                            class="btn btn-lg btn-default login-button"
+                            data-toggle="modal"
+                            data-target="#login-modal">
+                        <span class="fa fa-sign-in"></span>&nbsp;
+                        Login
+                    </button>
                 </div>
             </div>
         </div>
@@ -59,14 +56,7 @@
         @include('panes.welcomeAddPane')
         <div class="welcome-container">
             Linken makes it easy to quickly save and share links and notes from any page.<br>
-            Click the blue bar above to try out the Linken interface.<br><br>
-            <button type="button"
-                    aria-hidden="true"
-                    class="btn btn-lg btn-success signup-button"
-                    data-toggle="modal"
-                    data-target="#signup-modal">
-                Sign Up for Linken
-            </button>
+            Click the blue bar above to try out the Linken interface.
         </div>
     </div>
     <div class="welcome-header">
@@ -131,21 +121,60 @@
             Want to help? Donating or <a href="https://github.com/brycenrogers/linken/pulls" target="_blank">Contributing</a> helps keep Linken running.
         </div>
     </div>
-    <div class="welcome-header">
-        Want to try it out?
-    </div>
-    <div class="col-md-12">
-        <div class="welcome-container text-center">
-            <button type="button"
-                    aria-hidden="true"
-                    class="btn btn-lg btn-success signup-button"
-                    data-toggle="modal"
-                    data-target="#signup-modal">
-                Sign Up for Linken
-            </button>
-            <br>
-            <div class="small">
-                It's quick!
+    <!-- Login Modal -->
+    <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="login-modal-label">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form class="form-horizontal" method="post" action="/auth/login">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="item-settings-modal-label">
+                            <span class="fa fa-sign-in"></span>&nbsp;
+                            Linken Login
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="well">
+                            Sign in using another service
+                        </div>
+                        <div class="">
+                            <a class="btn btn-block btn-social btn-google" href="/oauth/google/auth">
+                                <span class="fa fa-google"></span>Sign In with Google
+                            </a>
+                            <a class="btn btn-block btn-social btn-github" href="/oauth/github/auth">
+                                <span class="fa fa-github"></span>Sign In with Github
+                            </a>
+                        </div>
+                        <hr>
+                        <div class="well">
+                            Sign in with Email
+                        </div>
+                        <div id="login-email-group" class="form-group">
+                            <label for="login-email" class="col-sm-2 control-label">Email</label>
+                            <div class="col-sm-10">
+                                <input name="email" type="email" class="form-control" id="email" placeholder="Email" value="">
+                            </div>
+                        </div>
+                        <div id="signup-password-group" class="form-group">
+                            <label for="signup-password" class="col-sm-2 control-label">Password</label>
+                            <div class="col-sm-8">
+                                <input name="password" type="password" class="form-control" id="login-password" placeholder="Password"><br>
+                                <a href="/password/email"
+                                   id="forgot-password-button"
+                                   type="button"
+                                   title="Forgot Password?"
+                                   data-target="#password-reset-modal">
+                                   Forgot password?
+                                </a>
+                            </div>
+                        </div>
+                        {!! csrf_field() !!}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Login</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -155,11 +184,14 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="item-settings-modal-label">Sign Up for Linken</h4>
+                    <h4 class="modal-title" id="item-settings-modal-label">
+                        <span class="fa fa-user-plus"></span>&nbsp;
+                        Sign Up for Linken
+                    </h4>
                 </div>
                 <div class="modal-body">
                     <div class="well">
-                        Sign in using an existing account
+                        Sign in using another service
                     </div>
                     <div class="">
                         <a class="btn btn-block btn-social btn-google" href="/oauth/google/auth">

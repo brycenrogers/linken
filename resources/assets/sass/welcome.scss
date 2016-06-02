@@ -12,7 +12,7 @@
     height: 180px;
     background-color: $lightGreyBackground;
     .blurb-container {
-        padding: 0 0 50px;
+        padding: 0 0 44px;
         font-size: 22pt;
         font-family: 'Montserrat', sans-serif;
         font-weight: 300;
@@ -26,12 +26,18 @@
         width: 96%;
         top: -95px;
     }
+    .action-pane {
+        text-align: center;
+        button {
+            width: 254px;
+        }
+    }
     @media (max-width: 767px) {
         .blurb-container {
             padding: 0 0 30px;
             font-weight: 300;
         }
-        .login-pane {
+        .action-pane {
             input, .btn {
                 margin-bottom: 15px;
             }
