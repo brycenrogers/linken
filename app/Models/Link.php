@@ -47,6 +47,7 @@ class Link extends Model implements Searchable
             'url' => $this->url,
             'photo' => $this->photo,
             'description' => $item->description,
+            'discovery_setting' => $item->discovery_setting,
             'tags' => json_encode($tags),
             'created_at' => $this->created_at->getTimestamp()
         ];

@@ -38,7 +38,7 @@
                       tabindex="2"
                       class="form-control input-lg"
                       id="add-tags"
-                      placeholder="Tags"
+                      placeholder="Tags (comma separated)"
                       rows="1"></textarea>
         </div>
         <div class="col-md-2">

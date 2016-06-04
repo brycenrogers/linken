@@ -108,10 +108,23 @@ class SearchHandler implements SearchHandlerInterface {
         $query->setSize($limit);
 
         $boolQuery = new BoolQuery();
-        foreach($typeTerms as $type => $term) {
-            $termQueryType = new TermQuery([$type => $term]);
-            $boolQuery->addMust($termQueryType);
+
+        // Handle 'must' filters
+        if (isset($typeTerms['must'])) {
+            foreach($typeTerms['must'] as $type => $term) {
+                $termQueryType = new TermQuery([$type => $term]);
+                $boolQuery->addMust($termQueryType);
+            }
         }
+
+        // Handle 'should' filters
+        if (isset($typeTerms['should'])) {
+            foreach($typeTerms['should'] as $type => $term) {
+                $termQueryType = new TermQuery([$type => $term]);
+                $boolQuery->addShould($termQueryType);
+            }
+        }
+
         $query->setQuery($boolQuery);
 
         if ($user) {
