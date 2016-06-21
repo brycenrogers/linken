@@ -67,6 +67,7 @@
                                         <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Settings
                                     </a>
                                 </li>
+                                @if ($user->password != '')
                                 <li>
                                     <a href="#change-password-modal" data-toggle="modal" aria-hidden="true">
                                         <span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Change Password
@@ -77,6 +78,7 @@
                                         <span class="glyphicon glyphicon-camera" aria-hidden="true"></span> Update Photo
                                     </a>
                                 </li>
+                                @endif
                                 <li role="separator" class="divider"></li>
                                 <li>
                                     <a href="/auth/logout">

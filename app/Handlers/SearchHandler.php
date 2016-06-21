@@ -70,7 +70,7 @@ class SearchHandler implements SearchHandlerInterface {
         $query->setSize($limit);
 
         $fuzzy = new Fuzzy();
-        $fuzzy->setField('_all', $term);
+        $fuzzy->setField('value', $term);
         $fuzzy->setFieldOption('fuzziness', 2);
 
         if ($user) {

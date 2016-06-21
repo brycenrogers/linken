@@ -102,7 +102,8 @@ class TagController extends Controller
     public function findItemsForTags(Request $request, SearchHandlerInterface $searchHandler)
     {
         $q = $request->input('q');
-        $items = $searchHandler->filteredSearch(['tags' => $q], Auth::user(), 'created_at', 'desc');
+        $filters['must'] = ['tags' => $q];
+        $items = $searchHandler->filteredSearch($filters, Auth::user(), 'created_at', 'desc');
         $title = "Tag : " . $q;
         return view('all', ['items' => $items, 'title' => $title]);
     }

@@ -397,24 +397,23 @@ $( document ).ready(function() {
     {
         var height = 0;
         var addPaneHeight = $('input#add-pane-height').val();
-        if (addPaneHeight != '') {
-            height = parseInt(addPaneHeight) + 28;
-        }
-        if ($(window).width() <= 767) {
-            if (height == 0) {
-                height = 260;
+        if (addPaneHeight == '') {
+            if ($(window).width() <= 767) {
+                if (height == 0) {
+                    height = 260;
+                }
+                $('div#add-pane').show().velocity({
+                    minHeight: [ height, "easeOutCubic" ]
+                }, 200);
             }
-            $('div#add-pane').show().velocity({
-                minHeight: [ height, "easeOutCubic" ]
-            }, 200);
-        }
-        if ($(window).width() >= 768) {
-            if (height == 0) {
-                height = 176;
+            if ($(window).width() >= 768) {
+                if (height == 0) {
+                    height = 176;
+                }
+                $('div#add-pane').show().velocity({
+                    minHeight: [ height, "easeOutCubic" ]
+                }, 200);
             }
-            $('div#add-pane').show().velocity({
-                minHeight: [ height, "easeOutCubic" ]
-            }, 200);
         }
         var infoPane = $('#info-pane');
         if (infoPane.attr('data-open') == 'false') {
