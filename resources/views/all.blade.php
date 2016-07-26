@@ -32,7 +32,14 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <div id="settings-image" class="media-link-image" style=""></div>
+                            <textarea id="settings-url"></textarea>
+                            <div id="settings-image-container">
+                                <div id="settings-image" data-image-number="1" class="media-link-image" style=""></div>
+                            </div>
+                            <div id="settings-image-options">
+                                <span id="settings-image-refresh-button" class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                                <span id="settings-image-upload-button" class="glyphicon glyphicon-upload" aria-hidden="true"></span>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="settings-value">Title</label>

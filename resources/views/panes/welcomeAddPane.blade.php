@@ -1,7 +1,6 @@
 <div class="col-md-offset-2 col-md-8">
     <div class="click-me">
-        <span class="click-span">Click the blue bar</span>
-        <br>
+        <div class="click-span">Click the blue bar to see how it works</div>
         <span class="glyphicon glyphicon-arrow-down"></span>
     </div>
 
@@ -43,6 +42,7 @@
                                 id="add-tags"
                                 placeholder="Tags"
                                 rows="1"></textarea>
+                    <br>
                 </div>
                 <div class="col-md-2">
                     <button tabindex="6" class="btn btn-success btn-lg btn-block" id="welcome-add-button">

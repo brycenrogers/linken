@@ -77,7 +77,8 @@
                             data-value="{{ $item->value }}"
                             data-description="{{ $item->description }}"
                             data-image="{{ $item->itemable->photo ? $item->itemable->photo : "" }}"
-                            data-tags="@foreach ($item->tags as $tag){{ $tag->name }},@endforeach">
+                            data-tags="@foreach ($item->tags as $tag){{ $tag->name }},@endforeach"
+                            data-url="{{ $item->itemable->url }}">
                             <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
                         </a>
                         @endif

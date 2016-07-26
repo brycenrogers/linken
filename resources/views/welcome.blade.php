@@ -6,7 +6,7 @@
         <div class="feature-container">
             <div class="col-md-12">
                 <div class="blurb-container">
-                    Linken helps you remember things
+                    Linken helps you keep track of stuff
                 </div>
             </div>
             <div class="col-md-offset-2 col-md-8">
@@ -28,19 +28,11 @@
                 <div class="action-pane">
                     <button type="button"
                             aria-hidden="true"
-                            class="btn btn-lg btn-default signup-button"
-                            data-toggle="modal"
-                            data-target="#signup-modal">
-                        <span class="fa fa-user-plus"></span>&nbsp;
-                        Sign Up
-                    </button>
-                    <button type="button"
-                            aria-hidden="true"
-                            class="btn btn-lg btn-default login-button"
+                            class="btn btn-lg btn-success login-button"
                             data-toggle="modal"
                             data-target="#login-modal">
                         <span class="fa fa-sign-in"></span>&nbsp;
-                        Login
+                        Login or Sign Up
                     </button>
                 </div>
             </div>
@@ -114,8 +106,8 @@
     </div>
     <div class="col-md-12">
         <div class="welcome-container">
-            Linken is designed, built and maintained by <a href="http://github.com/brycenrogers" target="_blank">Brycen Rogers</a>,
-            a software engineer in Denver, CO. <br>The source code is <a href="http://github.com/brycenrogers/linken" target="_blank">available on Github</a>, supported by an
+            Linken is designed, built and maintained by <a href="https://brycenrogers.com" target="_blank">Brycen Rogers</a>,
+            a <a href="http://github.com/brycenrogers" target="_blank">software engineer</a> in Denver, CO. <br>The source code is <a href="http://github.com/brycenrogers/linken" target="_blank">available on Github</a>, supported by an
             <a href="https://github.com/brycenrogers/linken/blob/master/LICENSE.txt" target="_blank">Apache 2.0 license</a>, and running on
             <a href="https://laravel.com/" target="_blank">Laravel 5.2</a>.<br>
             Want to help? Donating or <a href="https://github.com/brycenrogers/linken/pulls" target="_blank">Contributing</a> helps keep Linken running.
@@ -134,9 +126,6 @@
                         </h4>
                     </div>
                     <div class="modal-body">
-                        <div class="well">
-                            Sign in using another service
-                        </div>
                         <div class="">
                             <a class="btn btn-block btn-social btn-google" href="/oauth/google/auth">
                                 <span class="fa fa-google"></span>Sign In with Google
@@ -144,11 +133,14 @@
                             <a class="btn btn-block btn-social btn-github" href="/oauth/github/auth">
                                 <span class="fa fa-github"></span>Sign In with Github
                             </a>
+                            <a type="button" class="btn btn-block btn-social btn-email"
+                                data-toggle="modal"
+                                data-target="#signup-modal"
+                                data-dismiss="modal">
+                                <span class="fa fa-envelope-o"></span>Sign Up with Email
+                            </a>
                         </div>
                         <hr>
-                        <div class="well">
-                            Sign in with Email
-                        </div>
                         <div id="login-email-group" class="form-group">
                             <label for="login-email" class="col-sm-2 control-label">Email</label>
                             <div class="col-sm-10">
@@ -190,21 +182,6 @@
                     </h4>
                 </div>
                 <div class="modal-body">
-                    <div class="well">
-                        Sign in using another service
-                    </div>
-                    <div class="">
-                        <a class="btn btn-block btn-social btn-google" href="/oauth/google/auth">
-                            <span class="fa fa-google"></span>Sign In with Google
-                        </a>
-                        <a class="btn btn-block btn-social btn-github" href="/oauth/github/auth">
-                            <span class="fa fa-github"></span>Sign In with Github
-                        </a>
-                    </div>
-                    <hr>
-                    <div class="well">
-                        Sign up using Email
-                    </div>
                     <form id="signup-form" class="form-horizontal" method="post" name="registerForm" action="/auth/register">
                         <div id="signup-name-group" class="form-group">
                             <label for="signup-name" class="col-sm-2 control-label">Name</label>

@@ -35,6 +35,7 @@
     <script src="{{ asset('assets/js/add-pane.js') }}"></script>
     <script src="{{ asset('assets/js/control-pane.js') }}"></script>
     <script src="{{ asset('assets/js/item-pane.js') }}"></script>
+    <script src="{{ asset('assets/js/settings.js') }}"></script>
     <script src="{{ asset('assets/js/discover.js') }}"></script>
     <script src="{{ asset('assets/js/welcome.js') }}"></script>
     <!-- /build -->

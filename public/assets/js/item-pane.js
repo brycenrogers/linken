@@ -6,6 +6,7 @@ $( document ).ready(function() {
     var tagsTextarea = $('#settings-tags');
     var destroyItem = $('#destroy-item');
     var settingsItemIdInput = $('#settings-item-id');
+    var settingsUrlTextarea = $('#settings-url');
 
     autosize($('.share-emails'));
 
@@ -25,6 +26,7 @@ $( document ).ready(function() {
         var tagsStr = button.data('tags');
         var tags = tagsStr.split(',');
         var lastTagElement = tags[tags.length - 1];
+        var url = button.data('url');
 
         if (lastTagElement == "") {
             tags.splice(tags.length - 1, 1);
@@ -37,6 +39,7 @@ $( document ).ready(function() {
         settingsValueTextarea.val(value);
         settingsDescriptionTextarea.val(description);
         settingsItemIdInput.val(itemId);
+        settingsUrlTextarea.html(url);
         destroyItem.attr('href', '/item/destroy/' + itemId);
 
         autosize(settingsValueTextarea);

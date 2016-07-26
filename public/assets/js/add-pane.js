@@ -55,7 +55,7 @@ $( document ).ready(function() {
         openAddPane();
         welcomeOpenInfoPane(
             '/assets/images/abraham-wiki-portrait.jpg',
-            'Abraham Lincoln - Wikipedia, the free encyclopedia'
+            'Abraham Lincoln'
         );
     });
 
